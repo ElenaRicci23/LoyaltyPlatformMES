@@ -1,44 +1,26 @@
-package mes.corporation.loyaltyplatform.model;
+package mes.corporation.loyaltyplatform.utenti.DTO;
 
-import jakarta.persistence.*;
-
-
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED) // Strategia di ereditarietà per sottoclassi
-public abstract class Utente {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userID;
-
-    @Column(nullable = false)
+public class ClienteDTO {
     private String nome;
-
-    @Column(nullable = false)
     private String cognome;
-
-    @Column(nullable = false, unique = true)
     private String email;
-
-    @Column(nullable = false)
     private String password;
+    private DatiPersonaliClienteDTO datiPersonali;
 
-    protected Utente() {
+    public DatiPersonaliClienteDTO getDatiPersonali() {
+        return datiPersonali;
     }
 
-    protected Utente(String nome, String cognome, String email, String password) {
+    public void setDatiPersonali(DatiPersonaliClienteDTO datiPersonali) {
+        this.datiPersonali = datiPersonali;
+    }
+
+
+    public ClienteDTO(String nome, String cognome, String email, String password) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.password = password;
-    }
-
-    public Long getUserID() {
-        return userID;
-    }
-
-    public void setUserID(Long userID) {
-        this.userID = userID;
     }
 
     public String getNome() {
@@ -74,4 +56,3 @@ public abstract class Utente {
     }
 
 }
-
