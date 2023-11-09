@@ -10,13 +10,6 @@ public class Cliente extends Utente {
     @JoinColumn(name = "dati_personali_id", referencedColumnName = "id")
     private DatiPersonaliClienti datiPersonali;
 
-
-    public void visualizzaProfilo() {
-        // Implementazione del metodo
-    }
-
-    // altri metodi come modificaProfilo, eliminaProfilo, ecc...
-
     public Cliente(String nome, String cognome, String email, String password, DatiPersonaliClienti datiPersonali) {
         super(nome, cognome, email, password);
         if (!isValidEmailForCliente(email)) {
@@ -24,6 +17,17 @@ public class Cliente extends Utente {
         }
         this.datiPersonali = datiPersonali;
     }
+
+    public Cliente() {
+    }
+
+    public void visualizzaProfilo() {
+        // Implementazione del metodo
+    }
+
+    // altri metodi come modificaProfilo, eliminaProfilo, ecc...
+
+
 
     // Metodo di validazione dell'email per un cliente
     private boolean isValidEmailForCliente(String email) {
