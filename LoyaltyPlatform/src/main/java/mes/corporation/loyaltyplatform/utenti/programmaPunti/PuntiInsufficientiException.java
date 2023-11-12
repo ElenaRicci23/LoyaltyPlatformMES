@@ -24,56 +24,8 @@
 
 package mes.corporation.loyaltyplatform.utenti.programmaPunti;
 
-import jakarta.persistence.*;
-import mes.corporation.loyaltyplatform.utenti.model.Azienda;
-
-@Entity
-public class PuntiPerAzienda {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    private Tessera tessera;
-
-    @ManyToOne
-    private Azienda azienda;
-
-    private Integer punti;
-
-    public PuntiPerAzienda() {
-        // Costruttore vuoto richiesto da JPA
+public class PuntiInsufficientiException extends Throwable {
+    public PuntiInsufficientiException(String s) {
+        super(s);
     }
-
-    public PuntiPerAzienda(Tessera tessera, Azienda azienda, int punti) {
-        this.tessera = tessera;
-        this.azienda = azienda;
-        this.punti = punti;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Tessera getTessera() {
-        return tessera;
-    }
-
-    public Azienda getAzienda() {
-        return azienda;
-    }
-
-    public Integer getPunti() {
-        return punti;
-    }
-
-    public void setPunti(Integer punti) {
-        this.punti = punti;
-    }
-
-    public void setAzienda(Azienda azienda) {
-        this.azienda = azienda;
-    }
-
 }

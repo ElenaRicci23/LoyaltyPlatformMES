@@ -24,5 +24,68 @@
 
 package mes.corporation.loyaltyplatform.utenti.programmaPunti;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Premio {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String nome;
+
+    private int puntiRichiesti;
+
+    @ManyToOne
+    private ProgrammaPunti programmaPunti;
+    @ManyToOne
+    private CatalogoPremi catalogoPremi;
+
+
+
+    public Premio() {
+        // Costruttore vuoto richiesto da JPA
+    }
+
+    public Premio(String nome, int puntiRichiesti) {
+        this.nome = nome;
+        this.puntiRichiesti = puntiRichiesti;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getPuntiRichiesti() {
+        return puntiRichiesti;
+    }
+
+    public void setPuntiRichiesti(int puntiRichiesti) {
+        this.puntiRichiesti = puntiRichiesti;
+    }
+
+    public ProgrammaPunti getProgrammaPunti() {
+        return programmaPunti;
+    }
+
+    public void setProgrammaPunti(ProgrammaPunti programmaPunti) {
+        this.programmaPunti = programmaPunti;
+    }
+
+    public CatalogoPremi getCatalogoPremi() {
+        return catalogoPremi;
+    }
+
+    public void setCatalogoPremi(CatalogoPremi catalogoPremi) {
+        this.catalogoPremi = catalogoPremi;
+    }
 }

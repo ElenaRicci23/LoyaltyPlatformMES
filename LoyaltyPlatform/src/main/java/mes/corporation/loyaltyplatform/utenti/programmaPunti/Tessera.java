@@ -77,4 +77,21 @@ public class Tessera {
 
         return puntiAzienda.map(PuntiPerAzienda::getPunti).orElse(0);
     }
+
+    //da terminare insieme al codice di Cliente
+    public void scalaPunti(CatalogoPremi catalogoPremi, Premio premio) throws PuntiInsufficientiException {
+        Azienda azienda = catalogoPremi.getAzienda();
+        int puntiRichiesti = premio.getPuntiRichiesti();
+
+        // Verifica se il cliente ha punti sufficienti per il premio
+        if (puntiPerAziende.containsKey(azienda) && puntiPerAziende.get(azienda) >= puntiRichiesti) {
+            puntiPerAziende.put(azienda, puntiPerAziende.get(azienda) - puntiRichiesti);
+
+            // Aggiorna il database (assicurati di avere un EntityManager disponibile)
+            // entityManager.persist(this);
+        } else {
+            throw new PuntiInsufficientiException("Punti insufficienti per ottenere il premio");
+        }
+    }
+
 }

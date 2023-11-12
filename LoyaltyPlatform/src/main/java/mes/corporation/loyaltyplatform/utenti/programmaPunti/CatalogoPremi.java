@@ -24,6 +24,7 @@
 
 package mes.corporation.loyaltyplatform.utenti.programmaPunti;
 
+
 import jakarta.persistence.*;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
 
@@ -31,51 +32,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class ProgrammaPunti {
+public class CatalogoPremi {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private Tessera tessera;
-
-    @ManyToOne
     private Azienda azienda;
 
-    private int punti;
-
-    @OneToMany(mappedBy = "programmaPunti", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "catalogoPremi", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Premio> premiDisponibili = new ArrayList<>();
 
+    // Costruttori, getter, setter e altri metodi necessari
 
-    public ProgrammaPunti() {
+    public CatalogoPremi() {
         // Costruttore vuoto richiesto da JPA
     }
 
-    public ProgrammaPunti(Tessera tessera, Azienda azienda, int punti) {
-        this.tessera = tessera;
+    public CatalogoPremi(Azienda azienda) {
         this.azienda = azienda;
-        this.punti = punti;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Tessera getTessera() {
-        return tessera;
-    }
-
     public Azienda getAzienda() {
         return azienda;
     }
 
-    public int getPunti() {
-        return punti;
-    }
-
-    public void setPunti(int punti) {
-        this.punti = punti;
+    public void setAzienda(Azienda azienda) {
+        this.azienda = azienda;
     }
 
     public List<Premio> getPremiDisponibili() {
@@ -83,8 +71,7 @@ public class ProgrammaPunti {
     }
 
     public void aggiungiPremio(Premio premio) {
-        // Metodo per aggiungere un premio al catalogo premi
         premiDisponibili.add(premio);
-        premio.setProgrammaPunti(this);
+        premio.setCatalogoPremi(this);
     }
 }
