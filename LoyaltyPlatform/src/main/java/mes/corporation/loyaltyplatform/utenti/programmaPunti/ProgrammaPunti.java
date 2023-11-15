@@ -26,6 +26,7 @@ package mes.corporation.loyaltyplatform.utenti.programmaPunti;
 
 import jakarta.persistence.*;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
+import mes.corporation.loyaltyplatform.utenti.model.Tessera;
 
 import java.util.ArrayList;
 import java.util.List;

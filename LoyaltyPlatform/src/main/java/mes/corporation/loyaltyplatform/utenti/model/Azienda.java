@@ -1,11 +1,13 @@
 package mes.corporation.loyaltyplatform.utenti.model;
 
 import jakarta.persistence.*;
+import mes.corporation.loyaltyplatform.fedelta.ProgrammaFedeltaPunti;
+import mes.corporation.loyaltyplatform.fedelta.TipoProgrammaFedelta;
 
 @Entity
 public class Azienda extends Utente {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE) // o GenerationType.TABLE
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
 
     private Long id;
 
@@ -13,6 +15,11 @@ public class Azienda extends Utente {
     @JoinColumn(name = "azienda_id")
     private DatiPersonaliAzienda datiPersonali;
 
+    @Enumerated(EnumType.STRING)
+    private TipoProgrammaFedelta tipoProgrammaFedelta;
+
+    @OneToOne(mappedBy = "azienda")
+    private ProgrammaFedeltaPunti programmaFedeltaPunti;
     public Azienda() {
     }
 
@@ -41,6 +48,15 @@ public class Azienda extends Utente {
 
     public void setPartitaIva(String partitaIva) {
         this.datiPersonali.setPartitaIva(partitaIva);
+    }
+
+
+    public TipoProgrammaFedelta getTipoProgrammaFedelta() {
+        return tipoProgrammaFedelta;
+    }
+
+    public void setTipoProgrammaFedelta(TipoProgrammaFedelta tipoProgrammaFedelta) {
+        this.tipoProgrammaFedelta = tipoProgrammaFedelta;
     }
 
 }

@@ -1,23 +1,25 @@
 package mes.corporation.loyaltyplatform.utenti.service;
 
+import jakarta.transaction.Transactional;
+
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
 import mes.corporation.loyaltyplatform.utenti.repo.AziendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AziendaService extends UtenteService<Azienda,AziendaRepository> {
 
-    @Autowired
-    private AziendaRepository aziendaRepository;
 
-    @Override
-    public boolean login(Azienda azienda) {
-        Azienda existingAzienda = aziendaRepository.findByEmail(azienda.getEmail());
-        if (existingAzienda != null && existingAzienda.getPassword().equals(azienda.getPassword())) {
-            return true;
-        }
-        return false;
+    private final AziendaRepository aziendaRepository;
+
+
+    @Autowired
+    public AziendaService(AziendaRepository aziendaRepository) {
+        this.aziendaRepository = aziendaRepository;
+
     }
 
     // Metodo per verificare se una partita IVA è già registrata
@@ -29,6 +31,10 @@ public class AziendaService extends UtenteService<Azienda,AziendaRepository> {
     // Metodo per trovare un'azienda per numero di partita IVA
     public Azienda findAziendaByPartitaIva(String partitaIva) {
         return aziendaRepository.findByDatiPersonali_PartitaIva(partitaIva);
+    }
+    public Azienda getAziendaById(Long aziendaId) {
+        Optional<Azienda> aziendaOptional = aziendaRepository.findById(aziendaId);
+        return aziendaOptional.orElse(null); // Restituisce l'azienda se presente, altrimenti null
     }
 
 
@@ -44,9 +50,14 @@ public class AziendaService extends UtenteService<Azienda,AziendaRepository> {
     }
 
     public boolean isEmailAlreadyRegistered(String email) {
-        Azienda azienda = aziendaRepository.findByEmail(email);
-        return azienda != null;
+        Optional<Azienda> azienda = aziendaRepository.findByEmail(email);
+        return azienda.isPresent();
     }
+    public void saveAzienda(Azienda azienda) {
+        aziendaRepository.save(azienda);
+    }
+
+
 
 }
 

@@ -13,6 +13,11 @@ public class Cliente extends Utente {
     @JoinColumn(name = "cliente_id")
     private DatiPersonaliCliente datiPersonali;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "proprietario")
+    private Tessera tessera;
+
+
+
     public Cliente() {
     }
 
@@ -29,5 +34,22 @@ public class Cliente extends Utente {
     public void setDatiPersonali(DatiPersonaliCliente datiPersonali) {
         this.datiPersonali = datiPersonali;
         this.datiPersonali.setCliente(this); // Imposta il collegamento bidirezionale
+    }
+    public Tessera getTessera() {
+        return tessera;
+    }
+
+    public void setTessera(Tessera tessera) {
+        this.tessera = tessera;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 }

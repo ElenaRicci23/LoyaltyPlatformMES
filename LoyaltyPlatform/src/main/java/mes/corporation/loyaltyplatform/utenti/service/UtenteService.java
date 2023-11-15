@@ -11,7 +11,6 @@ public abstract class UtenteService<T extends Utente, R extends UtenteRepository
 
     protected R utenteRepository;
 
-    public abstract boolean login(T utente);
 
     public abstract void registrazione(T utente);
 }

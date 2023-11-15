@@ -1,5 +1,6 @@
 package mes.corporation.loyaltyplatform.utenti.controller;
 
+import mes.corporation.loyaltyplatform.fedelta.TipoProgrammaFedelta;
 import mes.corporation.loyaltyplatform.utenti.DTO.AziendaDTO;
 import mes.corporation.loyaltyplatform.utenti.DTO.DatiPersonaliAziendaDTO;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
@@ -53,6 +54,17 @@ public class AziendaController {
         Azienda azienda = aziendaService.findAziendaByPartitaIva(partitaIva);
         if (azienda != null) {
             return ResponseEntity.ok(azienda);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @PostMapping("/{aziendaId}/configura-programma-fedelta")
+    public ResponseEntity<String> configuraProgrammaFedelta(@PathVariable Long aziendaId, @RequestBody TipoProgrammaFedelta tipoProgrammaFedelta) {
+        Azienda azienda = aziendaService.getAziendaById(aziendaId);
+        if (azienda != null) {
+            azienda.setTipoProgrammaFedelta(tipoProgrammaFedelta);
+            aziendaService.saveAzienda(azienda);
+            return ResponseEntity.ok("Programma fedeltà configurato con successo per l'azienda.");
         } else {
             return ResponseEntity.notFound().build();
         }

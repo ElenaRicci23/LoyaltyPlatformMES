@@ -1,50 +1,19 @@
-/*
- * MIT License
- *
- * Copyright (c) 2023 Di Felice Matteo, Ricci Elena, Avaltroni Sara
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 package mes.corporation.loyaltyplatform.utenti.programmaPunti;
 
 import jakarta.persistence.*;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
+import mes.corporation.loyaltyplatform.utenti.model.Tessera;
 
 @Entity
 public class PuntiPerAzienda {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     private Tessera tessera;
-
     @ManyToOne
     private Azienda azienda;
-
-    private Integer punti;
-
-    public PuntiPerAzienda() {
-        // Costruttore vuoto richiesto da JPA
-    }
+    private int punti;
 
     public PuntiPerAzienda(Tessera tessera, Azienda azienda, int punti) {
         this.tessera = tessera;
@@ -52,28 +21,41 @@ public class PuntiPerAzienda {
         this.punti = punti;
     }
 
+    public PuntiPerAzienda() {
+
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Tessera getTessera() {
         return tessera;
     }
 
+    public void setTessera(Tessera tessera) {
+        this.tessera = tessera;
+    }
+
     public Azienda getAzienda() {
         return azienda;
-    }
-
-    public Integer getPunti() {
-        return punti;
-    }
-
-    public void setPunti(Integer punti) {
-        this.punti = punti;
     }
 
     public void setAzienda(Azienda azienda) {
         this.azienda = azienda;
     }
 
+    public int getPunti() {
+        return punti;
+    }
+
+    public void setPunti(int punti) {
+        this.punti = punti;
+    }
+
+    // Getter e Setter...
 }
