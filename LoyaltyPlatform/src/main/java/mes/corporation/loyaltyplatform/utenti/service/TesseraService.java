@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
+
+/**
+ * Servizio per la gestione delle tessere dei clienti.
+ */
 @Service
 public class TesseraService {
 
@@ -20,19 +25,35 @@ public class TesseraService {
     @Autowired
     private AziendaRepository aziendaRepository;
 
-    // Crea una nuova tessera per un cliente specifico
+    /**
+     * Crea una nuova tessera per un cliente specifico.
+     *
+     * @param cliente Il cliente per cui creare la tessera.
+     * @return La nuova tessera creata.
+     */
     public Tessera creaTessera(Cliente cliente) {
         Tessera nuovaTessera = new Tessera(cliente);
         return tesseraRepository.save(nuovaTessera);
     }
 
-    // Recupera la tessera di un cliente tramite l'ID del cliente
+    /**
+     * Recupera la tessera di un cliente tramite l'ID del cliente.
+     *
+     * @param clienteId L'ID del cliente.
+     * @return La tessera del cliente se trovata, altrimenti null.
+     */
     public Tessera getTesseraByClienteId(Long clienteId) {
         return tesseraRepository.findByProprietario_Id(clienteId).orElse(null);
     }
 
-
-    // Modifica il metodo per accettare l'ID dell'azienda invece dell'oggetto Azienda
+    /**
+     * Aggiunge punti alla tessera di un cliente da parte di un'azienda.
+     *
+     * @param clienteId L'ID del cliente.
+     * @param punti     Il numero di punti da aggiungere.
+     * @param aziendaId L'ID dell'azienda che aggiunge i punti.
+     * @throws Exception Lanciata se la tessera non è trovata per il cliente o l'azienda non è trovata.
+     */
     public void aggiungiPuntiATessera(Long clienteId, int punti, Long aziendaId) throws Exception {
         Tessera tessera = getTesseraByClienteId(clienteId);
         Optional<Azienda> aziendaOptional = aziendaRepository.findById(aziendaId);
@@ -46,6 +67,14 @@ public class TesseraService {
         }
     }
 
+    /**
+     * Riscatta punti dalla tessera di un cliente per un'azienda.
+     *
+     * @param clienteId L'ID del cliente.
+     * @param punti     Il numero di punti da riscattare.
+     * @param azienda   L'azienda per cui riscattare i punti.
+     * @throws PuntiInsufficientiException Lanciata se i punti disponibili sulla tessera sono insufficienti.
+     */
     public void riscattaPuntiDaTessera(Long clienteId, int punti, Azienda azienda) throws PuntiInsufficientiException {
         Tessera tessera = getTesseraByClienteId(clienteId);
         if (tessera != null) {
@@ -56,5 +85,3 @@ public class TesseraService {
         }
     }
 }
-
-

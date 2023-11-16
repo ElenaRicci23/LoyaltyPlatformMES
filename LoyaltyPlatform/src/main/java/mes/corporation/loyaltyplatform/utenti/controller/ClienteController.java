@@ -1,9 +1,12 @@
 package mes.corporation.loyaltyplatform.utenti.controller;
 
-import mes.corporation.loyaltyplatform.fedelta.ProgrammaFedelta;
-import mes.corporation.loyaltyplatform.fedelta.ProgrammaFedeltaFactory;
-import mes.corporation.loyaltyplatform.fedelta.TipoProgrammaFedelta;
+import jakarta.transaction.Transactional;
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedelta;
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaFactory;
+import mes.corporation.loyaltyplatform.fedelta.model.TipoProgrammaFedelta;
+import mes.corporation.loyaltyplatform.fedelta.service.TransazioneService;
 import mes.corporation.loyaltyplatform.utenti.DTO.ClienteDTO;
+import mes.corporation.loyaltyplatform.utenti.DTO.DatiPersonaliClienteDTO;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
 import mes.corporation.loyaltyplatform.utenti.model.Cliente;
 import mes.corporation.loyaltyplatform.utenti.model.DatiPersonaliCliente;
@@ -16,6 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
+
+/**
+ * Questa classe è responsabile di gestire le richieste relative ai clienti utenti.
+ */
 @RestController
 @RequestMapping("/api/clienti")
 public class ClienteController {
@@ -31,8 +40,17 @@ public class ClienteController {
     @Autowired
     private TesseraService tesseraService;
 
+    @Autowired
+    private TransazioneService transazioneService;
+
     private static final Logger logger = LoggerFactory.getLogger(ClienteController.class); // Crea un logger
 
+    /**
+     * Gestisce una richiesta POST per la registrazione di un cliente.
+     *
+     * @param clienteDTO I dati del cliente da registrare.
+     * @return Una ResponseEntity con un messaggio di successo o di errore.
+     */
     @PostMapping("/registrazione")
     public ResponseEntity<String> registrazioneCliente(@RequestBody ClienteDTO clienteDTO) {
         // Validare i dati del DTO (ad esempio, assicurarsi che l'email sia unica)
@@ -42,14 +60,15 @@ public class ClienteController {
 
         // Creare un oggetto DatiPersonaliCliente dal DatiPersonaliClienteDTO
         DatiPersonaliCliente datiPersonaliCliente = new DatiPersonaliCliente();
-        datiPersonaliCliente.setNome(clienteDTO.getDatiPersonali().getNome());
-        datiPersonaliCliente.setCognome(clienteDTO.getDatiPersonali().getCognome());
-        datiPersonaliCliente.setSesso(clienteDTO.getDatiPersonali().getSesso());
-        datiPersonaliCliente.setCodiceFiscale(clienteDTO.getDatiPersonali().getCodiceFiscale());
-        datiPersonaliCliente.setDataNascita(clienteDTO.getDatiPersonali().getDataNascita());
-        datiPersonaliCliente.setResidenza(clienteDTO.getDatiPersonali().getResidenza());
-        datiPersonaliCliente.setIndirizzo(clienteDTO.getDatiPersonali().getIndirizzo());
-        datiPersonaliCliente.setCellulare(clienteDTO.getDatiPersonali().getCellulare());
+        DatiPersonaliClienteDTO datiPersonaliDTO = clienteDTO.getDatiPersonali();
+        datiPersonaliCliente.setNome(datiPersonaliDTO.getNome());
+        datiPersonaliCliente.setCognome(datiPersonaliDTO.getCognome());
+        datiPersonaliCliente.setSesso(datiPersonaliDTO.getSesso());
+        datiPersonaliCliente.setCodiceFiscale(datiPersonaliDTO.getCodiceFiscale());
+        datiPersonaliCliente.setDataNascita(datiPersonaliDTO.getDataNascita());
+        datiPersonaliCliente.setResidenza(datiPersonaliDTO.getResidenza());
+        datiPersonaliCliente.setIndirizzo(datiPersonaliDTO.getIndirizzo());
+        datiPersonaliCliente.setCellulare(datiPersonaliDTO.getCellulare());
 
         // Creare un oggetto Cliente dal DTO
         Cliente cliente = new Cliente();
@@ -65,6 +84,13 @@ public class ClienteController {
         return ResponseEntity.ok("Cliente registrato con successo.");
     }
 
+    /**
+     * Gestisce una richiesta POST per iscrivere un cliente a un programma fedeltà.
+     *
+     * @param clienteId  L'ID del cliente da iscrivere al programma fedeltà.
+     * @param aziendaId  L'ID dell'azienda che offre il programma fedeltà.
+     * @return Una ResponseEntity con un messaggio di successo o di errore.
+     */
     @PostMapping("/iscrizioneProgrammaFedelta/{clienteId}/{aziendaId}")
     public ResponseEntity<String> iscriviProgrammaFedelta(
             @PathVariable Long clienteId,
@@ -87,7 +113,32 @@ public class ClienteController {
             return ResponseEntity.notFound().build();
         }
     }
+    /**
+     * Gestisce una richiesta POST per effettuare una transazione e accumulare punti fedeltà.
+     *
+     * @param clienteId     L'ID del cliente che effettua la transazione.
+     * @param aziendaId     L'ID dell'azienda presso cui viene effettuata la transazione.
+     * @param importoSpeso  L'importo speso nella transazione.
+     * @return Una ResponseEntity con un messaggio di successo o di errore.
+     */
+    @PostMapping("/effettuaTransazione/{clienteId}/{aziendaId}")
+    @Transactional // Indica che il metodo è gestito come una transazione
+    public ResponseEntity<String> effettuaTransazione(
+            @PathVariable Long clienteId,
+            @PathVariable Long aziendaId,
+            @RequestParam BigDecimal importoSpeso
+    ) {
+        try {
+            // Esegui la transazione utilizzando il servizio TransazioneService
+            transazioneService.processaTransazione(importoSpeso, clienteId, aziendaId);
 
+            return ResponseEntity.ok("Transazione completata con successo. Punti fedeltà accumulati.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Errore durante l'elaborazione della transazione: " + e.getMessage());
+        }
+    }
 
-
+/* POST /api/clienti/effettuaTransazione/123/456?importoSpeso=50.0
+ richiesta di transazione per il cliente con ID 123 presso l'azienda con ID 456, con un importo speso di 50.0.
+ */
 }

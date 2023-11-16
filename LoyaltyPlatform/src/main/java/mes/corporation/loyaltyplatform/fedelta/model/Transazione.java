@@ -1,0 +1,145 @@
+package mes.corporation.loyaltyplatform.fedelta.model;
+
+import jakarta.persistence.*;
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaPunti;
+import mes.corporation.loyaltyplatform.utenti.model.Azienda;
+import mes.corporation.loyaltyplatform.utenti.model.Cliente;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+
+/**
+ * Questa classe rappresenta un'entità per la registrazione di transazioni all'interno del programma fedeltà.
+ */
+@Entity
+public class Transazione {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "azienda_id")
+    private Azienda azienda;
+
+    @ManyToOne
+    @JoinColumn(name = "programma_fedelta_id")
+    private ProgrammaFedeltaPunti programmaFedeltaPunti;
+
+    private BigDecimal importoSpeso;
+    private LocalDateTime dataTransazione;
+
+    /**
+     * Ottiene l'ID della transazione.
+     *
+     * @return L'ID della transazione.
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Imposta l'ID della transazione.
+     *
+     * @param id L'ID da impostare.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * Ottiene il cliente associato alla transazione.
+     *
+     * @return Il cliente associato alla transazione.
+     */
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    /**
+     * Imposta il cliente associato alla transazione.
+     *
+     * @param cliente Il cliente da impostare.
+     */
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    /**
+     * Ottiene l'azienda associata alla transazione.
+     *
+     * @return L'azienda associata alla transazione.
+     */
+    public Azienda getAzienda() {
+        return azienda;
+    }
+
+    /**
+     * Imposta l'azienda associata alla transazione.
+     *
+     * @param azienda L'azienda da impostare.
+     */
+    public void setAzienda(Azienda azienda) {
+        this.azienda = azienda;
+    }
+
+    /**
+     * Ottiene il programma fedeltà basato su punti associato alla transazione.
+     *
+     * @return Il programma fedeltà basato su punti associato alla transazione.
+     */
+    public ProgrammaFedeltaPunti getProgrammaFedeltaPunti() {
+        return programmaFedeltaPunti;
+    }
+
+    /**
+     * Imposta il programma fedeltà basato su punti associato alla transazione.
+     *
+     * @param programmaFedeltaPunti Il programma fedeltà basato su punti da impostare.
+     */
+    public void setProgrammaFedeltaPunti(ProgrammaFedeltaPunti programmaFedeltaPunti) {
+        this.programmaFedeltaPunti = programmaFedeltaPunti;
+    }
+
+    /**
+     * Ottiene l'importo speso nella transazione.
+     *
+     * @return L'importo speso nella transazione.
+     */
+    public BigDecimal getImportoSpeso() {
+        return importoSpeso;
+    }
+
+    /**
+     * Imposta l'importo speso nella transazione.
+     *
+     * @param importoSpeso L'importo da impostare.
+     */
+    public void setImportoSpeso(BigDecimal importoSpeso) {
+        this.importoSpeso = importoSpeso;
+    }
+
+    /**
+     * Ottiene la data della transazione.
+     *
+     * @return La data della transazione.
+     */
+    public LocalDateTime getDataTransazione() {
+        return dataTransazione;
+    }
+
+    /**
+     * Imposta la data della transazione.
+     *
+     * @param dataTransazione La data da impostare.
+     */
+    public void setDataTransazione(LocalDateTime dataTransazione) {
+        this.dataTransazione = dataTransazione;
+    }
+
+    // Altri campi e metodi necessari...
+}

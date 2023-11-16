@@ -16,7 +16,9 @@ public class SecurityConfiguration {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/clienti/registrazione", "/api/azienda/registrazione").permitAll()
+                        .requestMatchers("/api/clienti/registrazione",
+                                "/api/azienda/registrazione",
+                                "/api/clienti/effettuaTransazione/{clienteId}/{aziendaId}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

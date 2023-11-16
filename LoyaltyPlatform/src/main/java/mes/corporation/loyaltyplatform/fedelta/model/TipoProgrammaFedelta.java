@@ -1,4 +1,4 @@
-package mes.corporation.loyaltyplatform.fedelta;
+package mes.corporation.loyaltyplatform.fedelta.model;
 
 public enum TipoProgrammaFedelta {
     PUNTI,

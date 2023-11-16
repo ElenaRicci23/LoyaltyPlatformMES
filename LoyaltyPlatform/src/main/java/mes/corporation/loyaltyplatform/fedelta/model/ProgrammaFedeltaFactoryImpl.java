@@ -1,11 +1,22 @@
-package mes.corporation.loyaltyplatform.fedelta;
+package mes.corporation.loyaltyplatform.fedelta.model;
 
 import org.springframework.stereotype.Service;
 
 
+/**
+ * Questa classe è un'implementazione di {@link ProgrammaFedeltaFactory} che fornisce
+ * la creazione di diverse implementazioni di programmi fedeltà in base al tipo specificato.
+ */
 @Service
 public class ProgrammaFedeltaFactoryImpl implements ProgrammaFedeltaFactory {
 
+    /**
+     * Crea un'istanza di {@link ProgrammaFedelta} in base al tipo specificato.
+     *
+     * @param tipoProgramma Il tipo di programma fedeltà desiderato.
+     * @return Un'istanza di {@link ProgrammaFedelta} specifica per il tipo fornito.
+     * @throws IllegalArgumentException Se il tipo di programma fedeltà specificato non è supportato.
+     */
     @Override
     public ProgrammaFedelta creaProgrammaFedelta(TipoProgrammaFedelta tipoProgramma) {
         // Qui dovresti implementare la logica per creare l'implementazione corretta
