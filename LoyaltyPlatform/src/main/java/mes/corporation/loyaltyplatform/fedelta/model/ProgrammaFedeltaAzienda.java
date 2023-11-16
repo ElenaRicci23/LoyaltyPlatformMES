@@ -1,13 +1,10 @@
 package mes.corporation.loyaltyplatform.fedelta.model;
 
 import jakarta.persistence.*;
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedelta;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
 import mes.corporation.loyaltyplatform.utenti.model.Cliente;
 
 import java.math.BigDecimal;
-
-
 
 
 /**
@@ -15,7 +12,7 @@ import java.math.BigDecimal;
  * per il programma fedeltà.
  */
 @Entity
-public class ProgrammaFedeltaPunti implements ProgrammaFedelta {
+public class ProgrammaFedeltaAzienda implements ProgrammaFedelta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -109,17 +106,6 @@ public class ProgrammaFedeltaPunti implements ProgrammaFedelta {
         // Implementa la registrazione del cliente per il programma fedeltà basato su punti
     }
 
-    /**
-     * Calcola i punti fedeltà basati sull'importo speso da un cliente.
-     *
-     * @param importoSpeso L'importo speso dal cliente.
-     * @return Il numero di punti fedeltà calcolati.
-     */
-    @Override
-    public int calcolaPunti(BigDecimal importoSpeso) {
-        int punti = importoSpeso.divide(BigDecimal.valueOf(10)).intValue();
 
-        return punti;
-    }
 }
 

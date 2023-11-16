@@ -24,7 +24,7 @@ public class ProgrammaFedeltaFactoryImpl implements ProgrammaFedeltaFactory {
 
         // Esempio di implementazione:
         if (tipoProgramma == TipoProgrammaFedelta.PUNTI) {
-            return new ProgrammaFedeltaPunti();
+            return new ProgrammaFedeltaAzienda();
         } else {
             throw new IllegalArgumentException("Tipo di programma fedeltà non supportato: " + tipoProgramma);
         }

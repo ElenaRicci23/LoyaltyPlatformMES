@@ -2,8 +2,9 @@ package mes.corporation.loyaltyplatform.fedelta.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedelta;
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaAzienda;
 import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaFactory;
-import mes.corporation.loyaltyplatform.fedelta.repository.ProgrammaFedeltaPuntiRepository;
+import mes.corporation.loyaltyplatform.fedelta.repository.ProgrammaFedeltaAziendaRepository;
 import mes.corporation.loyaltyplatform.utenti.model.Cliente;
 import mes.corporation.loyaltyplatform.utenti.repo.AziendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ import java.math.BigDecimal;
 public class ProgrammaFedeltaService implements ProgrammaFedelta {
 
     @Autowired
-    private ProgrammaFedeltaPuntiRepository programmaFedeltaPuntiRepository;
+    private ProgrammaFedeltaAziendaRepository programmaFedeltaAziendaRepository;
 
     @Autowired
     private AziendaRepository aziendaRepository;
@@ -34,11 +35,14 @@ public class ProgrammaFedeltaService implements ProgrammaFedelta {
         // Implementa la logica per la registrazione del cliente nel programma fedeltà, se necessario.
     }
 
-    @Override
+
     public int calcolaPunti(BigDecimal importoSpeso) {
-        // Implementa la logica per il calcolo dei punti in base all'importo speso, se necessario.
-        return 0; // Esempio: restituisci un valore fisso di 0, ma dovresti calcolare i punti in modo reale.
+        int punti = importoSpeso.divide(BigDecimal.valueOf(10)).intValue();
+
+        return punti;
     }
+
+
 
     /**
      * Ottiene il programma fedeltà associato a un'azienda tramite l'ID dell'azienda.
@@ -48,7 +52,7 @@ public class ProgrammaFedeltaService implements ProgrammaFedelta {
      * @throws EntityNotFoundException Se il programma fedeltà non è stato trovato per l'ID azienda specificato.
      */
     public ProgrammaFedelta getProgrammaFedeltaByAziendaId(Long aziendaId) {
-        return programmaFedeltaPuntiRepository.findByAziendaId(aziendaId)
+        return programmaFedeltaAziendaRepository.findByAziendaId(aziendaId)
                 .orElseThrow(() -> new EntityNotFoundException("Programma Fedeltà non trovato per l'ID Azienda: " + aziendaId));
     }
 }

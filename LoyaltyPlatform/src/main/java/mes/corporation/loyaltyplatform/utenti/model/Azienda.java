@@ -1,7 +1,7 @@
 package mes.corporation.loyaltyplatform.utenti.model;
 
 import jakarta.persistence.*;
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaPunti;
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaAzienda;
 import mes.corporation.loyaltyplatform.fedelta.model.TipoProgrammaFedelta;
 
 
@@ -28,7 +28,7 @@ public class Azienda extends Utente {
 
     // Associazione uno-a-uno con il programma fedeltà basato su punti
     @OneToOne(mappedBy = "azienda")
-    private ProgrammaFedeltaPunti programmaFedeltaPunti;
+    private ProgrammaFedeltaAzienda programmaFedeltaAzienda;
 
     /**
      * Costruttore vuoto per l'entità Azienda.
@@ -115,5 +115,6 @@ public class Azienda extends Utente {
         this.tipoProgrammaFedelta = tipoProgrammaFedelta;
     }
 }
+
 
 

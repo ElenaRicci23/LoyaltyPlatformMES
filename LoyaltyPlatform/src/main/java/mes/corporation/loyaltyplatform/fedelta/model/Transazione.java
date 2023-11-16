@@ -1,7 +1,6 @@
 package mes.corporation.loyaltyplatform.fedelta.model;
 
 import jakarta.persistence.*;
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaPunti;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
 import mes.corporation.loyaltyplatform.utenti.model.Cliente;
 
@@ -28,7 +27,7 @@ public class Transazione {
 
     @ManyToOne
     @JoinColumn(name = "programma_fedelta_id")
-    private ProgrammaFedeltaPunti programmaFedeltaPunti;
+    private ProgrammaFedeltaAzienda programmaFedeltaAzienda;
 
     private BigDecimal importoSpeso;
     private LocalDateTime dataTransazione;
@@ -92,17 +91,12 @@ public class Transazione {
      *
      * @return Il programma fedeltà basato su punti associato alla transazione.
      */
-    public ProgrammaFedeltaPunti getProgrammaFedeltaPunti() {
-        return programmaFedeltaPunti;
+    public ProgrammaFedeltaAzienda getProgrammaFedeltaAzienda() {
+        return programmaFedeltaAzienda;
     }
 
-    /**
-     * Imposta il programma fedeltà basato su punti associato alla transazione.
-     *
-     * @param programmaFedeltaPunti Il programma fedeltà basato su punti da impostare.
-     */
-    public void setProgrammaFedeltaPunti(ProgrammaFedeltaPunti programmaFedeltaPunti) {
-        this.programmaFedeltaPunti = programmaFedeltaPunti;
+    public void setProgrammaFedeltaAzienda(ProgrammaFedeltaAzienda programmaFedeltaAzienda) {
+        this.programmaFedeltaAzienda = programmaFedeltaAzienda;
     }
 
     /**

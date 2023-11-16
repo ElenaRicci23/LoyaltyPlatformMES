@@ -17,12 +17,7 @@ public interface ProgrammaFedelta {
      */
     void registraCliente(Cliente cliente);
 
-    /**
-     * Calcola i punti fedeltà basati sull'importo speso da un cliente.
-     *
-     * @param importoSpeso L'importo speso dal cliente.
-     * @return Il numero di punti fedeltà calcolati.
-     */
-    int calcolaPunti(BigDecimal importoSpeso);
+    //scrivere premi
+
 }
 
