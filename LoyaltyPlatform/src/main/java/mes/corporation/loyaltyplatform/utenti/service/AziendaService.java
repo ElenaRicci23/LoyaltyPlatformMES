@@ -1,10 +1,14 @@
 package mes.corporation.loyaltyplatform.utenti.service;
 
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaAzienda;
+import mes.corporation.loyaltyplatform.fedelta.model.TipoProgrammaFedelta;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
 import mes.corporation.loyaltyplatform.utenti.repo.AziendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -88,6 +92,16 @@ public class AziendaService extends UtenteService<Azienda, AziendaRepository> {
      */
     public void saveAzienda(Azienda azienda) {
         aziendaRepository.save(azienda);
+    }
+
+
+    public void aggiungiProgrammaFedelta(Azienda azienda, TipoProgrammaFedelta tipoProgrammaFedelta) {
+        ProgrammaFedeltaAzienda nuovoProgrammaFedelta = new ProgrammaFedeltaAzienda();
+        azienda.setTipoProgrammaFedelta(tipoProgrammaFedelta);
+        nuovoProgrammaFedelta.setAzienda(azienda);
+
+
+        azienda.aggiungiProgrammaFedelta(nuovoProgrammaFedelta);
     }
 }
 

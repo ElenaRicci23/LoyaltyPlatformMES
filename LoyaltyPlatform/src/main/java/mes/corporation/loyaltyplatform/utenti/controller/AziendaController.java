@@ -94,7 +94,7 @@ public class AziendaController {
         if (azienda != null) {
             // Imposta il tipo di programma fedeltà
             azienda.setTipoProgrammaFedelta(tipoProgrammaFedelta);
-
+            aziendaService.aggiungiProgrammaFedelta(azienda, tipoProgrammaFedelta);
             // Salva l'azienda nel database utilizzando il servizio
             aziendaService.saveAzienda(azienda);
 

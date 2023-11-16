@@ -20,7 +20,7 @@ public class ProgrammaFedeltaAzienda implements ProgrammaFedelta {
     private String nome;
     private String descrizione;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "azienda_id")
     private Azienda azienda;
 
