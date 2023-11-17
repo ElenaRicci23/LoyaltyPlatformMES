@@ -1,6 +1,6 @@
 package mes.corporation.loyaltyplatform.fedelta.repository;
 
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaAzienda;
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltà;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Repository per la gestione del programma fedeltà punti.
  */
-public interface ProgrammaFedeltaAziendaRepository extends JpaRepository<ProgrammaFedeltaAzienda, Long> {
+public interface ProgrammaFedeltaRepository extends JpaRepository<ProgrammaFedeltà, Long> {
 
     /**
      * Trova il programma fedeltà punti associato a un'azienda tramite l'ID dell'azienda.
@@ -17,5 +17,5 @@ public interface ProgrammaFedeltaAziendaRepository extends JpaRepository<Program
      * @param aziendaId L'ID dell'azienda per cui cercare il programma fedeltà punti.
      * @return Un'istanza di Optional contenente il programma fedeltà punti se trovato, altrimenti Optional vuoto.
      */
-    Optional<ProgrammaFedeltaAzienda> findByAziendaId(Long aziendaId);
+    Optional<ProgrammaFedeltà> findByAziendaId(Long aziendaId);
 }

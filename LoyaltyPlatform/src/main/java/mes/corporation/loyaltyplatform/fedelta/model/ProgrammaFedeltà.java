@@ -1,11 +1,13 @@
 package mes.corporation.loyaltyplatform.fedelta.model;
 
 import jakarta.persistence.*;
+import mes.corporation.loyaltyplatform.utenti.model.Azienda;
 
 /**
  * Questa classe rappresenta un programma fedeltà generico.
  * Può essere estesa per creare implementazioni specifiche di programmi fedeltà.
  */
+@Entity
 public class ProgrammaFedeltà {
 
     @Id
@@ -18,8 +20,12 @@ public class ProgrammaFedeltà {
     @Enumerated(EnumType.STRING)
     private TipoProgrammaFedelta tipoProgramma;
 
+    @ManyToOne
+    @JoinColumn(name = "azienda_id")
+    private Azienda azienda;
+
     /**
-     * Costruttore per creare un'istanza di ProgrammaFedeltà.
+     * Costruttore per creare un'istanza di ProgrammaFedeltà generco.
      *
      * @param nome           Il nome del programma fedeltà.
      * @param tipoProgramma  Il tipo di programma fedeltà.
@@ -29,6 +35,20 @@ public class ProgrammaFedeltà {
         this.nome = nome;
         this.descrizione = descrizione;
         this.tipoProgramma = tipoProgramma;
+    }
+
+    /**
+     * Costruttore per creare un'istanza di ProgrammaFedeltà per aziende.
+     *
+     * @param nome           Il nome del programma fedeltà.
+     * @param tipoProgramma  Il tipo di programma fedeltà.
+     * @param descrizione         Il valore associato al programma fedeltà.
+     */
+    public ProgrammaFedeltà(String nome, String descrizione, TipoProgrammaFedelta tipoProgramma, Azienda azienda) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.tipoProgramma = tipoProgramma;
+        this.azienda = azienda;
     }
 
     public ProgrammaFedeltà() {
@@ -52,4 +72,27 @@ public class ProgrammaFedeltà {
         return tipoProgramma;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public void setTipoProgramma(TipoProgrammaFedelta tipoProgramma) {
+        this.tipoProgramma = tipoProgramma;
+    }
 }

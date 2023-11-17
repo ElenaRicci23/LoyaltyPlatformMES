@@ -1,5 +1,6 @@
 package mes.corporation.loyaltyplatform.fedelta.service;
 
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltà;
 import mes.corporation.loyaltyplatform.utenti.repo.TesseraRepository;
 import mes.corporation.loyaltyplatform.utenti.service.TesseraService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class TransazioneService {
 
         if (pagamentoConfermato) {
             // Recupera l'istanza corretta di ProgrammaFedelta basata sull'aziendaId
-            ProgrammaFedelta programmaFedelta = programmaFedeltaService.getProgrammaFedeltaByAziendaId(aziendaId);
+            ProgrammaFedeltà programmaFedelta = programmaFedeltaService.getProgrammaFedeltaByAziendaId(aziendaId);
 
             // Calcola i punti in base all'importo speso
             int punti = programmaFedeltaService.calcolaPunti(importoSpeso);

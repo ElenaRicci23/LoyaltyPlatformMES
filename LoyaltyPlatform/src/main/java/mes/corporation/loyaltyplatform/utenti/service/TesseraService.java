@@ -3,7 +3,7 @@ package mes.corporation.loyaltyplatform.utenti.service;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
 import mes.corporation.loyaltyplatform.utenti.model.Cliente;
 import mes.corporation.loyaltyplatform.utenti.model.Tessera;
-import mes.corporation.loyaltyplatform.utenti.programmaPunti.PuntiInsufficientiException;
+import mes.corporation.loyaltyplatform.programmaPunti.PuntiInsufficientiException;
 import mes.corporation.loyaltyplatform.utenti.repo.AziendaRepository;
 import mes.corporation.loyaltyplatform.utenti.repo.TesseraRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
 package mes.corporation.loyaltyplatform.utenti.model;
 
 import jakarta.persistence.*;
-import mes.corporation.loyaltyplatform.utenti.programmaPunti.PuntiInsufficientiException;
-import mes.corporation.loyaltyplatform.utenti.programmaPunti.PuntiPerAzienda;
+import mes.corporation.loyaltyplatform.programmaPunti.PuntiInsufficientiException;
+import mes.corporation.loyaltyplatform.programmaPunti.PuntiPerAzienda;
 
 import java.util.ArrayList;
 import java.util.List;

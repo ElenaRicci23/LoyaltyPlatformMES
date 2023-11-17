@@ -27,7 +27,7 @@ public class Transazione {
 
     @ManyToOne
     @JoinColumn(name = "programma_fedelta_id")
-    private ProgrammaFedeltaAzienda programmaFedeltaAzienda;
+    private ProgrammaFedeltà programmaFedeltà;
 
     private BigDecimal importoSpeso;
     private LocalDateTime dataTransazione;
@@ -91,12 +91,12 @@ public class Transazione {
      *
      * @return Il programma fedeltà basato su punti associato alla transazione.
      */
-    public ProgrammaFedeltaAzienda getProgrammaFedeltaAzienda() {
-        return programmaFedeltaAzienda;
+    public ProgrammaFedeltà getProgrammaFedelta() {
+        return programmaFedeltà;
     }
 
-    public void setProgrammaFedeltaAzienda(ProgrammaFedeltaAzienda programmaFedeltaAzienda) {
-        this.programmaFedeltaAzienda = programmaFedeltaAzienda;
+    public void setProgrammaFedeltà(ProgrammaFedeltà programmaFedelta) {
+        this.programmaFedeltà = programmaFedelta;
     }
 
     /**

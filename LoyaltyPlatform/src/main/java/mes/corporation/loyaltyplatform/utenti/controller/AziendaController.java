@@ -1,8 +1,7 @@
 package mes.corporation.loyaltyplatform.utenti.controller;
 
 import mes.corporation.loyaltyplatform.fedelta.model.TipoProgrammaFedelta;
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaAzienda;
-import mes.corporation.loyaltyplatform.fedelta.repository.ProgrammaFedeltaAziendaRepository;
+import mes.corporation.loyaltyplatform.fedelta.repository.ProgrammaFedeltaRepository;
 import mes.corporation.loyaltyplatform.utenti.DTO.AziendaDTO;
 import mes.corporation.loyaltyplatform.utenti.DTO.DatiPersonaliAziendaDTO;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
@@ -25,7 +24,7 @@ public class AziendaController {
     @Autowired
     private AziendaRepository aziendaRepository;
     @Autowired
-    private ProgrammaFedeltaAziendaRepository programmaFedeltaAziendaRepository;
+    private ProgrammaFedeltaRepository programmaFedeltàRepository;
 
     /**
      * Gestisce una richiesta POST per la registrazione di un'azienda.

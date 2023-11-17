@@ -1,4 +1,4 @@
-package mes.corporation.loyaltyplatform.utenti.programmaPunti;
+package mes.corporation.loyaltyplatform.programmaPunti;
 
 import jakarta.persistence.*;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;

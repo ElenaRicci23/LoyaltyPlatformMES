@@ -1,8 +1,7 @@
 package mes.corporation.loyaltyplatform.utenti.model;
 
 import jakarta.persistence.*;
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaAzienda;
-import mes.corporation.loyaltyplatform.fedelta.model.TipoProgrammaFedelta;
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltà;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ public class Azienda extends Utente {
 
     // Associazione uno-a-molti con i programmi fedeltà
     @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProgrammaFedeltaAzienda> programmiFedeltaAzienda = new ArrayList<>();
+    private List<ProgrammaFedeltà> programmiFedeltà = new ArrayList<>();
 
     /**
      * Costruttore vuoto per l'entità Azienda.
@@ -58,12 +57,12 @@ public class Azienda extends Utente {
         return datiPersonali;
     }
 
-    public List<ProgrammaFedeltaAzienda> getProgrammiFedeltaAzienda() {
-        return programmiFedeltaAzienda;
+    public List<ProgrammaFedeltà> getProgrammiFedeltaAzienda() {
+        return programmiFedeltà;
     }
 
-    public void setProgrammiFedeltaAzienda(List<ProgrammaFedeltaAzienda> programmiFedeltaAzienda) {
-        this.programmiFedeltaAzienda = programmiFedeltaAzienda;
+    public void setProgrammiFedeltà(List<ProgrammaFedeltà> programmiFedeltaAzienda) {
+        this.programmiFedeltà = programmiFedeltaAzienda;
     }
 
 
@@ -104,8 +103,8 @@ public class Azienda extends Utente {
         this.datiPersonali.setPartitaIva(partitaIva);
     }
 
-    public void aggiungiProgrammaFedelta(ProgrammaFedeltaAzienda programmaFedeltaAzienda) {
-        programmiFedeltaAzienda.add(programmaFedeltaAzienda);
+    public void aggiungiProgrammaFedelta(ProgrammaFedeltà programmaFedeltaAzienda) {
+        programmiFedeltà.add(programmaFedeltaAzienda);
     }
 
 

@@ -22,56 +22,70 @@
  * SOFTWARE.
  */
 
-package mes.corporation.loyaltyplatform.utenti.programmaPunti;
-
+package mes.corporation.loyaltyplatform.programmaPunti;
 
 import jakarta.persistence.*;
-import mes.corporation.loyaltyplatform.utenti.model.Azienda;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-public class CatalogoPremi {
+public class Premio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String nome;
+
+    private int puntiRichiesti;
+
     @ManyToOne
-    private Azienda azienda;
+    private ProgrammaPunti programmaPunti;
+    @ManyToOne
+    private CatalogoPremi catalogoPremi;
 
-    @OneToMany(mappedBy = "catalogoPremi", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Premio> premiDisponibili = new ArrayList<>();
 
-    // Costruttori, getter, setter e altri metodi necessari
 
-    public CatalogoPremi() {
+    public Premio() {
         // Costruttore vuoto richiesto da JPA
     }
 
-    public CatalogoPremi(Azienda azienda) {
-        this.azienda = azienda;
+    public Premio(String nome, int puntiRichiesti) {
+        this.nome = nome;
+        this.puntiRichiesti = puntiRichiesti;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Azienda getAzienda() {
-        return azienda;
+    public String getNome() {
+        return nome;
     }
 
-    public void setAzienda(Azienda azienda) {
-        this.azienda = azienda;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public List<Premio> getPremiDisponibili() {
-        return premiDisponibili;
+    public int getPuntiRichiesti() {
+        return puntiRichiesti;
     }
 
-    public void aggiungiPremio(Premio premio) {
-        premiDisponibili.add(premio);
-        premio.setCatalogoPremi(this);
+    public void setPuntiRichiesti(int puntiRichiesti) {
+        this.puntiRichiesti = puntiRichiesti;
+    }
+
+    public ProgrammaPunti getProgrammaPunti() {
+        return programmaPunti;
+    }
+
+    public void setProgrammaPunti(ProgrammaPunti programmaPunti) {
+        this.programmaPunti = programmaPunti;
+    }
+
+    public CatalogoPremi getCatalogoPremi() {
+        return catalogoPremi;
+    }
+
+    public void setCatalogoPremi(CatalogoPremi catalogoPremi) {
+        this.catalogoPremi = catalogoPremi;
     }
 }

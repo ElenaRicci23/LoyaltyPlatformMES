@@ -1,4 +1,4 @@
-package mes.corporation.loyaltyplatform.utenti.programmaPunti;
+package mes.corporation.loyaltyplatform.programmaPunti;
 
 
 public class PuntiInsufficientiException extends Exception {

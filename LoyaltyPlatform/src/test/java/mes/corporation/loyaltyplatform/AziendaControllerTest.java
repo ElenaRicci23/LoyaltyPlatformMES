@@ -6,7 +6,7 @@ import mes.corporation.loyaltyplatform.utenti.controller.AziendaController;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
 import mes.corporation.loyaltyplatform.utenti.service.AziendaService;
 import mes.corporation.loyaltyplatform.fedelta.model.TipoProgrammaFedelta;
-import mes.corporation.loyaltyplatform.fedelta.repository.ProgrammaFedeltaAziendaRepository;
+import mes.corporation.loyaltyplatform.fedelta.repository.ProgrammaFedeltaRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -25,7 +25,7 @@ class AziendaControllerTest {
     private AziendaService aziendaService;
 
     @Mock
-    private ProgrammaFedeltaAziendaRepository programmaFedeltaAziendaRepository;
+    private ProgrammaFedeltaRepository programmaFedeltaRepository;
 
     @InjectMocks
     private AziendaController aziendaController;

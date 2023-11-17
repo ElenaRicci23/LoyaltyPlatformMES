@@ -22,9 +22,10 @@
  * SOFTWARE.
  */
 
-package mes.corporation.loyaltyplatform.utenti.programmaPunti;
+package mes.corporation.loyaltyplatform.programmaPunti;
 
 import jakarta.persistence.*;
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltà;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
 import mes.corporation.loyaltyplatform.utenti.model.Tessera;
 
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class ProgrammaPunti {
+public class ProgrammaPunti extends ProgrammaFedeltà {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,20 +44,21 @@ public class ProgrammaPunti {
     @ManyToOne
     private Azienda azienda;
 
+    final double rapportoPuntiSpesa = 1;
     private int punti;
 
     @OneToMany(mappedBy = "programmaPunti", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Premio> premiDisponibili = new ArrayList<>();
 
 
-    public ProgrammaPunti() {
-        // Costruttore vuoto richiesto da JPA
-    }
-
-    public ProgrammaPunti(Tessera tessera, Azienda azienda, int punti) {
+    public ProgrammaPunti(Tessera tessera, Azienda azienda, double rapportoPuntiSpesa, int punti) {
         this.tessera = tessera;
         this.azienda = azienda;
         this.punti = punti;
+    }
+
+    public ProgrammaPunti() {
+
     }
 
     public Long getId() {
@@ -81,6 +83,27 @@ public class ProgrammaPunti {
 
     public List<Premio> getPremiDisponibili() {
         return premiDisponibili;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTessera(Tessera tessera) {
+        this.tessera = tessera;
+    }
+
+    public void setAzienda(Azienda azienda) {
+        this.azienda = azienda;
+    }
+
+    public void setPremiDisponibili(List<Premio> premiDisponibili) {
+        this.premiDisponibili = premiDisponibili;
+    }
+
+    public double getRapportoPuntiSpesa() {
+        return rapportoPuntiSpesa;
     }
 
     public void aggiungiPremio(Premio premio) {
