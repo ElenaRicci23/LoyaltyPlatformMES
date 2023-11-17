@@ -8,6 +8,8 @@ import mes.corporation.loyaltyplatform.utenti.model.Azienda;
  * Può essere estesa per creare implementazioni specifiche di programmi fedeltà.
  */
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+
 public class ProgrammaFedeltà {
 
     @Id

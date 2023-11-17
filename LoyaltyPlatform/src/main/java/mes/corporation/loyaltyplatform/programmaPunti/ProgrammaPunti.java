@@ -37,7 +37,6 @@ public class ProgrammaPunti extends ProgrammaFedeltà {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     private Tessera tessera;
 
