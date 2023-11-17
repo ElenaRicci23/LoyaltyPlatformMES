@@ -18,7 +18,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/clienti/registrazione",
                                 "/api/azienda/registrazione",
-                                "/api/clienti/effettuaTransazione/{clienteId}/{aziendaId}").permitAll()
+                                "/api/clienti/effettuaTransazione/{clienteId}/{aziendaId}",
+                                "/{aziendaId}/aggiungi-programma-fedelta").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

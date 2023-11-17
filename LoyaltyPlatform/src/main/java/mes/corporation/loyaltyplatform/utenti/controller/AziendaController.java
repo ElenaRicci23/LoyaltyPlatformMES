@@ -1,10 +1,13 @@
 package mes.corporation.loyaltyplatform.utenti.controller;
 
 import mes.corporation.loyaltyplatform.fedelta.model.TipoProgrammaFedelta;
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaAzienda;
+import mes.corporation.loyaltyplatform.fedelta.repository.ProgrammaFedeltaAziendaRepository;
 import mes.corporation.loyaltyplatform.utenti.DTO.AziendaDTO;
 import mes.corporation.loyaltyplatform.utenti.DTO.DatiPersonaliAziendaDTO;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
 import mes.corporation.loyaltyplatform.utenti.model.DatiPersonaliAzienda;
+import mes.corporation.loyaltyplatform.utenti.repo.AziendaRepository;
 import mes.corporation.loyaltyplatform.utenti.service.AziendaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +22,10 @@ import org.springframework.web.bind.annotation.*;
 public class AziendaController {
     @Autowired
     private AziendaService aziendaService;
+    @Autowired
+    private AziendaRepository aziendaRepository;
+    @Autowired
+    private ProgrammaFedeltaAziendaRepository programmaFedeltaAziendaRepository;
 
     /**
      * Gestisce una richiesta POST per la registrazione di un'azienda.
@@ -80,29 +87,29 @@ public class AziendaController {
     }
 
     /**
-     * Gestisce una richiesta POST per configurare il programma fedeltà per un'azienda.
+     * Gestisce una richiesta POST per aggiungere il programma fedeltà per un'azienda.
      *
      * @param aziendaId           L'ID dell'azienda per cui configurare il programma fedeltà.
      * @param tipoProgrammaFedelta Il tipo di programma fedeltà da configurare.
      * @return Una ResponseEntity con un messaggio di successo o di errore.
      */
-    @PostMapping("/{aziendaId}/configura-programma-fedelta")
-    public ResponseEntity<String> configuraProgrammaFedelta(@PathVariable Long aziendaId, @RequestBody TipoProgrammaFedelta tipoProgrammaFedelta) {
+    @PostMapping("/{aziendaId}/aggiungi-programma-fedelta")
+    public ResponseEntity<String> aggiungiProgrammaFedelta(@PathVariable Long aziendaId, @RequestBody String nome, String descrizione, TipoProgrammaFedelta tipoProgrammaFedelta) {
         // Ottiene l'azienda in base all'ID
         Azienda azienda = aziendaService.getAziendaById(aziendaId);
 
         if (azienda != null) {
             // Imposta il tipo di programma fedeltà
-            azienda.setTipoProgrammaFedelta(tipoProgrammaFedelta);
-            aziendaService.aggiungiProgrammaFedelta(azienda, tipoProgrammaFedelta);
+            aziendaService.aggiungiProgrammaFedelta(nome, descrizione, tipoProgrammaFedelta, azienda);
             // Salva l'azienda nel database utilizzando il servizio
             aziendaService.saveAzienda(azienda);
 
-            return ResponseEntity.ok("Programma fedeltà configurato con successo per l'azienda.");
+            return ResponseEntity.ok("Programma fedeltà aggiunto con successo all'azienda.");
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
 }
 
 

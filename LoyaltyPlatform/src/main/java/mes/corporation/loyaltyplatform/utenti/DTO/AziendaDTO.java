@@ -23,6 +23,10 @@ public class AziendaDTO {
         this.datiPersonali = datiPersonali;
     }
 
+    public AziendaDTO() {
+
+    }
+
     /**
      * Restituisce l'email dell'azienda.
      *

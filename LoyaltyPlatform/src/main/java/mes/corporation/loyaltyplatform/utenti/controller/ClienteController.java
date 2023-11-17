@@ -2,7 +2,6 @@ package mes.corporation.loyaltyplatform.utenti.controller;
 
 import jakarta.transaction.Transactional;
 import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedelta;
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaFactory;
 import mes.corporation.loyaltyplatform.fedelta.model.TipoProgrammaFedelta;
 import mes.corporation.loyaltyplatform.fedelta.service.TransazioneService;
 import mes.corporation.loyaltyplatform.utenti.DTO.ClienteDTO;
@@ -33,9 +32,6 @@ public class ClienteController {
 
     @Autowired
     private AziendaService aziendaService;
-
-    @Autowired
-    private ProgrammaFedeltaFactory programmaFedeltaFactory;
 
     @Autowired
     private TesseraService tesseraService;
@@ -84,35 +80,6 @@ public class ClienteController {
         return ResponseEntity.ok("Cliente registrato con successo.");
     }
 
-    /**
-     * Gestisce una richiesta POST per iscrivere un cliente a un programma fedeltà.
-     *
-     * @param clienteId  L'ID del cliente da iscrivere al programma fedeltà.
-     * @param aziendaId  L'ID dell'azienda che offre il programma fedeltà.
-     * @return Una ResponseEntity con un messaggio di successo o di errore.
-     */
-    @PostMapping("/iscrizioneProgrammaFedelta/{clienteId}/{aziendaId}")
-    public ResponseEntity<String> iscriviProgrammaFedelta(
-            @PathVariable Long clienteId,
-            @PathVariable Long aziendaId
-    ) {
-        Cliente cliente = clienteService.getClienteById(clienteId);
-        Azienda azienda = aziendaService.getAziendaById(aziendaId);
-
-        if (cliente != null && azienda != null) {
-            TipoProgrammaFedelta tipoProgramma = azienda.getTipoProgrammaFedelta();
-
-            // Utilizza il tipo di programma per selezionare l'implementazione corretta
-            ProgrammaFedelta programmaFedelta = programmaFedeltaFactory.creaProgrammaFedelta(tipoProgramma);
-
-            // Iscrivi il cliente al programma fedeltà
-            programmaFedelta.registraCliente(cliente);
-
-            return ResponseEntity.ok("Cliente iscritto al programma fedeltà con successo.");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
     /**
      * Gestisce una richiesta POST per effettuare una transazione e accumulare punti fedeltà.
      *

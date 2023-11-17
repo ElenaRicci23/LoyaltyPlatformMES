@@ -34,6 +34,10 @@ public class DatiPersonaliAziendaDTO {
         this.numeroStabilimenti = numeroStabilimenti;
     }
 
+    public DatiPersonaliAziendaDTO() {
+
+    }
+
     /**
      * Restituisce il nome dell'azienda.
      *

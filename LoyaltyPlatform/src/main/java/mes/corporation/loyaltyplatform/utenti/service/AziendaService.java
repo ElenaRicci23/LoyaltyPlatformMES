@@ -95,13 +95,8 @@ public class AziendaService extends UtenteService<Azienda, AziendaRepository> {
     }
 
 
-    public void aggiungiProgrammaFedelta(Azienda azienda, TipoProgrammaFedelta tipoProgrammaFedelta) {
-        ProgrammaFedeltaAzienda nuovoProgrammaFedelta = new ProgrammaFedeltaAzienda();
-        azienda.setTipoProgrammaFedelta(tipoProgrammaFedelta);
-        nuovoProgrammaFedelta.setAzienda(azienda);
-
-
-        azienda.aggiungiProgrammaFedelta(nuovoProgrammaFedelta);
+    public void aggiungiProgrammaFedelta(String nome, String descrizione, TipoProgrammaFedelta tipoProgrammaFedelta, Azienda azienda) {
+        ProgrammaFedeltaAzienda nuovoProgrammaFedeltà = new ProgrammaFedeltaAzienda(nome, descrizione, tipoProgrammaFedelta, azienda);
     }
 }
 

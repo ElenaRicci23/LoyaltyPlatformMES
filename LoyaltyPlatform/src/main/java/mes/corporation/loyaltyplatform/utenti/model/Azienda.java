@@ -24,11 +24,6 @@ public class Azienda extends Utente {
     @JoinColumn(name = "azienda_id")
     private DatiPersonaliAzienda datiPersonali;
 
-    // Tipo di programma fedeltà associato all'azienda
-    @Enumerated(EnumType.STRING)
-    private TipoProgrammaFedelta tipoProgrammaFedelta;
-
-
     // Associazione uno-a-molti con i programmi fedeltà
     @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProgrammaFedeltaAzienda> programmiFedeltaAzienda = new ArrayList<>();
@@ -107,24 +102,6 @@ public class Azienda extends Utente {
      */
     public void setPartitaIva(String partitaIva) {
         this.datiPersonali.setPartitaIva(partitaIva);
-    }
-
-    /**
-     * Restituisce il tipo di programma fedeltà associato all'azienda.
-     *
-     * @return Il tipo di programma fedeltà.
-     */
-    public TipoProgrammaFedelta getTipoProgrammaFedelta() {
-        return tipoProgrammaFedelta;
-    }
-
-    /**
-     * Imposta il tipo di programma fedeltà associato all'azienda.
-     *
-     * @param tipoProgrammaFedelta Il tipo di programma fedeltà.
-     */
-    public void setTipoProgrammaFedelta(TipoProgrammaFedelta tipoProgrammaFedelta) {
-        this.tipoProgrammaFedelta = tipoProgrammaFedelta;
     }
 
     public void aggiungiProgrammaFedelta(ProgrammaFedeltaAzienda programmaFedeltaAzienda) {

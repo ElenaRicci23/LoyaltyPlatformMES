@@ -3,7 +3,6 @@ package mes.corporation.loyaltyplatform.fedelta.service;
 import jakarta.persistence.EntityNotFoundException;
 import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedelta;
 import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaAzienda;
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaFactory;
 import mes.corporation.loyaltyplatform.fedelta.repository.ProgrammaFedeltaAziendaRepository;
 import mes.corporation.loyaltyplatform.utenti.model.Cliente;
 import mes.corporation.loyaltyplatform.utenti.repo.AziendaRepository;
@@ -26,9 +25,6 @@ public class ProgrammaFedeltaService implements ProgrammaFedelta {
 
     @Autowired
     private AziendaRepository aziendaRepository;
-
-    @Autowired
-    private ProgrammaFedeltaFactory programmaFedeltaFactory; // Assicurati che il servizio di factory sia iniettato correttamente
 
     @Override
     public void registraCliente(Cliente cliente) {

@@ -20,9 +20,20 @@ public class ProgrammaFedeltaAzienda implements ProgrammaFedelta {
     private String nome;
     private String descrizione;
 
+    // Tipo di programma fedeltà associato all'azienda
+    @Enumerated(EnumType.STRING)
+    private TipoProgrammaFedelta tipoProgrammaFedelta;
+
     @ManyToOne
     @JoinColumn(name = "azienda_id")
     private Azienda azienda;
+
+    public ProgrammaFedeltaAzienda(String nome, String descrizione, TipoProgrammaFedelta tipoProgrammaFedelta, Azienda azienda) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.tipoProgrammaFedelta = tipoProgrammaFedelta;
+        this.azienda = azienda;
+    }
 
     /**
      * Ottiene l'ID dell'implementazione del programma fedeltà.
@@ -104,6 +115,25 @@ public class ProgrammaFedeltaAzienda implements ProgrammaFedelta {
     @Override
     public void registraCliente(Cliente cliente) {
         // Implementa la registrazione del cliente per il programma fedeltà basato su punti
+    }
+
+
+    /**
+     * Restituisce il tipo di programma fedeltà associato all'azienda.
+     *
+     * @return Il tipo di programma fedeltà.
+     */
+    public TipoProgrammaFedelta getTipoProgrammaFedelta() {
+        return tipoProgrammaFedelta;
+    }
+
+    /**
+     * Imposta il tipo di programma fedeltà associato all'azienda.
+     *
+     * @param tipoProgrammaFedelta Il tipo di programma fedeltà.
+     */
+    public void setTipoProgrammaFedelta(TipoProgrammaFedelta tipoProgrammaFedelta) {
+        this.tipoProgrammaFedelta = tipoProgrammaFedelta;
     }
 
 
