@@ -22,7 +22,7 @@ public class Azienda extends Utente {
     // Associazione uno-a-uno con dati personali dell'azienda
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "azienda_id")
-    private DatiPersonaliAzienda datiPersonali;
+    private DatiPersonaliAzienda datiPersonali = new DatiPersonaliAzienda();
 
     // Associazione uno-a-molti con i programmi fedeltà
     @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL, orphanRemoval = true)

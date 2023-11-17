@@ -1,12 +1,9 @@
 package mes.corporation.loyaltyplatform.utenti.controller;
 
 import jakarta.transaction.Transactional;
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedelta;
-import mes.corporation.loyaltyplatform.fedelta.model.TipoProgrammaFedelta;
 import mes.corporation.loyaltyplatform.fedelta.service.TransazioneService;
 import mes.corporation.loyaltyplatform.utenti.DTO.ClienteDTO;
 import mes.corporation.loyaltyplatform.utenti.DTO.DatiPersonaliClienteDTO;
-import mes.corporation.loyaltyplatform.utenti.model.Azienda;
 import mes.corporation.loyaltyplatform.utenti.model.Cliente;
 import mes.corporation.loyaltyplatform.utenti.model.DatiPersonaliCliente;
 import mes.corporation.loyaltyplatform.utenti.service.AziendaService;

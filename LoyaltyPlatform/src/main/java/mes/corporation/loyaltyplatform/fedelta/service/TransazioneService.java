@@ -1,6 +1,5 @@
 package mes.corporation.loyaltyplatform.fedelta.service;
 
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedelta;
 import mes.corporation.loyaltyplatform.utenti.repo.TesseraRepository;
 import mes.corporation.loyaltyplatform.utenti.service.TesseraService;
 import org.springframework.beans.factory.annotation.Autowired;

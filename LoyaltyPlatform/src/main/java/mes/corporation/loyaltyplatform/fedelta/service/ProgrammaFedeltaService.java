@@ -1,8 +1,6 @@
 package mes.corporation.loyaltyplatform.fedelta.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedelta;
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltaAzienda;
 import mes.corporation.loyaltyplatform.fedelta.repository.ProgrammaFedeltaAziendaRepository;
 import mes.corporation.loyaltyplatform.utenti.model.Cliente;
 import mes.corporation.loyaltyplatform.utenti.repo.AziendaRepository;

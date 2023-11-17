@@ -8,11 +8,11 @@ import java.math.BigDecimal;
 
 
 /**
- * Questa classe rappresenta un'implementazione di {@link ProgrammaFedelta} basata su punti
+ * Questa classe rappresenta un'implementazione di ProgrammaFedeltà basata su punti
  * per il programma fedeltà.
  */
 @Entity
-public class ProgrammaFedeltaAzienda implements ProgrammaFedelta {
+public class ProgrammaFedeltaAzienda extends ProgrammaFedeltà {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,10 +29,12 @@ public class ProgrammaFedeltaAzienda implements ProgrammaFedelta {
     private Azienda azienda;
 
     public ProgrammaFedeltaAzienda(String nome, String descrizione, TipoProgrammaFedelta tipoProgrammaFedelta, Azienda azienda) {
-        this.nome = nome;
-        this.descrizione = descrizione;
-        this.tipoProgrammaFedelta = tipoProgrammaFedelta;
+        super(nome, descrizione, tipoProgrammaFedelta);
         this.azienda = azienda;
+    }
+
+    public ProgrammaFedeltaAzienda() {
+        super();
     }
 
     /**
@@ -112,7 +114,6 @@ public class ProgrammaFedeltaAzienda implements ProgrammaFedelta {
      *
      * @param cliente Il cliente da registrare.
      */
-    @Override
     public void registraCliente(Cliente cliente) {
         // Implementa la registrazione del cliente per il programma fedeltà basato su punti
     }
