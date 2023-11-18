@@ -97,4 +97,12 @@ public class ProgrammaFedeltà {
     public void setTipoProgramma(TipoProgrammaFedelta tipoProgramma) {
         this.tipoProgramma = tipoProgramma;
     }
+
+    public Azienda getAzienda() {
+        return azienda;
+    }
+
+    public void setAzienda(Azienda azienda) {
+        this.azienda = azienda;
+    }
 }

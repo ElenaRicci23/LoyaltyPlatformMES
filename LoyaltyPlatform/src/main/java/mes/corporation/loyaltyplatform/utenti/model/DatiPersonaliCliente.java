@@ -21,7 +21,7 @@ public class DatiPersonaliCliente {
     private String cellulare;
 
     @OneToOne(mappedBy = "datiPersonali")
-    @MapsId
+    @JoinColumn
     private Cliente cliente;
 
 

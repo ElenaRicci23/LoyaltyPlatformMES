@@ -1,11 +1,6 @@
 package mes.corporation.loyaltyplatform.utenti.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,8 +31,9 @@ public class DatiPersonaliAzienda {
      * Azienda associata a questi dati personali.
      */
     @OneToOne(mappedBy = "datiPersonali")
-    @MapsId
+    @JoinColumn(name = "azienda_id")
     private Azienda azienda;
+
 
     /**
      * Costruttore vuoto per l'entità DatiPersonaliAzienda.

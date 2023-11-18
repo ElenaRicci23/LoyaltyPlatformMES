@@ -103,9 +103,11 @@ public class Azienda extends Utente {
         this.datiPersonali.setPartitaIva(partitaIva);
     }
 
-    public void aggiungiProgrammaFedelta(ProgrammaFedeltà programmaFedeltaAzienda) {
-        programmiFedeltà.add(programmaFedeltaAzienda);
+    public void aggiungiProgrammaFedelta(ProgrammaFedeltà programmaFedeltà) {
+        programmiFedeltà.add(programmaFedeltà);
+        programmaFedeltà.setAzienda(this);
     }
+
 
 
 }

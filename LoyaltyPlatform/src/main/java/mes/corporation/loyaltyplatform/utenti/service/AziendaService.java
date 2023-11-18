@@ -93,9 +93,18 @@ public class AziendaService extends UtenteService<Azienda, AziendaRepository> {
     }
 
 
-    public void aggiungiProgrammaFedelta(String nome, String descrizione, TipoProgrammaFedelta tipoProgrammaFedelta, Azienda azienda) {
-        ProgrammaFedeltà nuovoProgrammaFedeltà = new ProgrammaFedeltà(nome, descrizione, tipoProgrammaFedelta, azienda);
+//    public void aggiungiProgrammaFedelta(String nome, String descrizione, TipoProgrammaFedelta tipoProgrammaFedelta, Azienda azienda) {
+//        ProgrammaFedeltà nuovoProgrammaFedeltà = new ProgrammaFedeltà(nome, descrizione, tipoProgrammaFedelta, azienda);
+//        azienda.aggiungiProgrammaFedelta(nuovoProgrammaFedeltà); // Aggiungi il programma fedeltà all'azienda
+//        saveAzienda(azienda); // Salva l'azienda con il nuovo programma fedeltà nel repository
+//    }
+    public void aggiungiProgrammaFedelta(ProgrammaFedeltà programmaFedeltà) {
+        Azienda azienda = programmaFedeltà.getAzienda(); // Assumendo che l'associazione bidirezionale sia già impostata correttamente
+        azienda.aggiungiProgrammaFedelta(programmaFedeltà);
+        saveAzienda(azienda);
     }
+
+
 }
 
 

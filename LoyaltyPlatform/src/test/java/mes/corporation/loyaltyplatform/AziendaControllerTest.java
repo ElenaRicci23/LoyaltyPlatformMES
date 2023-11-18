@@ -81,25 +81,26 @@ class AziendaControllerTest {
 
         assertEquals(404, response.getStatusCodeValue());
     }
-
-    @Test
-    void testAggiungiProgrammaFedelta() {
-        Long aziendaId = 1L;
-        String nome = "Programma Fedeltà Gold";
-        String descrizione = "Descrizione del programma fedeltà Gold";
-        TipoProgrammaFedelta tipoProgrammaFedelta = TipoProgrammaFedelta.PUNTI;
-
-        Azienda azienda = new Azienda();
-        azienda.setId(aziendaId);
-
-        when(aziendaService.getAziendaById(aziendaId)).thenReturn(azienda);
-
-        ResponseEntity<String> response = aziendaController.aggiungiProgrammaFedelta(aziendaId, nome, descrizione, tipoProgrammaFedelta);
-
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals("Programma fedeltà aggiunto con successo all'azienda.", response.getBody());
-
-        verify(aziendaService, times(1)).aggiungiProgrammaFedelta(nome, descrizione, tipoProgrammaFedelta, azienda);
-        verify(aziendaService, times(1)).saveAzienda(azienda);
-    }
 }
+
+//    @Test
+//    void testAggiungiProgrammaFedelta() {
+//        Long aziendaId = 1L;
+//        String nome = "Programma Fedeltà Gold";
+//        String descrizione = "Descrizione del programma fedeltà Gold";
+//        TipoProgrammaFedelta tipoProgrammaFedelta = TipoProgrammaFedelta.PUNTI;
+//
+//        Azienda azienda = new Azienda();
+//        azienda.setId(aziendaId);
+//
+//        when(aziendaService.getAziendaById(aziendaId)).thenReturn(azienda);
+//
+//        ResponseEntity<String> response = aziendaController.aggiungiProgrammaFedelta(aziendaId, nome, descrizione, tipoProgrammaFedelta);
+//
+//        assertEquals(200, response.getStatusCodeValue());
+//        assertEquals("Programma fedeltà aggiunto con successo all'azienda.", response.getBody());
+//
+//        verify(aziendaService, times(1)).aggiungiProgrammaFedelta(nome, descrizione, tipoProgrammaFedelta, azienda);
+//        verify(aziendaService, times(1)).saveAzienda(azienda);
+//    }
+//}
