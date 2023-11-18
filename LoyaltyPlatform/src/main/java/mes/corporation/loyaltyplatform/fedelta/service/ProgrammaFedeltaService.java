@@ -1,7 +1,7 @@
 package mes.corporation.loyaltyplatform.fedelta.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltà;
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedelta;
 import mes.corporation.loyaltyplatform.fedelta.repository.ProgrammaFedeltaRepository;
 import mes.corporation.loyaltyplatform.utenti.model.Cliente;
 import mes.corporation.loyaltyplatform.utenti.repo.AziendaRepository;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 /**
- * Questa classe rappresenta un servizio per la gestione dei programmi fedeltà.
+ * Questa classe rappresenta un servizio per la gestione dei programmi Fedelta.
  * Tuttavia, al momento, non ha implementazioni specifiche.
  */
 @Service
@@ -24,7 +24,7 @@ public class ProgrammaFedeltaService {
     private AziendaRepository aziendaRepository;
 
     public void registraCliente(Cliente cliente) {
-        // Implementa la logica per la registrazione del cliente nel programma fedeltà, se necessario.
+        // Implementa la logica per la registrazione del cliente nel programma Fedelta, se necessario.
     }
 
 
@@ -37,14 +37,14 @@ public class ProgrammaFedeltaService {
 
 
     /**
-     * Ottiene il programma fedeltà associato a un'azienda tramite l'ID dell'azienda.
+     * Ottiene il programma Fedelta associato a un'azienda tramite l'ID dell'azienda.
      *
-     * @param aziendaId L'ID dell'azienda per cui ottenere il programma fedeltà.
-     * @return Il programma fedeltà associato all'azienda, se presente.
-     * @throws EntityNotFoundException Se il programma fedeltà non è stato trovato per l'ID azienda specificato.
+     * @param aziendaId L'ID dell'azienda per cui ottenere il programma Fedelta.
+     * @return Il programma Fedelta associato all'azienda, se presente.
+     * @throws EntityNotFoundException Se il programma Fedelta non è stato trovato per l'ID azienda specificato.
      */
-    public ProgrammaFedeltà getProgrammaFedeltaByAziendaId(Long aziendaId) {
+    public ProgrammaFedelta getProgrammaFedeltaByAziendaId(Long aziendaId) {
         return programmaFedeltaRepository.findByAziendaId(aziendaId)
-                .orElseThrow(() -> new EntityNotFoundException("Programma Fedeltà non trovato per l'ID Azienda: " + aziendaId));
+                .orElseThrow(() -> new EntityNotFoundException("Programma Fedelta non trovato per l'ID Azienda: " + aziendaId));
     }
 }

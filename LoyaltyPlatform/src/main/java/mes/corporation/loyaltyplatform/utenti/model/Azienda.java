@@ -1,7 +1,9 @@
 package mes.corporation.loyaltyplatform.utenti.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltà;
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedelta;
+import mes.corporation.loyaltyplatform.fedelta.model.TipoProgrammaFedelta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
 /**
  * Questa classe rappresenta un'azienda all'interno del sistema.
  * Estende la classe Utente e include informazioni specifiche dell'azienda,
- * tra cui dati personali, tipo di programma fedeltà e riferimento al programma fedeltà basato su punti.
+ * tra cui dati personali, tipo di programma Fedelta e riferimento al programma Fedelta basato su punti.
  */
 @Entity
 public class Azienda extends Utente {
@@ -23,9 +25,10 @@ public class Azienda extends Utente {
     @JoinColumn(name = "azienda_id")
     private DatiPersonaliAzienda datiPersonali = new DatiPersonaliAzienda();
 
-    // Associazione uno-a-molti con i programmi fedeltà
+    // Associazione uno-a-molti con i programmi Fedelta
     @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProgrammaFedeltà> programmiFedeltà = new ArrayList<>();
+    @JsonManagedReference
+    private List<ProgrammaFedelta> programmiFedelta = new ArrayList<>();
 
     /**
      * Costruttore vuoto per l'entità Azienda.
@@ -57,14 +60,13 @@ public class Azienda extends Utente {
         return datiPersonali;
     }
 
-    public List<ProgrammaFedeltà> getProgrammiFedeltaAzienda() {
-        return programmiFedeltà;
+    public List<ProgrammaFedelta> getProgrammiFedelta() {
+        return programmiFedelta;
     }
 
-    public void setProgrammiFedeltà(List<ProgrammaFedeltà> programmiFedeltaAzienda) {
-        this.programmiFedeltà = programmiFedeltaAzienda;
+    public void setProgrammiFedelta(List<ProgrammaFedelta> programmiFedelta) {
+        this.programmiFedelta = programmiFedelta;
     }
-
 
     /**
      * Imposta i dati personali dell'azienda e imposta il collegamento bidirezionale.
@@ -103,12 +105,16 @@ public class Azienda extends Utente {
         this.datiPersonali.setPartitaIva(partitaIva);
     }
 
-    public void aggiungiProgrammaFedelta(ProgrammaFedeltà programmaFedeltà) {
-        programmiFedeltà.add(programmaFedeltà);
-        programmaFedeltà.setAzienda(this);
+    public ProgrammaFedelta creaProgrammaFedelta(String nome, String descrizione, TipoProgrammaFedelta tipoProgramma) {
+        ProgrammaFedelta nuovoProgrammaFedelta = new ProgrammaFedelta(nome, descrizione, tipoProgramma, this);
+        aggiungiProgrammaFedelta(nuovoProgrammaFedelta);
+        return nuovoProgrammaFedelta;
     }
 
-
+    public void aggiungiProgrammaFedelta(ProgrammaFedelta programmaFedelta) {
+        programmiFedelta.add(programmaFedelta);
+        programmaFedelta.setAzienda(this);
+    }
 
 }
 

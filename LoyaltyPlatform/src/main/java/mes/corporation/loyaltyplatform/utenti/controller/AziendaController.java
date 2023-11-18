@@ -1,9 +1,11 @@
 package mes.corporation.loyaltyplatform.utenti.controller;
 
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltà;
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedelta;
+import mes.corporation.loyaltyplatform.fedelta.model.TipoProgrammaFedelta;
 import mes.corporation.loyaltyplatform.fedelta.repository.ProgrammaFedeltaRepository;
 import mes.corporation.loyaltyplatform.utenti.DTO.AziendaDTO;
 import mes.corporation.loyaltyplatform.utenti.DTO.DatiPersonaliAziendaDTO;
+import mes.corporation.loyaltyplatform.utenti.DTO.ProgrammaFedeltaDTO;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
 import mes.corporation.loyaltyplatform.utenti.model.DatiPersonaliAzienda;
 import mes.corporation.loyaltyplatform.utenti.repo.AziendaRepository;
@@ -11,6 +13,10 @@ import mes.corporation.loyaltyplatform.utenti.service.AziendaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -24,7 +30,7 @@ public class AziendaController {
     @Autowired
     private AziendaRepository aziendaRepository;
     @Autowired
-    private ProgrammaFedeltaRepository programmaFedeltàRepository;
+    private ProgrammaFedeltaRepository programmaFedeltaRepository;
 
     /**
      * Gestisce una richiesta POST per la registrazione di un'azienda.
@@ -85,28 +91,92 @@ public class AziendaController {
         }
     }
 
-    /**
-     * Gestisce una richiesta POST per aggiungere il programma fedeltà per un'azienda.
-     *
-     * @param aziendaId           L'ID dell'azienda per cui configurare il programma fedeltà.
-     * @param tipoProgrammaFedelta Il tipo di programma fedeltà da configurare.
-     * @return Una ResponseEntity con un messaggio di successo o di errore.
-     */
-    @PostMapping("/{aziendaId}/aggiungi-programma-fedelta")
-    public ResponseEntity<String> aggiungiProgrammaFedelta (@PathVariable Long aziendaId,
-    @RequestBody ProgrammaFedeltà programmaFedeltà) {
 
+    @PostMapping("/{aziendaId}/aggiungiPF")
+    public ResponseEntity<String> aggiungiProgrammaFedelta(@PathVariable Long aziendaId, @RequestBody ProgrammaFedeltaDTO programmaFedeltaDTO) {
         Azienda azienda = aziendaService.getAziendaById(aziendaId);
 
-        if (azienda != null) {
-            programmaFedeltà.setAzienda(azienda);
-            aziendaService.aggiungiProgrammaFedelta(programmaFedeltà);
-
-            return ResponseEntity.ok("Programma fedeltà aggiunto con successo all'azienda.");
-        } else {
+        if (azienda == null) {
             return ResponseEntity.notFound().build();
         }
+
+        TipoProgrammaFedelta tipoProgrammaFedelta = convertStringToTipoProgramma(programmaFedeltaDTO.getTipoProgramma());
+        if (tipoProgrammaFedelta == null) {
+            return ResponseEntity.badRequest().body("Tipo di programma non valido.");
+        }
+
+        ProgrammaFedelta programmaFedelta = aziendaService.creaProgrammaFedelta(aziendaId, programmaFedeltaDTO.getNome(),
+                programmaFedeltaDTO.getDescrizione(), tipoProgrammaFedelta);
+
+        if (programmaFedelta == null) {
+            return ResponseEntity.badRequest().body("Impossibile creare il programma Fedeltà.");
+        }
+
+        programmaFedeltaRepository.save(programmaFedelta);
+        return ResponseEntity.ok("Programma Fedeltà aggiunto con successo all'azienda.");
     }
+
+    // Metodo di conversione da stringa a TipoProgrammaFedelta
+    private TipoProgrammaFedelta convertStringToTipoProgramma(String tipoProgrammaString) {
+        try {
+            return TipoProgrammaFedelta.valueOf(tipoProgrammaString);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+
+
+
+//    {
+//        "nome": "Programma Punti",
+//            "descrizione": "Programma fedeltà basato su punti",
+//            "tipoProgramma": "PUNTI"
+//    }
+
+
+    /**
+     * Ottiene la lista dei programmi fedeltà associati a un'azienda.
+     *
+     * @param aziendaId L'ID dell'azienda di cui si desidera ottenere i programmi fedeltà.
+     * @return Una ResponseEntity contenente la lista dei programmi fedeltà o una risposta di errore se non trovata.
+     */
+
+
+    @GetMapping("/{aziendaId}/programmiAzienda")
+    public ResponseEntity<List<ProgrammaFedeltaDTO>> getProgrammiFedeltaByAziendaId(@PathVariable Long aziendaId) {
+        Azienda azienda = aziendaService.getAziendaById(aziendaId);
+
+        if (azienda == null) {
+            // Usa build() al posto di body() per ResponseEntity.notFound() e noContent()
+            return ResponseEntity.notFound().build();
+        }
+
+        List<ProgrammaFedelta> programmiFedelta = azienda.getProgrammiFedelta();
+        if (programmiFedelta.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        List<ProgrammaFedeltaDTO> programmiFedeltaDTOList = programmiFedelta.stream()
+                .map(this::convertToProgrammaFedeltaDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(programmiFedeltaDTOList);
+    }
+    private ProgrammaFedeltaDTO convertToProgrammaFedeltaDTO(ProgrammaFedelta programmaFedelta) {
+        ProgrammaFedeltaDTO dto = new ProgrammaFedeltaDTO();
+        dto.setId(programmaFedelta.getId());
+        dto.setNome(programmaFedelta.getNome());
+        dto.setDescrizione(programmaFedelta.getDescrizione());
+        dto.setTipoProgramma(programmaFedelta.getTipoProgramma().name());
+        return dto;
+    }
+
+
+
+
+
+
+
 }
 
 //{

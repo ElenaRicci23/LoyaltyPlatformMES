@@ -7,7 +7,7 @@ import mes.corporation.loyaltyplatform.utenti.model.Tessera;
 
 /**
  * Questa classe rappresenta l'entità per la gestione dei punti accumulati da una tessera di un cliente
- * in relazione a un'azienda specifica all'interno del programma fedeltà.
+ * in relazione a un'azienda specifica all'interno del programma Fedelta.
  */
 @Entity
 public class PuntiPerAzienda {

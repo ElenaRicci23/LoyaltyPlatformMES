@@ -21,7 +21,7 @@ public class Cliente extends Utente {
     private DatiPersonaliCliente datiPersonali;
 
     /**
-     * Tessera associata al cliente per il programma fedeltà.
+     * Tessera associata al cliente per il programma Fedelta.
      */
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "proprietario")
     private Tessera tessera;
@@ -67,7 +67,7 @@ public class Cliente extends Utente {
     }
 
     /**
-     * Restituisce la tessera associata al cliente per il programma fedeltà.
+     * Restituisce la tessera associata al cliente per il programma Fedelta.
      *
      * @return La tessera del cliente.
      */
@@ -76,7 +76,7 @@ public class Cliente extends Utente {
     }
 
     /**
-     * Imposta la tessera associata al cliente per il programma fedeltà.
+     * Imposta la tessera associata al cliente per il programma Fedelta.
      *
      * @param tessera La tessera del cliente.
      */

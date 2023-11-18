@@ -78,7 +78,7 @@ public class ClienteController {
     }
 
     /**
-     * Gestisce una richiesta POST per effettuare una transazione e accumulare punti fedeltà.
+     * Gestisce una richiesta POST per effettuare una transazione e accumulare punti Fedelta.
      *
      * @param clienteId     L'ID del cliente che effettua la transazione.
      * @param aziendaId     L'ID dell'azienda presso cui viene effettuata la transazione.
@@ -96,7 +96,7 @@ public class ClienteController {
             // Esegui la transazione utilizzando il servizio TransazioneService
             transazioneService.processaTransazione(importoSpeso, clienteId, aziendaId);
 
-            return ResponseEntity.ok("Transazione completata con successo. Punti fedeltà accumulati.");
+            return ResponseEntity.ok("Transazione completata con successo. Punti Fedelta accumulati.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Errore durante l'elaborazione della transazione: " + e.getMessage());
         }

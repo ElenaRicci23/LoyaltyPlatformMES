@@ -16,10 +16,13 @@ public class SecurityConfiguration {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/clienti/registrazione",
+                        .requestMatchers(
+                                "/api/clienti/registrazione",
                                 "/api/azienda/registrazione",
                                 "/api/clienti/effettuaTransazione/{clienteId}/{aziendaId}",
-                                "/{aziendaId}/aggiungi-programma-fedelta").permitAll()
+                                "/{aziendaId}/aggiungiPF",
+                                "/{aziendaId}/programmiAzienda"
+                                ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

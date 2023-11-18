@@ -25,7 +25,7 @@
 package mes.corporation.loyaltyplatform.programmaPunti;
 
 import jakarta.persistence.*;
-import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedeltà;
+import mes.corporation.loyaltyplatform.fedelta.model.ProgrammaFedelta;
 import mes.corporation.loyaltyplatform.utenti.model.Azienda;
 import mes.corporation.loyaltyplatform.utenti.model.Tessera;
 
@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class ProgrammaPunti extends ProgrammaFedeltà {
+public class ProgrammaPunti extends ProgrammaFedelta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

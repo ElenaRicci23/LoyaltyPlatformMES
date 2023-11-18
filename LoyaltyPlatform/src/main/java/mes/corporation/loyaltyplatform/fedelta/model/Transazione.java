@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 
 /**
- * Questa classe rappresenta un'entità per la registrazione di transazioni all'interno del programma fedeltà.
+ * Questa classe rappresenta un'entità per la registrazione di transazioni all'interno del programma Fedelta.
  */
 @Entity
 public class Transazione {
@@ -27,7 +27,7 @@ public class Transazione {
 
     @ManyToOne
     @JoinColumn(name = "programma_fedelta_id")
-    private ProgrammaFedeltà programmaFedeltà;
+    private ProgrammaFedelta programmaFedelta;
 
     private BigDecimal importoSpeso;
     private LocalDateTime dataTransazione;
@@ -87,16 +87,16 @@ public class Transazione {
     }
 
     /**
-     * Ottiene il programma fedeltà basato su punti associato alla transazione.
+     * Ottiene il programma Fedelta basato su punti associato alla transazione.
      *
-     * @return Il programma fedeltà basato su punti associato alla transazione.
+     * @return Il programma Fedelta basato su punti associato alla transazione.
      */
-    public ProgrammaFedeltà getProgrammaFedelta() {
-        return programmaFedeltà;
+    public ProgrammaFedelta getProgrammaFedelta() {
+        return programmaFedelta;
     }
 
-    public void setProgrammaFedeltà(ProgrammaFedeltà programmaFedelta) {
-        this.programmaFedeltà = programmaFedelta;
+    public void setProgrammaFedelta(ProgrammaFedelta programmaFedelta) {
+        this.programmaFedelta = programmaFedelta;
     }
 
     /**
