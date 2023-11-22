@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProgrammaFedeltaRepository extends JpaRepository<ProgrammaFedelta, Long> {
-    // Eventuali query personalizzate possono essere definite qui, se necessario.
+
+    ProgrammaFedelta findByNome(String nome);
 }

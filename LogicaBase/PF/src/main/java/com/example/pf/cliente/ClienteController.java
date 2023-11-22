@@ -2,7 +2,8 @@ package com.example.pf.cliente;
 
 
 import com.example.pf.DTO.ClienteDTO;
-import com.example.pf.DTO.ClienteTesseraDTO;
+import com.example.pf.DTO.ProgrammaFedeltaDTO;
+import com.example.pf.model.GestoreProgrammaFedelta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,20 +11,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.example.pf.DTO.ClienteDTO.convertClienteToDTO;
-import static com.example.pf.DTO.ClienteDTO.convertClienteToEntity;
-
 
 @RestController
 @RequestMapping("/api/clienti")
 public class ClienteController {
     private final ClienteService clienteService;
-    private final TesseraService tesseraService;
+    private final GestoreProgrammaFedelta gestoreProgrammaFedelta;
+
+    private final ClienteRepository clienteRepository;
+
 
     @Autowired
-    public ClienteController(ClienteService clienteService, TesseraService tesseraService) {
+    public ClienteController(ClienteService clienteService, TesseraService tesseraService, GestoreProgrammaFedelta gestoreProgrammaFedelta, ClienteRepository clienteRepository) {
         this.clienteService = clienteService;
-        this.tesseraService = tesseraService;
+        this.gestoreProgrammaFedelta = gestoreProgrammaFedelta;
+        this.clienteRepository = clienteRepository;
     }
 
     @GetMapping("/")
@@ -31,12 +33,6 @@ public class ClienteController {
         List<Cliente> clienti = clienteService.getAllClienti();
         return new ResponseEntity<>(clienti, HttpStatus.OK);
     }
-//    @GetMapping("/clienti-tessere")
-//    public ResponseEntity<List<ClienteTesseraDTO>> getClientiETessere() {
-//        List<ClienteTesseraDTO> clientiETessere = clienteService.getClientiETessere();
-//        return new ResponseEntity<>(clientiETessere, HttpStatus.OK);
-//    }
-
 
 
     @GetMapping("/{id}")
@@ -66,6 +62,29 @@ public class ClienteController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PostMapping("/{clienteId}/iscrivi-programma-fedelta")
+    public ResponseEntity<?> iscriviClienteAProgrammaFedelta(
+            @PathVariable Long clienteId,
+            @RequestBody ProgrammaFedeltaDTO programmaFedeltaDTO) {
+
+        // Trova il cliente
+        Cliente cliente = clienteRepository.findById(clienteId).orElse(null);
+
+        if (cliente == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Chiamare il servizio di GestoreProgrammaFedelta per iscrivere il cliente al programma fedeltà
+        boolean iscrizioneRiuscita = gestoreProgrammaFedelta.iscriviClienteAProgrammaFedelta(cliente, programmaFedeltaDTO);
+
+        if (iscrizioneRiuscita) {
+            return ResponseEntity.ok("Iscrizione avvenuta con successo");
+        } else {
+            return ResponseEntity.badRequest().body("Impossibile iscriversi a questo programma fedeltà");
+        }
+    }
+
+
 
 
 

@@ -1,7 +1,10 @@
 package com.example.pf.cliente;
 
+import com.example.pf.model.ProgrammaFedelta;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -18,20 +21,41 @@ public class Tessera {
     @JoinColumn(name = "cliente_id") // Questo è importante per la relazione
     private Cliente cliente;
 
-    public Cliente getCliente() {
-        return cliente;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tessera_programma_fedelta",
+            joinColumns = @JoinColumn(name = "tessera_id"),
+            inverseJoinColumns = @JoinColumn(name = "programma_fedelta_id")
+    )
+    private Set<ProgrammaFedelta> programmiFedelta = new HashSet<>();
+
+
+
+    public void addProgrammaFedelta(ProgrammaFedelta programmaFedelta) {
+        programmiFedelta.add(programmaFedelta);
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void removeProgrammaFedelta(ProgrammaFedelta programmaFedelta) {
+        programmiFedelta.remove(programmaFedelta);
     }
+
+
+
+    public Tessera() {
+
+    }
+
+
+    public Cliente getCliente() { return cliente; }
+
+    public void setCliente(Cliente cliente) {this.cliente = cliente; }
 
     public Tessera(Cliente cliente) {  }
 
     public Long getId() { return id;  }
-
-
     public void setId(Long id) {  this.id = id; }
+
 
 
 }

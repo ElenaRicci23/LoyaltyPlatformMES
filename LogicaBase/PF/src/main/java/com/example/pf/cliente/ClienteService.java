@@ -2,7 +2,6 @@ package com.example.pf.cliente;
 
 
 import com.example.pf.DTO.ClienteDTO;
-import com.example.pf.DTO.ClienteTesseraDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
