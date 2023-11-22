@@ -8,7 +8,7 @@ import jakarta.persistence.Entity;
 @Entity
 public class ProgrammaPunti extends ProgrammaFedelta implements IProgrammaPunti {
     private int puntiTotali;  // Variabile per tenere traccia dei punti accumulati
-//Non va bene da fare per il cliente
+     //Non va bene da fare per il cliente
     // Costruttore
     public ProgrammaPunti(String nome, String descrizione) {
         // Imposta i campi necessari e chiama il costruttore della superclasse

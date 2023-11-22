@@ -51,10 +51,10 @@ public class AziendaController {
     }
 
     @PostMapping("/{aziendaId}/programmi_fedelta")
-    public ResponseEntity<Azienda> addProgrammaFedelta(@PathVariable Long aziendaId, @RequestBody ProgrammaFedeltaDTO programmaFedeltaDto) {
+    public ResponseEntity<ProgrammaFedeltaDTO> addProgrammaFedelta(@PathVariable Long aziendaId, @RequestBody ProgrammaFedeltaDTO programmaFedeltaDto) {
         Azienda updatedAzienda = aziendaService.addProgrammaFedelta(aziendaId, programmaFedeltaDto.getNome(), programmaFedeltaDto.getTipoProgrammaFedelta(), programmaFedeltaDto.getDescrizione());
         if (updatedAzienda != null) {
-            return ResponseEntity.ok(updatedAzienda);
+            return ResponseEntity.ok(programmaFedeltaDto);
         } else {
             return ResponseEntity.notFound().build();
         }
