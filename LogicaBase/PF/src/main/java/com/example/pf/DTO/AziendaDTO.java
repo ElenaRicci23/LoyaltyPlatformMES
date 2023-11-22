@@ -1,19 +1,8 @@
-package com.example.pf.azienda;
+package com.example.pf.DTO;
 
+import com.example.pf.azienda.Azienda;
 
-import com.example.pf.model.ProgrammaFedelta;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-
-import java.util.HashSet;
-import java.util.Set;
-
-
-@Entity
-public class Azienda {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class AziendaDTO {
 
     private String nome;
 
@@ -25,13 +14,8 @@ public class Azienda {
     private String indirizzo;
     private int numeroStabilimenti;
 
-    // Relazione con i programmi di fedeltà
-    @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private Set<ProgrammaFedelta> programmiFedelta = new HashSet<>();
 
-    // Costruttori, getter e setter
-    public Azienda() {}
+
     public String getNome() {
         return nome;
     }
@@ -96,31 +80,33 @@ public class Azienda {
         this.numeroStabilimenti = numeroStabilimenti;
     }
 
-    // Metodo per aggiungere un programma di fedeltà
-    public void addProgrammaFedelta(ProgrammaFedelta programma) {
-        programmiFedelta.add(programma);
-        programma.setAzienda(this);
+    public static Azienda convertToEntity(AziendaDTO aziendaDTO) {
+        Azienda azienda = new Azienda();
+        azienda.setNome(aziendaDTO.getNome());
+        azienda.setEmail(aziendaDTO.getEmail());
+        azienda.setPartitaIva(aziendaDTO.getPartitaIva());
+        azienda.setCodiceUnivoco(aziendaDTO.getCodiceUnivoco());
+        azienda.setRagioneSociale(aziendaDTO.getRagioneSociale());
+        azienda.setSettore(aziendaDTO.getSettore());
+        azienda.setIndirizzo(aziendaDTO.getIndirizzo());
+        azienda.setNumeroStabilimenti(aziendaDTO.getNumeroStabilimenti());
+
+        return azienda;
     }
 
-    // Metodo per rimuovere un programma di fedeltà
-    public void removeProgrammaFedelta(ProgrammaFedelta programma) {
-        programmiFedelta.remove(programma);
-        programma.setAzienda(null);
+
+    public static AziendaDTO convertToDTO(Azienda azienda) {
+        AziendaDTO aziendaDTO = new AziendaDTO();
+        aziendaDTO.setNome(azienda.getNome());
+        aziendaDTO.setEmail(azienda.getEmail());
+        aziendaDTO.setPartitaIva(azienda.getPartitaIva());
+        aziendaDTO.setCodiceUnivoco(azienda.getCodiceUnivoco());
+        aziendaDTO.setRagioneSociale(azienda.getRagioneSociale());
+        aziendaDTO.setSettore(azienda.getSettore());
+        aziendaDTO.setIndirizzo(azienda.getIndirizzo());
+        aziendaDTO.setNumeroStabilimenti(azienda.getNumeroStabilimenti());
+        return aziendaDTO;
     }
 
-    public Set<ProgrammaFedelta> getProgrammiFedelta() {
-        return programmiFedelta;
-    }
 
-    public void setProgrammiFedelta(Set<ProgrammaFedelta> programmiFedelta) {
-        this.programmiFedelta = programmiFedelta;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }

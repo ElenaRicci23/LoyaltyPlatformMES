@@ -1,17 +1,10 @@
-package com.example.pf.cliente;
+package com.example.pf.DTO;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.example.pf.cliente.Cliente;
 
 import java.sql.Date;
 
-@Entity
-public class Cliente {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class ClienteDTO {
     private String nome;
     private String email;
     private String cognome;
@@ -22,6 +15,7 @@ public class Cliente {
     private String indirizzo;
     private String cellulare;
 
+    // Metodi getter e setter per i campi
 
     public String getNome() {
         return nome;
@@ -94,12 +88,34 @@ public class Cliente {
     public void setCellulare(String cellulare) {
         this.cellulare = cellulare;
     }
+    public static Cliente convertClienteToEntity(ClienteDTO clienteDTO) {
+        Cliente cliente = new Cliente();
+        cliente.setNome(clienteDTO.getNome());
+        cliente.setEmail(clienteDTO.getEmail());
+        cliente.setCognome(clienteDTO.getCognome());
+        cliente.setSesso(clienteDTO.getSesso());
+        cliente.setCodiceFiscale(clienteDTO.getCodiceFiscale());
+        cliente.setDataNascita(clienteDTO.getDataNascita());
+        cliente.setResidenza(clienteDTO.getResidenza());
+        cliente.setIndirizzo(clienteDTO.getIndirizzo());
+        cliente.setCellulare(clienteDTO.getCellulare());
 
-    public void setId(Long id) {
-        this.id = id;
+        return cliente;
     }
 
-    public Long getId() {
-        return id;
+    public static ClienteDTO convertClienteToDTO(Cliente cliente) {
+        ClienteDTO clienteDTO = new ClienteDTO();
+        clienteDTO.setNome(cliente.getNome());
+        clienteDTO.setEmail(cliente.getEmail());
+        clienteDTO.setCognome(cliente.getCognome());
+        clienteDTO.setSesso(cliente.getSesso());
+        clienteDTO.setCodiceFiscale(cliente.getCodiceFiscale());
+        clienteDTO.setDataNascita(cliente.getDataNascita());
+        clienteDTO.setResidenza(cliente.getResidenza());
+        clienteDTO.setIndirizzo(cliente.getIndirizzo());
+        clienteDTO.setCellulare(cliente.getCellulare());
+
+        return clienteDTO;
     }
 }
+

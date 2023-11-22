@@ -16,8 +16,14 @@ public class GestoreProgrammaFedelta {
         this.factory = factory;
     }
 
-    public IProgrammaPunti creaProgrammaPunti(String nome, String descrizione) {
-        return factory.creaProgrammaPunti(nome, descrizione);
+    public IProgrammaPunti creaProgrammaPunti(String nome, String descrizione, TipoProgrammaFedelta tipoProgrammaFedelta) {
+        if (tipoProgrammaFedelta == TipoProgrammaFedelta.PUNTI) {
+            return factory.creaProgrammaPunti(nome, descrizione);
+        } else {
+            // Gestisci il caso in cui la tipologia non è valida (ad esempio, se non è "PUNTI")
+            System.out.println("Non gestiamo per ora altri tipi di programmi WORK IN PRORESS!");
+            return null;
+        }
     }
 
 }
