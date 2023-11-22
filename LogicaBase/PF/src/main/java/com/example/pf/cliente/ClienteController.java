@@ -1,9 +1,7 @@
 package com.example.pf.cliente;
 
 
-import com.example.pf.DTO.AziendaDTO;
 import com.example.pf.DTO.ClienteDTO;
-import com.example.pf.azienda.Azienda;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +17,12 @@ import static com.example.pf.DTO.ClienteDTO.convertClienteToEntity;
 @RequestMapping("/api/clienti")
 public class ClienteController {
     private final ClienteService clienteService;
+    private final TesseraService tesseraService;
 
     @Autowired
-    public ClienteController(ClienteService clienteService) {
+    public ClienteController(ClienteService clienteService, TesseraService tesseraService) {
         this.clienteService = clienteService;
+        this.tesseraService = tesseraService;
     }
 
     @GetMapping("/")
@@ -41,12 +41,15 @@ public class ClienteController {
     }
 
     @PostMapping("/registra")
-    public ResponseEntity<ClienteDTO> createCliente(@RequestBody ClienteDTO clienteDTO) {
-        Cliente cliente = convertClienteToEntity(clienteDTO);
-        Cliente savedCliente =clienteService.saveCliente(cliente);
-       ClienteDTO savedClienteDTO = convertClienteToDTO(savedCliente);
-        return new ResponseEntity<>(savedClienteDTO, HttpStatus.CREATED);
+    public ResponseEntity<Cliente> createCliente(@RequestBody ClienteDTO clienteDTO) {
+        // Chiamare il servizio per creare il cliente utilizzando il DTO
+        Cliente cliente = clienteService.createCliente(clienteDTO);
+
+        // Restituisci una risposta di successo con il cliente appena creato
+        return new ResponseEntity<>(cliente, HttpStatus.CREATED);
     }
+
+
 
 
     @PutMapping("/{id}")

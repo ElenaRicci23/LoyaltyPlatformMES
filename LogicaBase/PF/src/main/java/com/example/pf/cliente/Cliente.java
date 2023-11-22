@@ -1,9 +1,7 @@
 package com.example.pf.cliente;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.sql.Date;
 
@@ -21,7 +19,16 @@ public class Cliente {
     private String residenza;
     private String indirizzo;
     private String cellulare;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "proprietario")
+    private Tessera tessera;
 
+    public Tessera getTessera() {
+        return tessera;
+    }
+
+    public void setTessera(Tessera tessera) {
+        this.tessera = tessera;
+    }
 
     public String getNome() {
         return nome;
