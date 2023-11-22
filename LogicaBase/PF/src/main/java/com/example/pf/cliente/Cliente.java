@@ -3,6 +3,7 @@ package com.example.pf.cliente;
 
 import jakarta.persistence.*;
 
+
 import java.sql.Date;
 
 @Entity
@@ -19,7 +20,7 @@ public class Cliente {
     private String residenza;
     private String indirizzo;
     private String cellulare;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "proprietario")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cliente")
     private Tessera tessera;
 
     public Tessera getTessera() {
@@ -33,6 +34,7 @@ public class Cliente {
     public String getNome() {
         return nome;
     }
+
 
     public void setNome(String nome) {
         this.nome = nome;

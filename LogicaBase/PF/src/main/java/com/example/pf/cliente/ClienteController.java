@@ -2,6 +2,7 @@ package com.example.pf.cliente;
 
 
 import com.example.pf.DTO.ClienteDTO;
+import com.example.pf.DTO.ClienteTesseraDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,13 @@ public class ClienteController {
         List<Cliente> clienti = clienteService.getAllClienti();
         return new ResponseEntity<>(clienti, HttpStatus.OK);
     }
+//    @GetMapping("/clienti-tessere")
+//    public ResponseEntity<List<ClienteTesseraDTO>> getClientiETessere() {
+//        List<ClienteTesseraDTO> clientiETessere = clienteService.getClientiETessere();
+//        return new ResponseEntity<>(clientiETessere, HttpStatus.OK);
+//    }
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> getClienteById(@PathVariable Long id) {
@@ -42,12 +50,24 @@ public class ClienteController {
 
     @PostMapping("/registra")
     public ResponseEntity<Cliente> createCliente(@RequestBody ClienteDTO clienteDTO) {
-        // Chiamare il servizio per creare il cliente utilizzando il DTO
-        Cliente cliente = clienteService.createCliente(clienteDTO);
+        try {
+            // Chiamare il servizio per creare il cliente
+            Cliente nuovoCliente = clienteService.createCliente(clienteDTO);
 
-        // Restituisci una risposta di successo con il cliente appena creato
-        return new ResponseEntity<>(cliente, HttpStatus.CREATED);
+            if (nuovoCliente != null) {
+                // Il cliente è stato creato con successo, restituisci una risposta di successo
+                return new ResponseEntity<>(nuovoCliente, HttpStatus.CREATED);
+            } else {
+                // Gestisci il caso in cui la creazione del cliente non sia riuscita
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (Exception e) {
+            // Gestisci eventuali eccezioni qui e restituisci una risposta di errore appropriata
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
+
 
 
 

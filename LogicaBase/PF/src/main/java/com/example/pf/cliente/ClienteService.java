@@ -2,9 +2,11 @@ package com.example.pf.cliente;
 
 
 import com.example.pf.DTO.ClienteDTO;
+import com.example.pf.DTO.ClienteTesseraDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.pf.DTO.ClienteDTO.convertClienteToEntity;
@@ -32,9 +34,6 @@ public class ClienteService {
         return clienteRepository.findById(id).orElse(null);
     }
 
-    public Cliente saveCliente(Cliente cliente) {
-        return clienteRepository.save(cliente);
-    }
 
     public Cliente updateCliente(Long id, Cliente cliente) {
         Cliente existingCliente = clienteRepository.findById(id).orElse(null);
@@ -52,15 +51,31 @@ public class ClienteService {
     }
 
     public Cliente createCliente(ClienteDTO clienteDTO) {
-        // Converti il DTO in un'entità Cliente
         Cliente cliente = convertClienteToEntity(clienteDTO);
-        // Salva il cliente nel database
         clienteRepository.save(cliente);
-
-        // Ora che il cliente è stato salvato, puoi creare una tessera associata ad esso
-        tesseraService.creaTessera(cliente);
+        Tessera tessera = tesseraService.creaTessera(cliente);
         return cliente;
     }
+//    public List<ClienteTesseraDTO> getClientiETessere() {
+//        List<ClienteTesseraDTO> clientiETessere = new ArrayList<>();
+//
+//        List<Cliente> clienti = clienteRepository.findAll();
+//
+//        for (Cliente cliente : clienti) {
+//            ClienteTesseraDTO dto = new ClienteTesseraDTO();
+//            dto.setNomeCliente(cliente.getNome());
+//            if (cliente.getTessera() != null) {
+//                // Aggiungi i dettagli della tessera al DTO
+//                dto.setDettagliTessera(cliente.getTessera());
+//            }
+//            clientiETessere.add(dto);
+//        }
+//
+//        return clientiETessere;
+//    }
+
+
+
 
 
 

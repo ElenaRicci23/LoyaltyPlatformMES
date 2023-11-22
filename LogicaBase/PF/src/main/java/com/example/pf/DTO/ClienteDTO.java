@@ -15,7 +15,7 @@ public class ClienteDTO {
     private String indirizzo;
     private String cellulare;
 
-    // Metodi getter e setter per i campi
+
 
     public String getNome() {
         return nome;
@@ -114,6 +114,10 @@ public class ClienteDTO {
         clienteDTO.setResidenza(cliente.getResidenza());
         clienteDTO.setIndirizzo(cliente.getIndirizzo());
         clienteDTO.setCellulare(cliente.getCellulare());
+
+
+
+
 
         return clienteDTO;
     }
