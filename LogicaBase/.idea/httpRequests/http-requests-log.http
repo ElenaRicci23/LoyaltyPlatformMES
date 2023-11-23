@@ -1,0 +1,158 @@
+POST http://localhost:8080/api/clienti/registra
+Content-Type: application/json
+
+{
+  "nome": "Luca",
+  "cognome": "Bianchi",
+  "email": "luca@gmail.com",
+  "cellulare": "3334455667",
+  "codiceFiscale": "BCNLCA95A15H501B",
+  "dataNascita": "1995-08-20",
+  "indirizzo": "Via Roma, 12",
+  "residenza": "Roma",
+  "sesso": "M"
+}
+
+<> 2023-11-22T112245.201.json
+
+###
+
+POST http://localhost:8080/api/clienti/registra
+Content-Type: application/json
+
+{
+  "nome": "Mario",
+  "email": "mario@example.com",
+  "cognome": "Rossi",
+  "sesso": "M",
+  "codiceFiscale": "RSSMRA80A01H501K",
+  "dataNascita": "1980-01-01",
+  "residenza": "Milano",
+  "indirizzo": "Via Roma 123",
+  "cellulare": "+39 1234567890"
+}
+
+<> 2023-11-22T110454.201.json
+
+###
+
+POST http://localhost:8080/api/aziende/aggiungi
+Content-Type: application/json
+
+{
+  "nome": "UVW Solutions",
+  "email": "info@uvwsolutions.com",
+  "partitaIva": "55555555555",
+  "codiceUnivoco": "COD55555",
+  "ragioneSociale": "UVW S.p.A.",
+  "settore": "Servizi",
+  "indirizzo": "Via Palermo, 7, 90100 Palermo",
+  "numeroStabilimenti": 3
+}
+
+<> 2023-11-22T110247.201.json
+
+###
+
+POST http://localhost:8080/api/aziende/aggiungi
+
+Content-Type: application/json
+{
+
+        "nome": "XYZ Corporation",
+         "email": "info@xyzcorporation.com",
+        "partitaIva": "12345678901",
+        "codiceUnivoco": "COD12345",
+        "ragioneSociale": "XYZ S.p.A.",
+        "settore": "Tecnologia",
+        "indirizzo": "Via Venezia, 3, 00100 Roma",
+        "numeroStabilimenti": 2
+
+        }
+
+<> 2023-11-22T110126.415.json
+
+###
+
+POST http://localhost:8080/api/aziende/aggiungi
+
+Content-Type: application/json
+{
+
+        "nome": "XYZ Corporation",
+         "email": "info@xyzcorporation.com"
+        "partitaIva": "12345678901",
+        "codiceUnivoco": "COD12345",
+        "ragioneSociale": "XYZ S.p.A.",
+        "settore": "Tecnologia",
+        "indirizzo": "Via Venezia, 3, 00100 Roma",
+        "numeroStabilimenti": 2
+
+        }
+
+<> 2023-11-22T105943.415.json
+
+###
+
+POST http://localhost:8080/api/aziende/aggiungi
+
+Content-Type: application/json
+{
+
+        "nome": "XYZ Corporation",
+         "email": "info@xyzcorporation.com"
+        "partitaIva": "12345678901",
+        "codiceUnivoco": "COD12345",
+        "ragioneSociale": "XYZ S.p.A.",
+        "settore": "Tecnologia",
+        "indirizzo": "Via Venezia, 3, 00100 Roma",
+        "numeroStabilimenti": 2
+
+        }
+
+<> 2023-11-22T105744.415.json
+
+###
+
+POST http://localhost:8080/api/aziende/aggiungi
+
+Content-Type: application/jsontent-Type: application/json
+
+{
+
+        "nome": "XYZ Corporation",
+         "email": "info@xyzcorporation.com"
+        "partitaIva": "12345678901",
+        "codiceUnivoco": "COD12345",
+        "ragioneSociale": "XYZ S.p.A.",
+        "settore": "Tecnologia",
+        "indirizzo": "Via Venezia, 3, 00100 Roma",
+        "numeroStabilimenti": 2
+
+        }
+
+<> 2023-11-22T105702.415.json
+
+###
+
+POST http://localhost:8080/api/azienda/aggiungi
+
+Content-Type: application/jsontent-Type: application/json
+
+{
+
+        "nome": "XYZ Corporation",
+         "email": "info@xyzcorporation.com"
+        "partitaIva": "12345678901",
+        "codiceUnivoco": "COD12345",
+        "ragioneSociale": "XYZ S.p.A.",
+        "settore": "Tecnologia",
+        "indirizzo": "Via Venezia, 3, 00100 Roma",
+        "numeroStabilimenti": 2
+
+        }
+
+<> 2023-11-22T105548.404.json
+
+###
+

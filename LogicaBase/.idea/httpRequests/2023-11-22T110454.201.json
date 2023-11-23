@@ -1,0 +1,11 @@
+{
+  "nome": "Mario",
+  "email": "mario@example.com",
+  "cognome": "Rossi",
+  "sesso": "M",
+  "codiceFiscale": "RSSMRA80A01H501K",
+  "dataNascita": "1980-01-01",
+  "residenza": "Milano",
+  "indirizzo": "Via Roma 123",
+  "cellulare": "+39 1234567890"
+}
