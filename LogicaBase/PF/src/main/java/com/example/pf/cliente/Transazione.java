@@ -2,25 +2,23 @@ package com.example.pf.cliente;
 
 import jakarta.persistence.*;
 
-@Entity
-public class Acquisto {
-    @Id
-    @GeneratedValue
-    private Long id;
+import java.util.Date;
 
-    private double importo;  // L'importo dell'acquisto
+@Entity
+public class Transazione {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Double importo;  // Usa Double invece di double
+    private Date dataAcquisto;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setId(Long id) { this.id = id; }
 
     public double getImporto() {
         return importo;

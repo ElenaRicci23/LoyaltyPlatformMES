@@ -1,10 +1,10 @@
 package com.example.pf.factory;
 
-import com.example.pf.cliente.Acquisto;
+import com.example.pf.cliente.Transazione;
 
 public interface IProgrammaPunti {
 
-    void accumulaPunti(int puntiDaAggiungere, Acquisto acquisto);
+    void accumulaPunti(int puntiDaAggiungere, Transazione transazione);
     int getPuntiTotali();
 
 

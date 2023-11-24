@@ -1,6 +1,6 @@
 package com.example.pf.DTO;
 
-public class AcquistoDTO {
+public class TransazioneDTO {
     private double importo;
 
     public double getImporto() {

@@ -1,12 +1,13 @@
 package com.example.pf.model;
 
 import com.example.pf.DTO.ProgrammaFedeltaDTO;
-import com.example.pf.cliente.Acquisto;
+import com.example.pf.cliente.Transazione;
 import com.example.pf.cliente.Cliente;
 import com.example.pf.cliente.ClienteRepository;
 import com.example.pf.cliente.Tessera;
 import com.example.pf.factory.FactoryProgrammaPunti;
 import com.example.pf.factory.IProgrammaPunti;
+import com.example.pf.factory.ProgrammaPunti;
 import com.example.pf.repo.ProgrammaFedeltaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,15 +57,15 @@ public class GestoreProgrammaFedelta {
         }
     }
 
-    public void aggiornaPuntiFedelta(Cliente cliente, Acquisto acquisto) {
+    public void aggiornaPuntiFedelta(Cliente cliente, Transazione transazione) {
         Tessera tessera = cliente.getTessera();
         if (tessera != null) {
             Set<ProgrammaFedelta> programmiFedelta = tessera.getProgrammiFedelta();
             for (ProgrammaFedelta programmaFedelta : programmiFedelta) {
-                if (programmaFedelta instanceof IProgrammaPunti) {
-                    IProgrammaPunti programmaPunti = (IProgrammaPunti) programmaFedelta;
-                    int puntiDaAggiungere = calcolaPuntiDaAggiungere(acquisto.getImporto());
-                    programmaPunti.accumulaPunti(puntiDaAggiungere, acquisto);
+                if (programmaFedelta instanceof ProgrammaPunti) {
+                    ProgrammaPunti programmaPunti = (ProgrammaPunti) programmaFedelta;
+                    int puntiDaAggiungere = calcolaPuntiDaAggiungere(transazione.getImporto());
+                    programmaPunti.accumulaPunti(puntiDaAggiungere, transazione);
                 }
             }
         }

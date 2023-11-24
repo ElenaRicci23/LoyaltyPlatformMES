@@ -1,7 +1,7 @@
 package com.example.pf.cliente;
 
 
-import com.example.pf.DTO.AcquistoDTO;
+import com.example.pf.DTO.TransazioneDTO;
 import com.example.pf.DTO.ClienteDTO;
 import com.example.pf.DTO.ProgrammaFedeltaDTO;
 import com.example.pf.model.GestoreProgrammaFedelta;
@@ -88,7 +88,7 @@ public class ClienteController {
     @PostMapping("/{clienteId}/effettua-acquisto")
     public ResponseEntity<?> effettuaAcquisto(
             @PathVariable Long clienteId,
-            @RequestBody AcquistoDTO acquistoDTO) {
+            @RequestBody TransazioneDTO transazioneDTO) {
 
         Cliente cliente = clienteRepository.findById(clienteId).orElse(null);
 
@@ -97,15 +97,15 @@ public class ClienteController {
         }
 
         // Esegui la logica dell'acquisto
-        Acquisto nuovoAcquisto = new Acquisto();
-        nuovoAcquisto.setImporto(acquistoDTO.getImporto());
-        nuovoAcquisto.setCliente(cliente);
+        Transazione nuovoTransazione = new Transazione();
+        nuovoTransazione.setImporto(transazioneDTO.getImporto());
+        nuovoTransazione.setCliente(cliente);
 
-        cliente.aggiungiAcquisto(nuovoAcquisto);
+        cliente.aggiungiAcquisto(nuovoTransazione);
         clienteService.updateCliente(clienteId, cliente);
 
         // Aggiorna i punti fedeltà associati all'acquisto
-        gestoreProgrammaFedelta.aggiornaPuntiFedelta(cliente, nuovoAcquisto);
+        gestoreProgrammaFedelta.aggiornaPuntiFedelta(cliente, nuovoTransazione);
 
         return ResponseEntity.ok("Acquisto effettuato con successo.");
     }

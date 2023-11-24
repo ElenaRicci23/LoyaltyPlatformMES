@@ -1,6 +1,6 @@
 package com.example.pf.factory;
 
-import com.example.pf.cliente.Acquisto;
+import com.example.pf.cliente.Transazione;
 import com.example.pf.model.ProgrammaFedelta;
 import com.example.pf.model.TipoProgrammaFedelta;
 import jakarta.persistence.Entity;
@@ -12,8 +12,8 @@ import java.util.List;
 @Entity
 public class ProgrammaPunti extends ProgrammaFedelta implements IProgrammaPunti {
     private int puntiTotali;  // Variabile per tenere traccia dei punti accumulati
-    private List<Acquisto> acquisti = new ArrayList<>();
-     //Non va bene da fare per il cliente
+    private List<Transazione> acquisti = new ArrayList<>();
+    //Non va bene da fare per il cliente
     // Costruttore
     public ProgrammaPunti(String nome, String descrizione) {
         // Imposta i campi necessari e chiama il costruttore della superclasse
@@ -25,11 +25,11 @@ public class ProgrammaPunti extends ProgrammaFedelta implements IProgrammaPunti 
     }
 
     @Override
-    public void accumulaPunti(int puntiDaAggiungere, Acquisto acquisto) {
+    public void accumulaPunti(int puntiDaAggiungere, Transazione transazione) {
         if (puntiDaAggiungere > 0) {
             puntiTotali += puntiDaAggiungere;
             // Aggiungi l'acquisto alla lista degli acquisti associati ai punti
-            acquisti.add(acquisto);
+            acquisti.add(transazione);
         } else {
             throw new IllegalArgumentException("Invalid points value. Points to add must be greater than 0.");
         }

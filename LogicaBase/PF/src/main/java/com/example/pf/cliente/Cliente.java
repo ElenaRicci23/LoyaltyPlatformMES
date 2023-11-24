@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 public class Cliente {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String email;
@@ -25,11 +25,11 @@ public class Cliente {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cliente")
     private Tessera tessera;
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private List<Acquisto> acquisti = new ArrayList<>();
+    private List<Transazione> acquisti = new ArrayList<>();
 
-    public List<Acquisto> getAcquisti() { return acquisti; }
+    public List<Transazione> getAcquisti() { return acquisti; }
 
-    public void aggiungiAcquisto(Acquisto acquisto) { acquisti.add(acquisto); }
+    public void aggiungiAcquisto(Transazione transazione) { acquisti.add(transazione); }
 
     public Tessera getTessera() {
         return tessera;
