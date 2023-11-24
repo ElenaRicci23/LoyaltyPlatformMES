@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/LogicaBase.iml" filepath="$PROJECT_DIR$/.idea/LogicaBase.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/PF.main.iml" filepath="$PROJECT_DIR$/.idea/modules/PF.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.example.PF.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.example.PF.main.iml" />
     </modules>
   </component>
 </project>

@@ -1,7 +1,7 @@
 package com.example.pf.model;
 
 import com.example.pf.DTO.ProgrammaFedeltaDTO;
-import com.example.pf.cliente.Acquisto;
+import com.example.pf.azienda.Premio;
 import com.example.pf.cliente.Cliente;
 import com.example.pf.cliente.ClienteRepository;
 import com.example.pf.cliente.Tessera;
@@ -55,27 +55,60 @@ public class GestoreProgrammaFedelta {
             return false; // Il programma fedeltà non è di tipo "PUNTI" o non è stato trovato
         }
     }
+    public void configurazioneProgrammaFedelta(IProgrammaPunti programmaPunti, Set<Premio> premi, double tassoConversione, int puntiBonus, Set<Premio> premiPersonalizzati, String messaggioPersonalizzato, String occasioneSpeciale, String eccezione, Cliente cliente, String attivita, String parametro, String valore) {
+        if (programmaPunti != null) {
+            // Esegui la configurazione specifica del programma fedeltà
 
-    public void aggiornaPuntiFedelta(Cliente cliente, Acquisto acquisto) {
-        Tessera tessera = cliente.getTessera();
-        if (tessera != null) {
-            Set<ProgrammaFedelta> programmiFedelta = tessera.getProgrammiFedelta();
-            for (ProgrammaFedelta programmaFedelta : programmiFedelta) {
-                if (programmaFedelta instanceof IProgrammaPunti) {
-                    IProgrammaPunti programmaPunti = (IProgrammaPunti) programmaFedelta;
-                    int puntiDaAggiungere = calcolaPuntiDaAggiungere(acquisto.getImporto());
-                    programmaPunti.accumulaPunti(puntiDaAggiungere, acquisto);
+            if (premi != null) {
+                for (Premio premio : premi) {
+                    programmaPunti.aggiungiPremio(premio);
                 }
             }
+
+            if (tassoConversione >= 0) {
+                programmaPunti.impostaTassoConversione(tassoConversione);
+            }
+
+            if (puntiBonus >= 0) {
+                programmaPunti.impostaPuntiBonus(puntiBonus);
+            }
+
+            if (premiPersonalizzati != null) {
+                for (Premio premio : premiPersonalizzati) {
+                    programmaPunti.aggiungiPremioPersonalizzato(premio);
+                }
+            }
+
+            if (messaggioPersonalizzato != null) {
+                programmaPunti.personalizzaMessaggiComunicazioni(messaggioPersonalizzato);
+            }
+
+            if (occasioneSpeciale != null) {
+                programmaPunti.offriRicompenseSpeciali(occasioneSpeciale);
+            }
+
+            if (eccezione != null) {
+                programmaPunti.gestisciEccezioni(eccezione);
+            }
+
+            if (cliente != null && attivita != null) {
+                programmaPunti.registraAttivitaCliente(cliente, attivita);
+            }
+
+            if (parametro != null && valore != null) {
+                programmaPunti.configuraParametriAvanzati(parametro, valore);
+            }
+
+            // Altre configurazioni specifiche, se necessario...
+        } else {
+            // Gestisci il caso in cui il programma fedeltà non è valido
+            System.out.println("Programma fedeltà non valido.");
         }
     }
 
-    private int calcolaPuntiDaAggiungere(double importo) {
-        // In questa implementazione ipotetica, si potrebbe stabilire che ogni tot di importo
-        // corrisponde a un certo numero di punti. Ad esempio, 1 punto ogni 10 euro di spesa.
-        int puntiPerEuro = 1;
-        return (int) (importo / 10) * puntiPerEuro;
-    }
+
+
+
 
 
 

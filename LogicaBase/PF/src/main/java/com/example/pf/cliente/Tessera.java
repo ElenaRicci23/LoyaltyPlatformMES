@@ -31,17 +31,6 @@ public class Tessera {
     )
     private Set<ProgrammaFedelta> programmiFedelta = new HashSet<>();
 
-    public int getPuntiAccumulati() {
-        int puntiTotali = 0;
-
-        for (ProgrammaFedelta programma : programmiFedelta) {
-            if (programma instanceof ProgrammaPunti) {
-                puntiTotali += ((ProgrammaPunti) programma).getPuntiTotali();
-            }
-        }
-
-        return puntiTotali;
-    }
 
     public void addProgrammaFedelta(ProgrammaFedelta programmaFedelta) {
         programmiFedelta.add(programmaFedelta);

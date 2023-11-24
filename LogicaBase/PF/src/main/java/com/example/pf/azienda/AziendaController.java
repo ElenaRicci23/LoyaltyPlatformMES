@@ -59,22 +59,5 @@ public class AziendaController {
             return ResponseEntity.notFound().build();
         }
     }
-
-        // Endpoint per configurare un programma fedeltà esistente
-        @PostMapping("/{aziendaId}/programmi_fedelta/{programmaFedeltaId}/configura")
-        public ResponseEntity<?> configurazioneProgrammaFedelta(
-                @PathVariable Long aziendaId,
-                @PathVariable Long programmaFedeltaId,
-                @RequestBody ProgrammaFedeltaConfigurazioneDTO configurazioneDTO) {
-
-            try {
-                aziendaService.configurazioneProgrammaPunti(aziendaId, programmaFedeltaId, configurazioneDTO.getPuntiPerAcquisto(), configurazioneDTO.getSogliaPremio());
-                return ResponseEntity.ok(aziendaService.getAziendaById(aziendaId));
-            } catch (RuntimeException e) {
-                // Gestisci l'eccezione e restituisci una risposta con lo stato HTTP appropriato
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-            }
-        }
-
 }
 

@@ -1,11 +1,10 @@
 package com.example.pf.azienda;
 
 
-import com.example.pf.configurazione.ProgrammaPuntiConfigurazioneService;
+
 import com.example.pf.factory.IProgrammaPunti;
 import com.example.pf.factory.ProgrammaPunti;
 import com.example.pf.model.GestoreProgrammaFedelta;
-import com.example.pf.model.ProgrammaFedelta;
 import com.example.pf.model.TipoProgrammaFedelta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,14 +18,10 @@ public class AziendaService {
     private GestoreProgrammaFedelta gestoreProgrammaFedelta;
 
     private final AziendaRepository aziendaRepository;
-    private final ProgrammaPuntiConfigurazioneService configurazioneService;
-
-
 
     @Autowired
-    public AziendaService(AziendaRepository aziendaRepository, ProgrammaPuntiConfigurazioneService configurazioneService) {
+    public AziendaService(AziendaRepository aziendaRepository) {
         this.aziendaRepository = aziendaRepository;
-        this.configurazioneService = configurazioneService;
     }
 
     public List<Azienda> findAllAziende() {
@@ -74,53 +69,30 @@ public class AziendaService {
         }
     }
 
-
-    // Metodo per configurare le regole del programma di punti
-    public void configurazioneProgrammaPunti(Long aziendaId, Long programmaFedeltaId, int puntiPerAcquisto, int sogliaPremio) {
-        // Trova l'azienda per ID
-        Optional<Azienda> aziendaOpt = aziendaRepository.findById(aziendaId);
-
-        if (aziendaOpt.isPresent()) {
-            Azienda azienda = aziendaOpt.get();
-
-            // Trova il programma fedeltà per ID all'interno dell'azienda
-            Optional<ProgrammaFedelta> programmaFedeltaOpt = azienda.getProgrammiFedelta().stream()
-                    .filter(pf -> pf.getId().equals(programmaFedeltaId))
-                    .findFirst();
-
-            if (programmaFedeltaOpt.isPresent()) {
-                ProgrammaFedelta programmaFedelta = programmaFedeltaOpt.get();
-
-                // Verifica se il programma fedeltà è di tipo ProgrammaPunti
-                if (programmaFedelta instanceof IProgrammaPunti) {
-                    IProgrammaPunti programmaPunti = (IProgrammaPunti) programmaFedelta;
-
-                    // Ora puoi configurare il programma fedeltà con i valori desiderati
-                    configurazioneService.impostaPuntiPerAcquisto(puntiPerAcquisto);
-                    configurazioneService.impostaSogliaPremio(sogliaPremio);
-                    // Puoi chiamare altri metodi di configurazione se necessario
-                } else {
-                    // Gestisci il caso in cui il programma fedeltà non è di tipo ProgrammaPunti
-                    throw new RuntimeException("Il programma fedeltà non è di tipo ProgrammaPunti.");
-                }
-            } else {
-                // Gestisci il caso in cui la tipologia fornita non è valida
-                throw new RuntimeException("La tipologia fornita non è valida.");
-            }
-        } else {
-            // Gestisci il caso in cui l'azienda non viene trovata
-            throw new RuntimeException("L'azienda specificata non è stata trovata.");
-        }
-    }
-
-
-
-    public Azienda getAziendaById(Long aziendaId) {
-        Optional<Azienda> aziendaOpt = findAziendaById(aziendaId);
-        // Gestisci il caso in cui l'azienda non viene trovata
-        return aziendaOpt.orElse(null);
-    }
-
+//    public Azienda configureProgrammaFedelta(Long aziendaId, double tassoConversione, /* altri parametri personalizzati */) {
+//        Optional<Azienda> aziendaOpt = findAziendaById(aziendaId);
+//
+//        if (aziendaOpt.isPresent()) {
+//            Azienda azienda = aziendaOpt.get();
+//            // Trova il programma fedeltà da configurare (potresti avere più programmi)
+//            // Ad esempio, puoi ciclare attraverso i programmi esistenti o avere un metodo per selezionare il programma desiderato
+//
+//            // Configura il programma fedeltà con i parametri desiderati
+//            if (azienda.getProgrammaFedelta() != null) {
+//                ProgrammaPunti programmaPunti = azienda.getProgrammaFedelta();
+//                programmaPunti.setTassoConversione(tassoConversione);
+//                // Imposta altri parametri personalizzati, se necessario
+//                // programmaPunti.setAltroParametro(altroValore);
+//                // ...
+//            }
+//
+//            // Salva l'azienda con il programma fedeltà configurato
+//            return aziendaRepository.save(azienda);
+//        } else {
+//            // Gestisci il caso in cui l'azienda non viene trovata
+//            return null;
+//        }
+//    }
 
 }
 

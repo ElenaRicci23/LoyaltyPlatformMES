@@ -24,12 +24,9 @@ public class Cliente {
     private String cellulare;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cliente")
     private Tessera tessera;
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private List<Acquisto> acquisti = new ArrayList<>();
 
-    public List<Acquisto> getAcquisti() { return acquisti; }
 
-    public void aggiungiAcquisto(Acquisto acquisto) { acquisti.add(acquisto); }
+
 
     public Tessera getTessera() {
         return tessera;
