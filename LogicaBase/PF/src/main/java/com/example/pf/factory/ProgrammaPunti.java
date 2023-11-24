@@ -1,13 +1,18 @@
 package com.example.pf.factory;
 
+import com.example.pf.cliente.Acquisto;
 import com.example.pf.model.ProgrammaFedelta;
 import com.example.pf.model.TipoProgrammaFedelta;
 import jakarta.persistence.Entity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //Da cambaire logica ..perchè l ofare al tessera o un altra table
 @Entity
 public class ProgrammaPunti extends ProgrammaFedelta implements IProgrammaPunti {
     private int puntiTotali;  // Variabile per tenere traccia dei punti accumulati
+    private List<Acquisto> acquisti = new ArrayList<>();
      //Non va bene da fare per il cliente
     // Costruttore
     public ProgrammaPunti(String nome, String descrizione) {
@@ -20,9 +25,14 @@ public class ProgrammaPunti extends ProgrammaFedelta implements IProgrammaPunti 
     }
 
     @Override
-    public void accumulaPunti(int puntiDaAggiungere) {
-        // Implementa l'accumulo generico di punti
-        puntiTotali += puntiDaAggiungere;
+    public void accumulaPunti(int puntiDaAggiungere, Acquisto acquisto) {
+        if (puntiDaAggiungere > 0) {
+            puntiTotali += puntiDaAggiungere;
+            // Aggiungi l'acquisto alla lista degli acquisti associati ai punti
+            acquisti.add(acquisto);
+        } else {
+            throw new IllegalArgumentException("Invalid points value. Points to add must be greater than 0.");
+        }
     }
 
     @Override

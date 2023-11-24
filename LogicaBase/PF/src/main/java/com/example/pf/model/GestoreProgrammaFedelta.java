@@ -1,13 +1,17 @@
 package com.example.pf.model;
 
 import com.example.pf.DTO.ProgrammaFedeltaDTO;
+import com.example.pf.cliente.Acquisto;
 import com.example.pf.cliente.Cliente;
 import com.example.pf.cliente.ClienteRepository;
+import com.example.pf.cliente.Tessera;
 import com.example.pf.factory.FactoryProgrammaPunti;
 import com.example.pf.factory.IProgrammaPunti;
 import com.example.pf.repo.ProgrammaFedeltaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 
 @Service
@@ -52,6 +56,26 @@ public class GestoreProgrammaFedelta {
         }
     }
 
+    public void aggiornaPuntiFedelta(Cliente cliente, Acquisto acquisto) {
+        Tessera tessera = cliente.getTessera();
+        if (tessera != null) {
+            Set<ProgrammaFedelta> programmiFedelta = tessera.getProgrammiFedelta();
+            for (ProgrammaFedelta programmaFedelta : programmiFedelta) {
+                if (programmaFedelta instanceof IProgrammaPunti) {
+                    IProgrammaPunti programmaPunti = (IProgrammaPunti) programmaFedelta;
+                    int puntiDaAggiungere = calcolaPuntiDaAggiungere(acquisto.getImporto());
+                    programmaPunti.accumulaPunti(puntiDaAggiungere, acquisto);
+                }
+            }
+        }
+    }
+
+    private int calcolaPuntiDaAggiungere(double importo) {
+        // In questa implementazione ipotetica, si potrebbe stabilire che ogni tot di importo
+        // corrisponde a un certo numero di punti. Ad esempio, 1 punto ogni 10 euro di spesa.
+        int puntiPerEuro = 1;
+        return (int) (importo / 10) * puntiPerEuro;
+    }
 
 
 

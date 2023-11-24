@@ -1,5 +1,6 @@
 package com.example.pf.cliente;
 
+import com.example.pf.factory.ProgrammaPunti;
 import com.example.pf.model.ProgrammaFedelta;
 import jakarta.persistence.*;
 
@@ -30,7 +31,17 @@ public class Tessera {
     )
     private Set<ProgrammaFedelta> programmiFedelta = new HashSet<>();
 
+    public int getPuntiAccumulati() {
+        int puntiTotali = 0;
 
+        for (ProgrammaFedelta programma : programmiFedelta) {
+            if (programma instanceof ProgrammaPunti) {
+                puntiTotali += ((ProgrammaPunti) programma).getPuntiTotali();
+            }
+        }
+
+        return puntiTotali;
+    }
 
     public void addProgrammaFedelta(ProgrammaFedelta programmaFedelta) {
         programmiFedelta.add(programmaFedelta);
@@ -54,6 +65,15 @@ public class Tessera {
     public Tessera(Cliente cliente) {  }
 
     public Long getId() { return id;  }
+
+    public Set<ProgrammaFedelta> getProgrammiFedelta() {
+        return programmiFedelta;
+    }
+
+    public void setProgrammiFedelta(Set<ProgrammaFedelta> programmiFedelta) {
+        this.programmiFedelta = programmiFedelta;
+    }
+
     public void setId(Long id) {  this.id = id; }
 
 
