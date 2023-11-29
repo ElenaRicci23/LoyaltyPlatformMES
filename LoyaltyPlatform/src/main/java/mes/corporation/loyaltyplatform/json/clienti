@@ -1,0 +1,57 @@
+[
+    {
+        "nome": "Luca",
+        "cognome": "Bianchi",
+        "email": "luca@gmail.com",
+        "cellulare": "3334455667",
+        "codiceFiscale": "BCNLCA95A15H501B",
+        "dataNascita": "1995-08-20",
+        "indirizzo": "Via Roma, 12",
+        "residenza": "Roma",
+        "sesso": "M"
+    },
+    {
+        "nome": "Giulia",
+        "cognome": "Verdi",
+        "email": "giulia@gmail.com",
+        "cellulare": "3344556677",
+        "codiceFiscale": "VRDGLI93A22H501V",
+        "dataNascita": "1993-12-05",
+        "indirizzo": "Via Napoli, 8",
+        "residenza": "Napoli",
+        "sesso": "F"
+    },
+    {
+        "nome": "Andrea",
+        "cognome": "Ferrari",
+        "email": "andrea@gmail.com",
+        "cellulare": "3478899001",
+        "codiceFiscale": "FRRNDR90A10H501F",
+        "dataNascita": "1990-03-10",
+        "indirizzo": "Via Milano, 7",
+        "residenza": "Milano",
+        "sesso": "M"
+    },
+    {
+        "nome": "Elena",
+        "cognome": "Rizzo",
+        "email": "elena@gmail.com",
+        "cellulare": "3399112233",
+        "codiceFiscale": "RZZLNA92A07H501R",
+        "dataNascita": "1992-06-18",
+        "indirizzo": "Via Firenze, 15",
+        "residenza": "Firenze",
+        "sesso": "F"
+    },
+    {
+        "nome": "Marco",
+        "cognome": "Galli",
+        "email": "marco@gmail.com",
+        "cellulare": "3499223344",
+        "codiceFiscale": "GLLMRC94A20H501G",
+        "dataNascita": "1994-09-25",
+        "indirizzo": "Via Torino, 9",
+        "residenza": "Torino",
+        "sesso": "M"
+    }
+]

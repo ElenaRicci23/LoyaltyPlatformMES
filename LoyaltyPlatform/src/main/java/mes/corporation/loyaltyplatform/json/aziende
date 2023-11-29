@@ -1,0 +1,52 @@
+[
+    {
+        "nome": "XYZ Corporation",
+        "email": "info@xyzcorporation.com",
+        "partitaIva": "12345678901",
+        "codiceUnivoco": "COD12345",
+        "ragioneSociale": "XYZ S.p.A.",
+        "settore": "Tecnologia",
+        "indirizzo": "Via Venezia, 3, 00100 Roma",
+        "numeroStabilimenti": 2
+    },
+    {
+        "nome": "LMN Electronics",
+        "email": "contact@lmnelectronics.com",
+        "partitaIva": "98765432101",
+        "codiceUnivoco": "COD98765",
+        "ragioneSociale": "LMN S.p.A.",
+        "settore": "Elettronica",
+        "indirizzo": "Via Genova, 6, 20100 Milano",
+        "numeroStabilimenti": 4
+    },
+    {
+        "nome": "PQR Industries",
+        "email": "support@pqrindustries.com",
+        "partitaIva": "45678901234",
+        "codiceUnivoco": "COD45678",
+        "ragioneSociale": "PQR S.p.A.",
+        "settore": "Industria",
+        "indirizzo": "Via Bologna, 9, 40100 Bologna",
+        "numeroStabilimenti": 1
+    },
+    {
+        "nome": "UVW Solutions",
+        "email": "info@uvwsolutions.com",
+        "partitaIva": "55555555555",
+        "codiceUnivoco": "COD55555",
+        "ragioneSociale": "UVW S.p.A.",
+        "settore": "Servizi",
+        "indirizzo": "Via Palermo, 7, 90100 Palermo",
+        "numeroStabilimenti": 3
+    },
+    {
+        "nome": "RST Group",
+        "email": "hello@rstgroup.com",
+        "partitaIva": "77777777777",
+        "codiceUnivoco": "COD77777",
+        "ragioneSociale": "RST S.p.A.",
+        "settore": "Finanza",
+        "indirizzo": "Via Napoli, 12, 80100 Napoli",
+        "numeroStabilimenti": 2
+    }
+]
