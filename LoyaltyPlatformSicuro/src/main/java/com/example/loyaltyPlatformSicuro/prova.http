@@ -1,0 +1,158 @@
+###
+POST http://localhost:8080/api/cliente/registrazione
+Content-Type: application/json
+
+{
+  "email": "mario.rossi@email.com",
+  "password": "PasswordSegreta",
+  "datiPersonali": {
+    "nome": "Mario",
+    "cognome": "Rossi",
+    "codiceFiscale": "RSSMRA90A01H501I",
+    "cellulare": "1234567890",
+    "indirizzo": "Via delle Rose, 456",
+    "dataNascita": "1990-01-01",
+    "residenza": "Roma",
+    "sesso": "M"
+  }
+}
+
+<> 2023-12-05T201525.200.json
+
+
+
+###
+POST http://localhost:8080/api/azienda/registrazione
+Content-Type: application/json
+
+{
+  "email": "azienda@example.com",
+  "password": "PasswordSicura123",
+  "datiPersonali": {
+    "nome": "Nome Azienda",
+    "partitaIva": "1312368901",
+    "codiceUnivoco": "ABC123",
+    "ragioneSociale": "Ragione Sociale SRL",
+    "settore": "Tecnologia",
+    "indirizzo": "Via delle Aziende, 789",
+    "numeroStabilimenti": 3
+  }
+}
+
+<> 2023-12-05T201533.200.json
+
+
+
+###
+POST http://localhost:8080/api/azienda/2/aggiungi-programma-fedelta
+Content-Type: application/json
+
+{
+  "nome": "Programma Fedeltà Azienda",
+  "descrizione": "Descrizione del programma fedeltà per l'azienda",
+  "tipoProgrammaFedelta": "PUNTI"
+}
+
+<> 2023-12-05T201543.200.json
+
+
+###
+POST http://localhost:8080/api/azienda/2/1/configura
+Content-Type: application/json
+
+{
+  "tassoConversione": 10,
+  "premi": [
+    {
+      "nome": "Premio 1",
+      "puntiDelPremio": 10,
+      "descrizione": "Descrizione del Premio 1"
+    },
+    {
+      "nome": "Premio 2",
+      "puntiDelPremio": 200,
+      "descrizione": "Descrizione del Premio 2"
+    }
+  ]
+}
+
+<> 2023-12-05T201700.200.json
+
+
+
+###
+GET http://localhost:8080/api/azienda/2/programmi-fedelta
+
+<> 2023-12-05T201613.200.json
+
+
+
+###
+GET http://localhost:8080/api/cliente/1/1
+
+###
+POST http://localhost:8080/api/cliente/1/iscrivi-programma-fedelta
+Content-Type: application/json
+
+{
+  "tesseraId": 1,
+  "programmaFedeltaId": 1,
+  "aziendaId": 2
+}
+
+
+
+
+###
+POST http://localhost:8080/api/cliente/1/effettua-acquisto
+Content-Type: application/json
+
+{
+  "clienteId": 1,
+  "nomeProdottoAcquistato": "Prova",
+  "importoProdotto": 400.0,
+  "dataPagamento": "2023-12-16",
+  "nomeAziendaAcquisto": "Nome Azienda"
+}
+
+<> 2023-12-05T204931.200.txt
+###
+GET http://localhost:8080/api/azienda/tutte
+
+<> 2023-12-05T201809.200.json
+
+###
+GET http://localhost:8080/api/azienda/2
+
+<> 2023-12-05T201816.200.json
+
+###
+POST http://localhost:8080/api/cliente/1/1/riscatta-premio
+Content-Type: application/json
+
+{
+  "nome": "Premio 1",
+  "puntiDelPremio": 10,
+  "descrizione": "Descrizione del Premio 1"
+}
+
+<> 2023-12-05T204941.404.json
+
+###
+GET http://localhost:8080/api/cliente/1/1/1/premiAssociati
+
+
+###
+GET http://localhost:8080/api/cliente/1/1/1/premiAssociati
+
+<> 2023-12-05T182014.200.json
+
+
+###
+GET http://localhost:8080/api/cliente/1/1/storico-punti
+
+<> 2023-12-05T202155.200.json
+<> 2023-12-05T201507.200.json
+
+
+
