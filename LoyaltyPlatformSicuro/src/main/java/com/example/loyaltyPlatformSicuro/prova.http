@@ -127,7 +127,7 @@ GET http://localhost:8080/api/azienda/2
 <> 2023-12-05T201816.200.json
 
 ###
-POST http://localhost:8080/api/cliente/1/1/riscatta-premio
+POST http://localhost:8080/api/cliente/1/1/1/riscattaPremio
 Content-Type: application/json
 
 {
