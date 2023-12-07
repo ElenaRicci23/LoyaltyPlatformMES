@@ -7,25 +7,32 @@ import com.example.loyaltyPlatformSicuro.utenti.UtenteService;
 import com.example.loyaltyPlatformSicuro.utenti.cliente.tessera.Tessera;
 import com.example.loyaltyPlatformSicuro.utenti.cliente.tessera.TesseraService;
 import jakarta.persistence.EntityNotFoundException;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
-
 public class ClienteService extends UtenteService<Cliente, ClienteRepository> {
 
     private final ClienteRepository clienteRepository;
-
     private RuoloRepository ruoloRepository;
-    private final TesseraService tesseraService; // Inietta il servizio della tessera
+    private final TesseraService tesseraService;
+    private final ModelMapper modelMapper;
 
-
-    public ClienteService(ClienteRepository utenteRepository, ClienteRepository clienteRepository, TesseraService tesseraService) {
+    @Autowired
+    public ClienteService(
+            ClienteRepository utenteRepository,
+            ClienteRepository clienteRepository,
+            TesseraService tesseraService,
+            ModelMapper modelMapper
+    ) {
         super(utenteRepository);
         this.clienteRepository = clienteRepository;
         this.tesseraService = tesseraService;
+        this.modelMapper = modelMapper;
     }
 
     public boolean isEmailAlreadyRegistered(String email) {
@@ -34,62 +41,43 @@ public class ClienteService extends UtenteService<Cliente, ClienteRepository> {
     }
 
     public void saveCliente(Cliente cliente) {
-       clienteRepository.save(cliente);
+        clienteRepository.save(cliente);
     }
     public void registrazioneConDTO(ClienteDTO clienteDTO) {
+        // Usa ModelMapper per mappare ClienteDTO a Cliente
+        Cliente cliente = modelMapper.map(clienteDTO, Cliente.class);
 
-        DatiPersonaliCliente datiPersonali = new DatiPersonaliCliente();
+        cliente.setRuolo("CLIENTE");
+
+        // Mappa i dati personali da DatiPersonaliClienteDTO a DatiPersonaliCliente
+        DatiPersonaliCliente datiPersonali = modelMapper.map(clienteDTO.getDatiPersonali(), DatiPersonaliCliente.class);
+
+        // Imposta i dati personali nel cliente
+        cliente.setDatiPersonali(datiPersonali);
+
         // Verifica se l'email è già registrata
         if (isEmailAlreadyRegistered(clienteDTO.getEmail())) {
             throw new RuntimeException("L'email è già registrata.");
         }
-        DatiPersonaliClienteDTO datiPersonaliDTO = clienteDTO.getDatiPersonali();
-        datiPersonali.setNome(datiPersonaliDTO.getNome());
-        datiPersonali.setCognome(datiPersonaliDTO.getCognome());
-        datiPersonali.setCodiceFiscale(datiPersonaliDTO.getCodiceFiscale());
-        datiPersonali.setCellulare(datiPersonaliDTO.getCellulare());
-        datiPersonali.setIndirizzo(datiPersonaliDTO.getIndirizzo());
-        datiPersonali.setDataNascita(datiPersonaliDTO.getDataNascita());
-        datiPersonali.setResidenza(datiPersonaliDTO.getResidenza());
-        datiPersonali.setSesso(datiPersonaliDTO.getSesso());
 
-        // Crea l'oggetto azienda e imposta i dati
-        Cliente cliente = new Cliente();
-        cliente.setEmail(clienteDTO.getEmail());
-        cliente.setPassword(clienteDTO.getPassword());
-        cliente.setDatiPersonali(datiPersonali);
-        cliente.setRuolo("CLIENTE");
-//        cliente.setUtente(cliente);
+        // Salva il cliente nel database
         saveCliente(cliente);
+
         // Dopo aver creato l'oggetto cliente, crea una tessera per lui
-        LocalDate dataEmissione = LocalDate.now(); // Imposta la data di emissione a oggi
-        LocalDate dataScadenza = dataEmissione.plusYears(1); // Imposta la data di scadenza a 1 anno dalla data di emissione
-        Tessera tessera = tesseraService.creaTessera(dataEmissione, dataScadenza, null,cliente.getId()); // Passa null per il codice a barre (lo genereremo nella tesseraService)
-
-        // Imposta la tessera creata per il cliente
+        LocalDate dataEmissione = LocalDate.now();
+        LocalDate dataScadenza = dataEmissione.plusYears(1);
+        Tessera tessera = tesseraService.creaTessera(dataEmissione, dataScadenza, null, cliente.getId());
         cliente.setTessera(tessera);
-
-        // Altri controlli e logica di registrazione, ad esempio, salvare l'azienda nel database
-
     }
- public Cliente getClienteById(Long clienteid){
-        Optional<Cliente> clienteOptional=clienteRepository.findById(clienteid);
+
+    public Cliente getClienteById(Long clienteId){
+        Optional<Cliente> clienteOptional=clienteRepository.findById(clienteId);
         return clienteOptional.orElse(null);
- }
+    }
 
-
-    public Long getTesseraIdByClienteId(Long clienteId) {
-        Cliente cliente = clienteRepository.findById(clienteId)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente non trovato con ID: " + clienteId));
-
-        Tessera tessera = cliente.getTessera();
-
-        if (tessera != null) {
-            return tessera.getId();
-        }
-
-        // Gestisci il caso in cui il cliente non ha una tessera restituendo un valore di default o generando un'eccezione, a seconda delle tue esigenze.
-        throw new EntityNotFoundException("Tessera non trovata per il cliente con ID: " + clienteId);
+    public void eliminaClienti() {
+        // Aggiungi il codice per eliminare tutti i clienti dal tuo repository
+        clienteRepository.deleteAll(); // Supponendo che tu abbia un repository chiamato clienteRepository
     }
 
 }

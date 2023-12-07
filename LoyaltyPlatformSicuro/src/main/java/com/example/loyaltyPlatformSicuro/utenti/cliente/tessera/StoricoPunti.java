@@ -19,11 +19,19 @@ public class StoricoPunti {
     @JoinColumn(name = "programma_fedelta_id")
     private ProgrammaFedelta programmaFedelta;
 
+    @Column(name = "punti_guadagnati")
     private int puntiGuadagnati;
+
+    @Column(name = "punti_utilizzati")
     private int puntiUtilizzati;
+
+    @Column(name = "operazione")
     private int operazione;
+
+    @Column(name = "punti")
     private int punti;
 
+    @Column(name = "data_operazione")
     private LocalDateTime dataOperazione;
 
     public Long getId() {

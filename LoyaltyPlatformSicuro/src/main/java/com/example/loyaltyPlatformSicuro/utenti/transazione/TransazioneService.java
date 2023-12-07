@@ -20,6 +20,7 @@ import java.util.List;
 public class TransazioneService {
     @Autowired
     private SistemaPagamento sistemaPagamento;
+
     @Autowired
     private final ClienteService clienteService;
 
@@ -29,9 +30,10 @@ public class TransazioneService {
     @Autowired
     private TransazioneRepository transazioneRepository;
 
-    public TransazioneService(SistemaPagamento sistemaPagamento, ClienteService clienteService, ClienteService clienteService1, TesseraRepository tesseraRepository, TransazioneRepository transazioneRepository) {
+    @Autowired
+    public TransazioneService(SistemaPagamento sistemaPagamento, ClienteService clienteService, TesseraRepository tesseraRepository, TransazioneRepository transazioneRepository) {
         this.sistemaPagamento = sistemaPagamento;
-        this.clienteService = clienteService1;
+        this.clienteService = clienteService;
         this.tesseraRepository = tesseraRepository;
         this.transazioneRepository = transazioneRepository;
     }
@@ -57,10 +59,7 @@ public class TransazioneService {
         transazione.setDataTransazione(LocalDate.parse(pagamento.getDataTransazione()));
         transazione.setImporto(pagamento.getImportoPagato());
         transazione.setNomeAzienda(pagamento.getNomeAzienda());
-        transazione.setCliente(cliente); // dove 'cliente' è l'oggetto Cliente associato all'acquisto
-
-
-
+        transazione.setCliente(cliente);
 
         // Salva la transazione nella repository delle transazioni
         transazioneRepository.save(transazione);
@@ -68,7 +67,6 @@ public class TransazioneService {
         // Restituisci la simulazione di pagamento all'utente
         return pagamento;
     }
-
 
     public Transazione getUltimaTransazioneCliente(Long clienteId) {
         List<Transazione> transazioni = transazioneRepository.findTransazioniByClienteIdOrderByDataTransazioneDesc(clienteId);
@@ -79,6 +77,11 @@ public class TransazioneService {
             // Gestisci il caso in cui il cliente non abbia transazioni
             throw new EntityNotFoundException("Nessuna transazione trovata per il cliente con ID: " + clienteId);
         }
+    }
+
+    public void eliminaTransazioni() {
+        // Aggiungi il codice per eliminare tutte le transazioni dal tuo repository
+        transazioneRepository.deleteAll(); // Supponendo che tu abbia un repository chiamato transazioneRepository
     }
 
 }

@@ -10,11 +10,13 @@ import com.example.loyaltyPlatformSicuro.programmiFedelta.factory.GestoreProgram
 import com.example.loyaltyPlatformSicuro.security.auth.RuoloRepository;
 import com.example.loyaltyPlatformSicuro.utenti.UtenteService;
 import jakarta.persistence.EntityNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class AziendaService extends UtenteService<Azienda, AziendaRepository> {
@@ -23,6 +25,9 @@ public class AziendaService extends UtenteService<Azienda, AziendaRepository> {
     private final RuoloRepository ruoloRepository;
 
     private final GestoreProgrammiFedelta gestoreProgrammiFedelta;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     public AziendaService(AziendaRepository aziendaRepository, RuoloRepository ruoloRepository, GestoreProgrammiFedelta gestoreProgrammiFedelta) {
@@ -47,69 +52,56 @@ public class AziendaService extends UtenteService<Azienda, AziendaRepository> {
         aziendaRepository.save(azienda);
     }
 
-    public void registrazioneConDTO(AziendaDTO aziendaDTO) {
+    public AziendaDTO convertToDto(Azienda azienda) {
+        return modelMapper.map(azienda, AziendaDTO.class);
+    }
 
-         //Verifica se l'azienda ha almeno 2 stabilimenti
+    public Azienda convertToEntity(AziendaDTO aziendaDTO) {
+        return modelMapper.map(aziendaDTO, Azienda.class);
+    }
+
+    public DatiPersonaliAziendaDTO convertToDto(DatiPersonaliAzienda datiPersonali) {
+        return modelMapper.map(datiPersonali, DatiPersonaliAziendaDTO.class);
+    }
+
+    public DatiPersonaliAzienda convertToEntity(DatiPersonaliAziendaDTO datiPersonaliDTO) {
+        return modelMapper.map(datiPersonaliDTO, DatiPersonaliAzienda.class);
+    }
+
+
+    public void registrazioneConDTO(AziendaDTO aziendaDTO) {
+        // Verifica se l'azienda ha almeno 2 stabilimenti
         if (aziendaDTO.getDatiPersonali().getNumeroStabilimenti() < 2) {
             throw new RuntimeException("L'azienda deve avere almeno 2 stabilimenti per la registrazione.");
         }
-
         // Verifica se l'email è già registrata
         if (isEmailAlreadyRegistered(aziendaDTO.getEmail())) {
             throw new RuntimeException("L'email è già registrata.");
         }
-
         // Verifica se la partita IVA è già registrata
         if (isPartitaIvaAlreadyRegistered(aziendaDTO.getDatiPersonali().getPartitaIva())) {
             throw new RuntimeException("La partita IVA è già registrata.");
         }
 
-        DatiPersonaliAzienda datiPersonali = new DatiPersonaliAzienda();
-        DatiPersonaliAziendaDTO datiPersonaliDTO = aziendaDTO.getDatiPersonali();
-        datiPersonali.setNome(datiPersonaliDTO.getNome());
-        datiPersonali.setPartitaIva(datiPersonaliDTO.getPartitaIva());
-        datiPersonali.setCodiceUnivoco(datiPersonaliDTO.getCodiceUnivoco());
-        datiPersonali.setRagioneSociale(datiPersonaliDTO.getRagioneSociale());
-        datiPersonali.setSettore(datiPersonaliDTO.getSettore());
-        datiPersonali.setIndirizzo(datiPersonaliDTO.getIndirizzo());
-        datiPersonali.setNumeroStabilimenti(datiPersonaliDTO.getNumeroStabilimenti());
-
-        // Crea l'oggetto azienda e imposta i dati
-        Azienda azienda = new Azienda();
-        azienda.setEmail(aziendaDTO.getEmail());
-        azienda.setPassword(aziendaDTO.getPassword());
-        azienda.setDatiPersonali(datiPersonali);
+        // Utilizza il modelMapper per mappare l'AziendaDTO a un oggetto Azienda
+        Azienda azienda = modelMapper.map(aziendaDTO, Azienda.class);
         azienda.setRuolo("AZIENDA");
-//        azienda.setUtente(azienda);
 
-        // Altri controlli e logica di registrazione, ad esempio, salvare l'azienda nel database
+        // Utilizza il modelMapper anche per mappare i DatiPersonaliAziendaDTO a DatiPersonaliAzienda
+        DatiPersonaliAzienda datiPersonali = modelMapper.map(aziendaDTO.getDatiPersonali(), DatiPersonaliAzienda.class);
+
+        azienda.setDatiPersonali(datiPersonali);
+
         saveAzienda(azienda);
     }
+
     public AziendaDTO getAziendaDTOById(Long aziendaId) {
         Azienda azienda = aziendaRepository.findById(aziendaId)
                 .orElseThrow(() -> new EntityNotFoundException("Azienda non trovata"));
 
-        // Creare un oggetto AziendaDTO per trasferire i dati
-        AziendaDTO aziendaDTO = new AziendaDTO();
-        aziendaDTO.setId(azienda.getId());
-        aziendaDTO.setEmail(azienda.getEmail());
-        aziendaDTO.setPassword(azienda.getPassword());
-
-        // Creare un oggetto DatiPersonaliAziendaDTO per i dati personali
-        DatiPersonaliAzienda datiPersonali = azienda.getDatiPersonali();
-        DatiPersonaliAziendaDTO datiPersonaliDTO = new DatiPersonaliAziendaDTO();
-        datiPersonaliDTO.setNome(datiPersonali.getNome());
-        datiPersonaliDTO.setPartitaIva(datiPersonali.getPartitaIva());
-        datiPersonaliDTO.setCodiceUnivoco(datiPersonali.getCodiceUnivoco());
-        datiPersonaliDTO.setRagioneSociale(datiPersonali.getRagioneSociale());
-        datiPersonaliDTO.setSettore(datiPersonali.getSettore());
-        datiPersonaliDTO.setIndirizzo(datiPersonali.getIndirizzo());
-        datiPersonaliDTO.setNumeroStabilimenti(datiPersonali.getNumeroStabilimenti());
-
-        aziendaDTO.setDatiPersonali(datiPersonaliDTO);
-
-        return aziendaDTO;
+        return modelMapper.map(azienda, AziendaDTO.class);
     }
+
     public Azienda getAziendaById(Long id) {
         return aziendaRepository.findAziendaById(id);
     }
@@ -138,6 +130,31 @@ public class AziendaService extends UtenteService<Azienda, AziendaRepository> {
     public List<Azienda> getAllAziende() {
         return aziendaRepository.findAll();
     }
+
+
+    public void eliminaAzienda(Long aziendaId) {
+        Azienda azienda = findById(aziendaId);
+        if (azienda != null) {
+            aziendaRepository.delete(azienda);
+        } else {
+            throw new EntityNotFoundException("Azienda non trovata");
+        }
+    }
+
+    public void aggiornaAzienda(Long aziendaId, AziendaDTO aziendaDTO) {
+        Azienda azienda = findById(aziendaId);
+        if (azienda != null) {
+            modelMapper.map(aziendaDTO, azienda); // Utilizza modelMapper per copiare i dati da aziendaDTO a azienda
+            aziendaRepository.save(azienda);
+        } else {
+            throw new EntityNotFoundException("Azienda non trovata");
+        }
+    }
+    public void eliminaAziende() {
+        // Aggiungi il codice per eliminare tutte le aziende dal tuo repository
+        aziendaRepository.deleteAll(); // Supponendo che tu abbia un repository chiamato aziendaRepository
+    }
+
 
 }
 

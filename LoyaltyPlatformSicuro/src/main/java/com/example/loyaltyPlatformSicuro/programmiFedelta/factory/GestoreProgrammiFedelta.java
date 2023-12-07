@@ -16,6 +16,7 @@ import com.example.loyaltyPlatformSicuro.utenti.azienda.AziendaRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,61 +38,38 @@ public class GestoreProgrammiFedelta {
             ProgrammaFedeltaRepository programmaFedeltaRepository,
             ProgrammaPuntiRepository programmaPuntiRepository,
             PremioRepository premioRepository,
-            ModelMapper modelMapper // Aggiungi questa riga
-    ) {
+            ModelMapper modelMapper,
+            ConcreteFactoryProgrammaFedelta factory) {
         this.aziendaRepository = aziendaRepository;
         this.programmaFedeltaRepository = programmaFedeltaRepository;
         this.programmaPuntiRepository = programmaPuntiRepository;
         this.premioRepository = premioRepository;
-        this.factory = new ConcreteFactoryProgrammaFedelta();
+        this.factory = factory;
         this.modelMapper = modelMapper;
     }
 
+
+    @Transactional
     public ProgrammaFedelta creaProgrammaFedelta(ProgrammaFedeltaDTO dto, Long aziendaId) {
         TipoProgrammaFedelta tipo = dto.getTipoProgrammaFedelta();
         String nome = dto.getNome();
         String descrizione = dto.getDescrizione();
 
-        ProgrammaFedelta programmaFedelta = switch (tipo) {
-            case PUNTI -> {
-                ProgrammaFedelta programmaPunti = factory.creaProgrammaPunti();
-                programmaPunti.setNome(nome);
-                programmaPunti.setDescrizione(descrizione);
-                programmaPunti.setTipoProgrammaFedelta(tipo);
-                yield programmaPunti;
-            }
-            case CASHBACK -> {
-                ProgrammaFedelta programmaCashback = factory.creaProgrammaCashback();
-                programmaCashback.setNome(nome);
-                programmaCashback.setDescrizione(descrizione);
-                programmaCashback.setTipoProgrammaFedelta(tipo);
+        ProgrammaFedelta programmaFedelta;
+        if (tipo == TipoProgrammaFedelta.PUNTI) {
+            programmaFedelta = factory.creaProgrammaPunti();
+        } else if (tipo == TipoProgrammaFedelta.CASHBACK) {
+            programmaFedelta = factory.creaProgrammaCashback();
+        } else if (tipo == TipoProgrammaFedelta.LIVELLI) {
+            programmaFedelta = factory.creaProgrammiLivello();
+        } else if (tipo == TipoProgrammaFedelta.MEMBERSHIP) {
+            programmaFedelta = factory.creaProgrammiMembership();
+        } else if (tipo == TipoProgrammaFedelta.VIP) {
+            programmaFedelta = factory.creaProgrammiVip();
+        } else {
+            throw new IllegalArgumentException("Tipo di programma fedeltà non supportato");
+        }
 
-                yield programmaCashback;
-            }
-            case LIVELLI -> {
-                ProgrammaFedelta programmaLivello = factory.creaProgrammiLivello();
-                programmaLivello.setNome(nome);
-                programmaLivello.setDescrizione(descrizione);
-                programmaLivello.setTipoProgrammaFedelta(tipo);
-
-                yield programmaLivello;
-            }
-            case MEMBERSHIP -> {
-                ProgrammaFedelta programmaMembership = factory.creaProgrammiMembership();
-                programmaMembership.setNome(nome);
-                programmaMembership.setDescrizione(descrizione);
-                programmaMembership.setTipoProgrammaFedelta(tipo);
-                yield programmaMembership;
-            }
-            case VIP -> {
-                ProgrammaFedelta programmaVip = factory.creaProgrammiVip();
-                programmaVip.setNome(nome);
-                programmaVip.setDescrizione(descrizione);
-                programmaVip.setTipoProgrammaFedelta(tipo);
-                yield programmaVip;
-            }
-            default -> throw new IllegalArgumentException("Tipo di programma fedeltà non supportato");
-        };
         // Associa il programmaFedelta all'azienda specifica
         Azienda azienda = trovaAziendaPerId(aziendaId);
         programmaFedelta.setAzienda(azienda);
@@ -102,31 +80,25 @@ public class GestoreProgrammiFedelta {
         return programmaFedelta;
     }
 
+    @Transactional
+    public Azienda trovaAziendaPerId(Long aziendaId) {
 
-    private Azienda trovaAziendaPerId(Long aziendaId) {
-        // Supponiamo di avere un repository reale per le aziende
-        // Sostituisci 'AziendaRepository' con il nome del tuo repository effettivo
-        Azienda azienda = aziendaRepository.findById(aziendaId).orElse(null);
-
-        if (azienda == null) {
-            throw new IllegalArgumentException("Azienda non trovata per l'ID fornito: " + aziendaId);
-        }
-
-        return azienda;
+        return aziendaRepository.findById(aziendaId)
+                .orElseThrow(() -> new IllegalArgumentException("Azienda non trovata per l'ID fornito: " + aziendaId));
     }
 
-
-
-
-
+    @Transactional
     public void salvaProgrammaFedelta(ProgrammaFedelta programmaFedelta) {
         programmaFedeltaRepository.save(programmaFedelta);
 
-        if (programmaFedelta instanceof ProgrammaPunti programmaPunti) {
+        if (programmaFedelta instanceof ProgrammaPunti) {
+            ProgrammaPunti programmaPunti = (ProgrammaPunti) programmaFedelta;
             programmaPuntiRepository.save(programmaPunti);
         }
     }
 
+
+    @Transactional
     public void configuraProgrammaPunti(ProgrammaPuntiDTO programmaPuntiDTO, Long aziendaId, Long programmaPuntiId) {
         double tassoConversione = programmaPuntiDTO.getTassoConversione();
         List<PremioDTO> premiDTO = programmaPuntiDTO.getPremi();
@@ -153,36 +125,29 @@ public class GestoreProgrammiFedelta {
         // Salvataggio del programma punti nel repository
         programmaPuntiRepository.save(programmaPunti);
         premioRepository.saveAll(premi);
-
     }
 
+    @Transactional(readOnly = true)
     public List<ProgrammaFedelta> getProgrammiFedeltaByAzienda(Azienda azienda) {
         // Implementa la logica per recuperare i programmi fedeltà dell'azienda
         return programmaFedeltaRepository.findByAzienda(azienda);
     }
 
+    private List<Premio> convertiPremiDTOInPremi(List<PremioDTO> premiDTO) {
+        return premiDTO.stream()
+                .map(premioDTO -> modelMapper.map(premioDTO, Premio.class))
+                .collect(Collectors.toList());
+    }
 
-
-    private List<Premio> convertiPremiDTOInPremi (List < PremioDTO > premiDTO) {
-            List<Premio> premi = new ArrayList<>();
-            for (PremioDTO premioDTO : premiDTO) {
-                Premio premio = new Premio();
-                premio.setNome(premioDTO.getNome());
-                premio.setPuntiDelPremio(premioDTO.getPuntiDelPremio());
-                premio.setDescrizione(premioDTO.getDescrizione());
-                premi.add(premio);
-            }
-            return premi;
-        }
-
+    @Transactional(readOnly = true)
     public List<ProgrammaFedeltaDTO> convertToDTOList(List<ProgrammaFedelta> programmiFedeltaList) {
         return programmiFedeltaList.stream()
-                .map(programmaFedelta -> {
-                    ProgrammaFedeltaDTO programmaFedeltaDTO = modelMapper.map(programmaFedelta, ProgrammaFedeltaDTO.class);
-                    programmaFedeltaDTO.setId(programmaFedelta.getId());
-                    return programmaFedeltaDTO;
-                })
+                .map(programmaFedelta -> modelMapper.map(programmaFedelta, ProgrammaFedeltaDTO.class))
                 .collect(Collectors.toList());
+    }
+    public void eliminaProgrammi() {
+        // Aggiungi il codice per eliminare tutti i programmi fedeltà dal tuo repository
+        programmaFedeltaRepository.deleteAll(); // Supponendo che tu abbia un repository chiamato programmaFedeltaRepository
     }
 
 

@@ -46,5 +46,16 @@ public class PagamentoSimulato {
     public void setNomeAzienda(String nomeAzienda) {
         this.nomeAzienda = nomeAzienda;
     }
+
+    @Override
+    public String toString() {
+        return "PagamentoSimulato{" +
+                "conferma=" + conferma +
+                ", messaggio='" + messaggio + '\'' +
+                ", dataTransazione='" + dataTransazione + '\'' +
+                ", importoPagato=" + importoPagato +
+                ", nomeAzienda='" + nomeAzienda + '\'' +
+                '}';
+    }
 }
 

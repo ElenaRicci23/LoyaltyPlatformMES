@@ -6,16 +6,25 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "transazioni") // Specifica il nome della tabella nel database
 public class Transazione {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "data_transazione")
     private LocalDate dataTransazione;
+
     private double importo;
+
+    @Column(name = "nome_azienda")
     private String nomeAzienda;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
+    // Getter e Setter per gli attributi
 
     public Cliente getCliente() {
         return cliente;

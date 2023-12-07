@@ -5,42 +5,48 @@ import com.example.loyaltyPlatformSicuro.utenti.Utente;
 import com.example.loyaltyPlatformSicuro.utenti.cliente.tessera.Tessera;
 import jakarta.persistence.*;
 
-
 /**
  * Rappresenta un cliente nel sistema, estendendo la classe astratta Utente.
  */
+
+
+
 @Entity
+@Table(name = "cliente")
 public class Cliente extends Utente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn
-//    private Utente utente;
-
+    @Column(name = "ruolo")
     private String ruolo;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cliente")
     private Tessera tessera;
 
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn
+    @JoinColumn(name = "dati_personali_id")
     private DatiPersonaliCliente datiPersonali = new DatiPersonaliCliente();
 
     public Cliente() {
     }
 
-    @Override
     public Long getId() {
         return id;
     }
 
-    @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getRuolo() {
+        return ruolo;
+    }
+
+    public void setRuolo(String ruolo) {
+        this.ruolo = ruolo;
     }
 
     public Tessera getTessera() {
@@ -50,14 +56,6 @@ public class Cliente extends Utente {
     public void setTessera(Tessera tessera) {
         this.tessera = tessera;
     }
-
-//    public Utente getUtente() {
-//        return utente;
-//    }
-//
-//    public void setUtente(Utente utente) {
-//        this.utente = utente;
-//    }
 
     public DatiPersonaliCliente getDatiPersonali() {
         return datiPersonali;
@@ -71,22 +69,10 @@ public class Cliente extends Utente {
         super(email, password);
     }
 
-
-    public String getRuolo() {
-        return ruolo;
-    }
-
-    public void setRuolo(String ruolo) {
-        this.ruolo = ruolo;
-    }
     public Long getTesseraId() {
         if (tessera != null) {
             return tessera.getId();
         }
         return null;
     }
-
-
-
 }
-

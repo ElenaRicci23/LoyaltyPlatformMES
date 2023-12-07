@@ -17,17 +17,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("/api/azienda")
 public class AziendaController {
 
     private final AziendaService aziendaService;
-
     private final GestoreProgrammiFedelta gestoreProgrammiFedelta;
-
     private final ModelMapper modelMapper;
-
 
     @Autowired
     public AziendaController(AziendaService aziendaService, GestoreProgrammiFedelta gestoreProgrammiFedelta, ModelMapper modelMapper) {
@@ -46,33 +42,30 @@ public class AziendaController {
         }
     }
 
-
     @GetMapping("/{aziendaId}/dashboardAzienda")
     public ModelAndView dashboardAzienda(@PathVariable Long aziendaId) {
         Azienda azienda = aziendaService.getAziendaById(aziendaId);
+        ModelAndView modelAndView;
 
-        // Verifica se l'azienda esiste e se l'utente ha i diritti per accedere a questa dashboard
         if (azienda != null) {
-            ModelAndView modelAndView = new ModelAndView("azienda/dashboardAzienda");
+            modelAndView = new ModelAndView("azienda/dashboardAzienda");
             modelAndView.addObject("azienda", azienda);
-            return modelAndView;
         } else {
-            ModelAndView modelAndView = new ModelAndView("errore");
+            modelAndView = new ModelAndView("errore");
             modelAndView.addObject("messaggio", "Azienda non trovata.");
-            return modelAndView;
         }
+
+        return modelAndView;
     }
 
     @PostMapping(path = "/{aziendaId}/aggiungi-programma-fedelta", consumes = "application/json")
     public ResponseEntity<?> aggiungiProgrammaFedelta(@PathVariable Long aziendaId, @RequestBody ProgrammaFedeltaDTO programmaFedeltaDTO) {
         aziendaService.aggiungiProgrammaFedeltaAdAzienda(aziendaId, programmaFedeltaDTO);
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Programma fedeltà aggiunto con successo.");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(Map.of("message", "Programma fedeltà aggiunto con successo."));
     }
 
     @PostMapping(path = "/{aziendaId}/{programmaPuntiId}/configura", consumes = "application/json")
-    public ResponseEntity<?> configuraProgrammaPunti(@PathVariable Long aziendaId,@PathVariable Long programmaPuntiId,@RequestBody ProgrammaPuntiDTO programmaPuntiDTO) {
+    public ResponseEntity<?> configuraProgrammaPunti(@PathVariable Long aziendaId, @PathVariable Long programmaPuntiId, @RequestBody ProgrammaPuntiDTO programmaPuntiDTO) {
         try {
             aziendaService.configuraProgrammaPunti(programmaPuntiDTO, aziendaId, programmaPuntiId);
             return ResponseEntity.ok(Map.of("message", "Programma punti configurato con successo."));
@@ -80,48 +73,52 @@ public class AziendaController {
             return ResponseEntity.badRequest().body(Map.of("message", "Errore nella configurazione del programma punti: " + e.getMessage()));
         }
     }
-    @GetMapping(path="/{aziendaId}/programmi-fedelta")
+
+    @GetMapping(path = "/{aziendaId}/programmi-fedelta")
     public ResponseEntity<List<ProgrammaFedeltaDTO>> getProgrammiFedeltaByAzienda(@PathVariable Long aziendaId) {
         Azienda azienda = aziendaService.findById(aziendaId);
+
         if (azienda == null) {
             return ResponseEntity.notFound().build();
         }
-        List<ProgrammaFedelta> programmiFedelta = gestoreProgrammiFedelta.getProgrammiFedeltaByAzienda(azienda);
 
-        // Converti la lista di ProgrammaFedelta in una lista di ProgrammaFedeltaDTO
-        List<ProgrammaFedeltaDTO> programmiFedeltaDTOList = gestoreProgrammiFedelta.convertToDTOList(programmiFedelta);
+        List<ProgrammaFedelta> programmiFedelta = gestoreProgrammiFedelta.getProgrammiFedeltaByAzienda(azienda);
+        List<ProgrammaFedeltaDTO> programmiFedeltaDTOList = programmiFedelta.stream()
+                .map(pf -> modelMapper.map(pf, ProgrammaFedeltaDTO.class))
+                .collect(Collectors.toList());
 
         return ResponseEntity.ok(programmiFedeltaDTOList);
     }
+
     @GetMapping("/{aziendaId}")
     public ResponseEntity<AziendaDTO> getAziendaById(@PathVariable Long aziendaId) {
         AziendaDTO aziendaDTO = aziendaService.getAziendaDTOById(aziendaId);
-        if (aziendaDTO != null) {
-            return new ResponseEntity<>(aziendaDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return aziendaDTO != null ? ResponseEntity.ok(aziendaDTO) : ResponseEntity.notFound().build();
     }
+
     @GetMapping("/tutte")
     public ResponseEntity<List<AziendaDTO>> getAllAziende() {
         List<Azienda> aziende = aziendaService.getAllAziende();
         List<AziendaDTO> aziendeDTO = aziende.stream()
-                .map(azienda -> modelMapper.map(azienda, AziendaDTO.class ))
+                .map(azienda -> modelMapper.map(azienda, AziendaDTO.class))
                 .collect(Collectors.toList());
 
-        if (!aziendeDTO.isEmpty()) {
-            return ResponseEntity.ok(aziendeDTO);
-        } else {
-            return ResponseEntity.noContent().build();
-        }
+        return !aziendeDTO.isEmpty() ? ResponseEntity.ok(aziendeDTO) : ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{aziendaId}")
+    public ResponseEntity<?> eliminaAzienda(@PathVariable Long aziendaId) {
+        // Implementa la logica per eliminare l'azienda con l'ID specificato
+        aziendaService.eliminaAzienda(aziendaId);
+        return ResponseEntity.ok(Map.of("message", "Azienda eliminata con successo."));
+    }
+    @PutMapping("/{aziendaId}")
+    public ResponseEntity<?> aggiornaAzienda(@PathVariable Long aziendaId, @RequestBody AziendaDTO aziendaDTO) {
+        // Implementa la logica per aggiornare l'azienda con l'ID specificato
+        aziendaService.aggiornaAzienda(aziendaId, aziendaDTO);
+        return ResponseEntity.ok(Map.of("message", "Azienda aggiornata con successo."));
     }
 
 
 
-
-
-
-
 }
-
-

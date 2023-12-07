@@ -49,20 +49,12 @@ public class ClienteController {
     }
 
     @GetMapping("/{clienteId}/dashboardCliente")
-    public ModelAndView dashboardCliente(@PathVariable Long clienteId) {
+    public ResponseEntity<?> dashboardCliente(@PathVariable Long clienteId) {
         Cliente cliente = clienteService.getClienteById(clienteId);
-
-        // Verifica se l'azienda esiste e se l'utente ha i diritti per accedere a questa dashboard
         if (cliente != null) {
-            ModelAndView modelAndView = new ModelAndView("cliente/dashboardCliente");
-            modelAndView.addObject("cliente", cliente);
-            return modelAndView;
+            return ResponseEntity.ok(cliente); // Restituisci i dati del cliente invece di ModelAndView
         } else {
-            // Gestisci il caso in cui l'aziendaid non sia valido
-            // Puoi reindirizzare l'utente a una pagina di errore o fare altro in base alle tue esigenze
-            ModelAndView modelAndView = new ModelAndView("errore");
-            modelAndView.addObject("messaggio", "Cliente non trovato.");
-            return modelAndView;
+            return ResponseEntity.notFound().build();
         }
     }
 

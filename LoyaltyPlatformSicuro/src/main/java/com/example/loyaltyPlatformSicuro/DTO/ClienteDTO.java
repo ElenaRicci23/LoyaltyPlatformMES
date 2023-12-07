@@ -1,5 +1,6 @@
 package com.example.loyaltyPlatformSicuro.DTO;
 
+
 public class ClienteDTO {
 
 
@@ -50,4 +51,5 @@ public class ClienteDTO {
         this.datiPersonali = datiPersonali;
     }
 }
+
 

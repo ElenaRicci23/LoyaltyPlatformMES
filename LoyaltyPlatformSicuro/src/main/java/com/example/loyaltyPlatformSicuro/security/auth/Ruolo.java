@@ -4,13 +4,16 @@ import jakarta.persistence.*;
 
 import java.util.Collection;
 
+
 @Entity
+@Table(name = "ruoli") // Specifica il nome della tabella nel database
 public class Ruolo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false) // Specifica che il campo "nome" è unico e non può essere nullo
     private String nome;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -20,7 +23,6 @@ public class Ruolo {
             inverseJoinColumns = @JoinColumn(name = "privilegio_id", referencedColumnName = "id")
     )
     private Collection<Privilegio> privileges;
-
 
     // Costruttori, getter e setter
 
@@ -39,7 +41,6 @@ public class Ruolo {
         this.id = id;
     }
 
-
     public Collection<Privilegio> getPrivileges() {
         return privileges;
     }
@@ -56,3 +57,4 @@ public class Ruolo {
         this.nome = nome;
     }
 }
+

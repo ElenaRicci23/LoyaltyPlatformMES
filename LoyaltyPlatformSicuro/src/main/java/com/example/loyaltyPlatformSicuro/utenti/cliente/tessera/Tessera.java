@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Entity
+@Table(name = "tessera")
 public class Tessera {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,11 +19,14 @@ public class Tessera {
     @Column(unique = true)
     private String codiceABarreUnivoco;
 
+    @Column(name = "data_emissione") // Specifica il nome della colonna nel database
     private LocalDate dataEmissione;
+
+    @Column(name = "data_scadenza") // Specifica il nome della colonna nel database
     private LocalDate dataScadenza;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "cliente_id") // Specifica il nome della colonna nel database
     private Cliente cliente;
 
     @ManyToMany
@@ -42,23 +46,11 @@ public class Tessera {
     @Column(name = "punti")
     private Map<ProgrammaPunti, Integer> puntiProgrammaPunti = new HashMap<>();
 
-
-    public Set<ProgrammaFedelta> getProgrammiFedelta() {
-        return programmiFedelta;
+    // Costruttore vuoto
+    public Tessera() {
     }
 
-    public void addProgrammaFedelta(ProgrammaFedelta programmaFedelta) {
-        programmiFedelta.add(programmaFedelta);
-    }
-
-
-    public Map<ProgrammaPunti, Integer> getPuntiProgrammaPunti() {
-        return puntiProgrammaPunti;
-    }
-
-    public void setPuntiProgrammaPunti(Map<ProgrammaPunti, Integer> puntiProgrammaPunti) {
-        this.puntiProgrammaPunti = puntiProgrammaPunti;
-    }
+    // Getter e setter per gli attributi della classe
 
     public Long getId() {
         return id;
@@ -100,6 +92,21 @@ public class Tessera {
         this.cliente = cliente;
     }
 
+    public Set<ProgrammaFedelta> getProgrammiFedelta() {
+        return programmiFedelta;
+    }
+
+    public void addProgrammaFedelta(ProgrammaFedelta programmaFedelta) {
+        programmiFedelta.add(programmaFedelta);
+    }
+
+    public Map<ProgrammaPunti, Integer> getPuntiProgrammaPunti() {
+        return puntiProgrammaPunti;
+    }
+
+    public void setPuntiProgrammaPunti(Map<ProgrammaPunti, Integer> puntiProgrammaPunti) {
+        this.puntiProgrammaPunti = puntiProgrammaPunti;
+    }
 
     public void setCodiceBarre() {
         // Genera un codice a barre casuale (ad esempio, di 10 cifre)
@@ -111,6 +118,4 @@ public class Tessera {
         }
         this.codiceABarreUnivoco = codiceBarreBuilder.toString();
     }
-
-
 }

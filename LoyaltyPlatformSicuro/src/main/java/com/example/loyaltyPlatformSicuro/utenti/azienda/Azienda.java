@@ -9,24 +9,25 @@ import java.util.HashSet;
 import java.util.Set;
 
 
+
 @Entity
+@Table(name = "azienda") // Specifica il nome della tabella
 public class Azienda extends Utente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn
-//    private Utente utente;
+
+    @Column(name = "ruolo")
     private String ruolo;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn()
+    @JoinColumn(name = "dati_personali_id") // Specifica il nome della colonna di join
     private DatiPersonaliAzienda datiPersonali = new DatiPersonaliAzienda();
 
     @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProgrammaFedelta> programmiFedelta = new HashSet<>();
-
 
     public Azienda() {
     }
@@ -41,13 +42,13 @@ public class Azienda extends Utente {
         this.id = id;
     }
 
-    //    public Utente getUtente() {
-//        return utente;
-//    }
-//
-//    public void setUtente(Utente utente) {
-//        this.utente = utente;
-//    }
+    public String getRuolo() {
+        return ruolo;
+    }
+
+    public void setRuolo(String ruolo) {
+        this.ruolo = ruolo;
+    }
 
     public DatiPersonaliAzienda getDatiPersonali() {
         return datiPersonali;
@@ -55,14 +56,6 @@ public class Azienda extends Utente {
 
     public void setDatiPersonali(DatiPersonaliAzienda datiPersonali) {
         this.datiPersonali = datiPersonali;
-    }
-
-    public String getRuolo() {
-        return ruolo;
-    }
-
-    public void setRuolo(String ruolo) {
-        this.ruolo = ruolo;
     }
 
     public Set<ProgrammaFedelta> getProgrammiFedelta() {
@@ -79,7 +72,7 @@ public class Azienda extends Utente {
         programmaFedelta.setAzienda(null);
     }
 
-    public Azienda( String email, String password, DatiPersonaliAzienda datiPersonali) {
+    public Azienda(String email, String password, DatiPersonaliAzienda datiPersonali) {
         super(email, password);
         this.datiPersonali = datiPersonali;
     }

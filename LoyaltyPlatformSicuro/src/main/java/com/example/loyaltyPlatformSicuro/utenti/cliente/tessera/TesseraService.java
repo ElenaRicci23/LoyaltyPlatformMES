@@ -12,6 +12,7 @@ import com.example.loyaltyPlatformSicuro.utenti.cliente.ClienteRepository;
 import com.example.loyaltyPlatformSicuro.utenti.transazione.Transazione;
 import com.example.loyaltyPlatformSicuro.utenti.transazione.TransazioneRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,14 +25,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class TesseraService {
-
-
 
     private final TesseraRepository tesseraRepository;
     private final ClienteRepository clienteRepository;
     private final ModelMapper modelMapper;
-
     private final StoricoPuntiRepository storicoPuntiRepository;
     private final AziendaRepository aziendaRepository;
     private final TransazioneRepository transazioneRepository;
@@ -41,7 +40,9 @@ public class TesseraService {
     public TesseraService(
             TesseraRepository tesseraRepository,
             ClienteRepository clienteRepository,
-            ModelMapper modelMapper, StoricoPuntiRepository storicoPuntiRepository, AziendaRepository aziendaRepository,
+            ModelMapper modelMapper,
+            StoricoPuntiRepository storicoPuntiRepository,
+            AziendaRepository aziendaRepository,
             TransazioneRepository transazioneRepository,
             ProgrammaFedeltaRepository programmaFedeltaRepository) {
         this.tesseraRepository = tesseraRepository;
@@ -230,6 +231,10 @@ public class TesseraService {
 
     private StoricoPuntiDTO mapToStoricoPuntiDTO(StoricoPunti storicoPunti) {
         return modelMapper.map(storicoPunti, StoricoPuntiDTO.class);
+    }
+
+    public void eliminaPunti() {
+        tesseraRepository.deleteAll();
     }
 
 
