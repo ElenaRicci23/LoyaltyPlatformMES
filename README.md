@@ -84,7 +84,7 @@ Puoi consultare la documentazione dell'API per ulteriori dettagli sulle richiest
 
   MIT License
 
-Copyright (c) [Anno] [Tuo Nome]
+Copyright (c) [2023] [Avatroni Sara,Di Felice Matteo,Ricci Elena]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
