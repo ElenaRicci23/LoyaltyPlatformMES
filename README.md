@@ -29,27 +29,31 @@ Il backend sarà in ascolto all'URL specificato (solitamente http://localhost:80
 Utilizzo delle Richieste HTTP
 Una volta che il backend è in esecuzione, puoi utilizzare richieste HTTP per interagire con l'applicazione. Ecco alcuni esempi di richieste:
 
-POST /api/cliente/registrazione: Per registrare un cliente.
-GET /api/cliente/{clienteId}/dashboardCliente: Per ottenere il dashboard di un cliente.
-GET /api/cliente/{clienteId}/{tesseraId}: Per ottenere i dettagli di una tessera specifica per un cliente.
-POST /api/cliente/{clienteId}/iscrivi-programma-fedelta: Per iscrivere un cliente a un programma fedeltà.
-POST /api/cliente/{clienteId}/effettua-acquisto: Per effettuare un acquisto per un cliente.
-GET /api/cliente/{clienteId}/{tesseraId}/{programmaPuntiId}/premiAssociati: Per ottenere premi associati a una tessera e a un programma fedeltà specifici.
-POST /api/cliente/{clienteId}/{tesseraId}/{programmaFedeltaId}/riscattaPremio: Per riscattare un premio per un cliente all'interno di un programma fedeltà specifico.
-GET /api/cliente/{clienteId}/{tesseraId}/storico-punti: Per ottenere lo storico dei punti per una tessera specifica.
-Per le operazioni relative alle aziende, puoi utilizzare le seguenti richieste:
+## API per i Clienti
 
-POST /api/azienda/registrazione: Per registrare un'azienda.
-GET /api/azienda/{aziendaId}/dashboardAzienda: Per ottenere il dashboard di un'azienda.
-POST /api/azienda/{aziendaId}/aggiungi-programma-fedelta: Per aggiungere un programma fedeltà a un'azienda.
-POST /api/azienda/{aziendaId}/{programmaPuntiId}/configura: Per configurare un programma punti per un'azienda.
-GET /api/azienda/{aziendaId}/programmi-fedelta: Per ottenere programmi fedeltà associati a un'azienda.
-GET /api/azienda/{aziendaId}: Per ottenere i dati di un'azienda specifica.
-GET /api/azienda/tutte: Per ottenere una lista di tutte le aziende.
-DELETE /api/azienda/{aziendaId}: Per eliminare un'azienda.
-PUT /api/azienda/{aziendaId}: Per aggiornare i dati di un'azienda.
-Per le operazioni di login:
+- **Registrazione Cliente**: `/api/cliente/registrazione`
+- **Visualizza Dashboard Cliente**: `/api/cliente/{clienteId}/dashboardCliente`
+- **Ottieni Dettagli Tessera Cliente**: `/api/cliente/{clienteId}/{tesseraId}`
+- **Iscrizione a Programma Fedeltà**: `/api/cliente/{clienteId}/iscrivi-programma-fedelta`
+- **Effettua Acquisto Cliente**: `/api/cliente/{clienteId}/effettua-acquisto`
+- **Ottieni Premi Associati**: `/api/cliente/{clienteId}/{tesseraId}/{programmaPuntiId}/premiAssociati`
+- **Riscatta Premio**: `/api/cliente/{clienteId}/{tesseraId}/{programmaFedeltaId}/riscattaPremio`
+- **Storico dei Punti**: `/api/cliente/{clienteId}/{tesseraId}/storico-punti`
+- **Login Cliente**: `/loginCliente`
 
-POST /loginAzienda: Per il login di un'azienda.
-POST /loginCliente: Per il login di un cliente.
-Sentiti libero di personalizzare ulteriormente questo README in base alle tue esigenze specifiche.
+## API per le Aziende
+
+- **Registrazione Azienda**: `/api/azienda/registrazione`
+- **Visualizza Dashboard Azienda**: `/api/azienda/{aziendaId}/dashboardAzienda`
+- **Aggiungi Programma Fedeltà**: `/api/azienda/{aziendaId}/aggiungi-programma-fedelta`
+- **Configura Programma Punti**: `/api/azienda/{aziendaId}/{programmaPuntiId}/configura`
+- **Ottieni Programmi Fedeltà Azienda**: `/api/azienda/{aziendaId}/programmi-fedelta`
+- **Ottieni Dati Azienda**: `/api/azienda/{aziendaId}`
+- **Ottieni Tutte le Aziende**: `/api/azienda/tutte`
+- **Elimina Azienda**: `/api/azienda/{aziendaId}`
+- **Aggiorna Azienda**: `/api/azienda/{aziendaId}`
+
+## Login Utenti (Aziende e Clienti)
+
+- **Login Azienda**: `/loginAzienda`
+- **Login Cliente**: `/loginCliente`
