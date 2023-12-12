@@ -6,9 +6,12 @@ incluso il routing delle richieste HTTP e l'interazione con il database MySQL.
 
 ## Autori
 
-- Avatroni Sara
-- Di Felice Matteo
-- Ricci Elena
+## Autori
+
+- [Avatroni Sara](https://github.com/418TheTeapot)
+- [Di Felice Matteo](https://github.com/Matteodife)
+- [Ricci Elena](https://github.com/ElenaRicci23)
+
 
 
 ## Panoramica
