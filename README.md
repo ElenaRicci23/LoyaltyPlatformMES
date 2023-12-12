@@ -4,6 +4,13 @@ Questo è il backend dell'applicazione Piattaforma Fedeltà, sviluppato utilizza
 Questo backend gestisce tutte le funzionalità principali dell'applicazione, 
 incluso il routing delle richieste HTTP e l'interazione con il database MySQL.
 
+## Autori
+
+- Avatroni Sara
+- Di Felice Matteo
+- Ricci Elena
+
+
 ## Panoramica
 
 Il backend della Piattaforma Fedeltà è responsabile di gestire le seguenti funzionalità principali:
@@ -143,3 +150,24 @@ Puoi consultare la documentazione dell'API per ulteriori dettagli sulle richiest
 
 - **Login Azienda**: `/loginAzienda`
 - **Login Cliente**: `/loginCliente`
+  MIT License
+
+Copyright (c) [Anno] [Tuo Nome]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
