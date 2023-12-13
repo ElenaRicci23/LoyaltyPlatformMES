@@ -34,7 +34,7 @@ public class TesseraService {
 
     private final TesseraRepository tesseraRepository;
     private final ClienteRepository clienteRepository;
-    private  ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
     private final StoricoPuntiRepository storicoPuntiRepository;
     private final AziendaRepository aziendaRepository;
     private final TransazioneRepository transazioneRepository;
@@ -54,6 +54,8 @@ public class TesseraService {
         this.aziendaRepository = aziendaRepository;
         this.transazioneRepository = transazioneRepository;
         this.programmaFedeltaRepository = programmaFedeltaRepository;
+        this.modelMapper = new ModelMapper();
+
     }
 
     /**

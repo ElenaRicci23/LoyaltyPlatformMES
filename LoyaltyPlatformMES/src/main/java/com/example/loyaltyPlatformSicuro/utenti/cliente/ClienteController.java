@@ -47,6 +47,8 @@ public class ClienteController {
         this.clienteService = clienteService;
         this.tesseraService = tesseraService;
         this.transazioneService = transazioneService;
+        this.modelMapper = new ModelMapper();
+
 
     }
     /**

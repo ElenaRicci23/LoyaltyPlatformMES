@@ -7,6 +7,7 @@ import com.example.loyaltyPlatformSicuro.utenti.cliente.Cliente;
 import com.example.loyaltyPlatformSicuro.utenti.cliente.ClienteService;
 import com.example.loyaltyPlatformSicuro.utenti.cliente.tessera.TesseraRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,8 @@ public class TransazioneService {
         this.clienteService = clienteService;
         this.tesseraRepository = tesseraRepository;
         this.transazioneRepository = transazioneRepository;
+
+
     }
 
     /**

@@ -37,6 +37,8 @@ public class ClienteService extends UtenteService<Cliente, ClienteRepository> {
         super(utenteRepository);
         this.clienteRepository = clienteRepository;
         this.tesseraService = tesseraService;
+        this.modelMapper = new ModelMapper();
+
     }
     /**
      * Verifica se un'email è già registrata per un cliente.

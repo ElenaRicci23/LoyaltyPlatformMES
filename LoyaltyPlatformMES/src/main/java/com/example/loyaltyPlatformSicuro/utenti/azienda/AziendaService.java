@@ -34,6 +34,8 @@ public class AziendaService extends UtenteService<Azienda, AziendaRepository> {
         this.aziendaRepository = aziendaRepository;
         this.ruoloRepository = ruoloRepository;
         this.gestoreProgrammiFedelta = gestoreProgrammiFedelta;
+        this.modelMapper = new ModelMapper();
+
     }
 
     /**

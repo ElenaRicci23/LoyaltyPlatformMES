@@ -56,7 +56,8 @@ public class GestoreProgrammiFedelta {
         this.programmaPuntiRepository = programmaPuntiRepository;
         this.premioRepository = premioRepository;
         this.factory = factory;
-        this.modelMapper = modelMapper;
+        this.modelMapper = new ModelMapper();
+
     }
 
     /**

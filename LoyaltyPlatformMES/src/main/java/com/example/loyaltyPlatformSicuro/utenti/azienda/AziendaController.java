@@ -31,6 +31,8 @@ public class AziendaController {
     public AziendaController(AziendaService aziendaService, GestoreProgrammiFedelta gestoreProgrammiFedelta) {
         this.aziendaService = aziendaService;
         this.gestoreProgrammiFedelta = gestoreProgrammiFedelta;
+        this.modelMapper = new ModelMapper();
+
     }
     /**
      * Registra un'azienda nel sistema utilizzando i dati forniti in un oggetto AziendaDTO.
