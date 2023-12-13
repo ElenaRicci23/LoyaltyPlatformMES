@@ -1,10 +1,11 @@
+**Nota Importante:** Per una comprensione più approfondita del progetto, è disponibile un documento PDF contenente la Specifica dei Requisiti del Software (SOFTWARE REQUIREMENTS SPECIFICATION, SRS). Si consiglia vivamente di consultare il documento SRS (disponibile come allegato) per una visione completa delle specifiche del progetto. Inoltre, si invita a fare riferimento al Visual Paradigm Project (VPP) per ulteriori dettagli e dettagli implementativi.
+
+
 # Backend Piattaforma Fedeltà - Spring Boot
 
 Questo è il backend dell'applicazione Piattaforma Fedeltà, sviluppato utilizzando Spring Boot. 
 Questo backend gestisce tutte le funzionalità principali dell'applicazione, 
 incluso il routing delle richieste HTTP e l'interazione con il database MySQL.
-
-## Autori
 
 ## Autori
 
